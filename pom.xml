@@ -42,7 +42,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>org.example.Generalka</mainClass>
+                    <mainClass>org.generalka.Generalka</mainClass>
                 </configuration>
             </plugin>
         </plugins>

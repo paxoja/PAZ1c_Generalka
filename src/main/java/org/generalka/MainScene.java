@@ -1,4 +1,4 @@
-package org.example;
+package org.generalka;
 
 import javafx.application.*;
 import javafx.fxml.FXMLLoader;

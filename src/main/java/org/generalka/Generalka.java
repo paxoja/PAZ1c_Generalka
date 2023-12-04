@@ -1,6 +1,4 @@
-package org.example;
-
-import org.example.MainScene;
+package org.generalka;
 
 public class Generalka {
 
