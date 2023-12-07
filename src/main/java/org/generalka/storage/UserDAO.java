@@ -1,4 +1,5 @@
-package org.generalka;
+package org.generalka.storage;
+
 import java.util.Optional;
 
 public interface UserDAO {

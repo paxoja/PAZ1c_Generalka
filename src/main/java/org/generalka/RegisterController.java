@@ -11,6 +11,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.generalka.storage.DaoFactory;
+import org.generalka.storage.User;
+import org.generalka.storage.UserDAO;
 
 import java.io.IOException;
 

@@ -1,5 +1,7 @@
-package org.generalka;
-import org.generalka.DaoFactory;
+package org.generalka.storage;
+import org.generalka.storage.DaoFactory;
+import org.generalka.storage.User;
+import org.generalka.storage.UserDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

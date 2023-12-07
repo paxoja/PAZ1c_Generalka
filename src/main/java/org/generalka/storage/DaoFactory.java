@@ -1,4 +1,4 @@
-package org.generalka;
+package org.generalka.storage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

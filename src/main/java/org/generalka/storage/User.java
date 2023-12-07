@@ -1,4 +1,4 @@
-package org.generalka;
+package org.generalka.storage;
 
 public class User {
 
