@@ -13,13 +13,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.generalka.storage.DaoFactory;
 import org.generalka.storage.User;
-import org.generalka.storage.UserDAO;
+import org.generalka.storage.UserDao;
 
 import java.io.IOException;
 
 public class RegisterController {
 
-    private UserDAO userDAO = DaoFactory.getUserDAO();
+    private UserDao userDAO = DaoFactory.INSTANCE.getUserDao();
 
     @FXML
     private Button button;

@@ -4,17 +4,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DaoFactory {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/mydb";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+import org.springframework.jdbc.core.JdbcTemplate;
+import com.mysql.cj.jdbc.MysqlDataSource;
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+public enum DaoFactory {
+
+    INSTANCE;
+
+    private UserDao userDao;
+    private JdbcTemplate jdbcTemplate;
+
+    private JdbcTemplate getJdbcTemplate() {
+        if (jdbcTemplate == null) {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser("root");
+            dataSource.setPassword("root");
+            dataSource.setUrl("jdbc:mysql://localhost:3306/mydb");
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        return jdbcTemplate;
     }
 
-    public static UserDAO getUserDAO() {
-        return new UserDAOImpl();
-        // If you have other DAOs, you can create them here and return instances accordingly.
+    public UserDao getUserDao() {
+        if (userDao == null)
+            userDao = new MysqlUserDao(getJdbcTemplate());
+        return userDao;
     }
 }
