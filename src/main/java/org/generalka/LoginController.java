@@ -37,12 +37,10 @@ public class LoginController {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/register.fxml"));
         Parent parent = loader.load();
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        Scene registerScene = new Scene(parent);
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        stage.setScene(registerScene);
         stage.setTitle("Attender");
-        stage.showAndWait();
     }
 
     public void userLogin(ActionEvent event) throws IOException {
