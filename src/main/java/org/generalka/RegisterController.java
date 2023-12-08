@@ -42,12 +42,10 @@ public class RegisterController {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        Scene registerScene = new Scene(parent);
+        Stage stage = (Stage) registerButton.getScene().getWindow();
+        stage.setScene(registerScene);
         stage.setTitle("Attender");
-        stage.showAndWait();
     }
 
 
