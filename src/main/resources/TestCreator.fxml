@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox alignment="CENTER" layoutX="66.0" prefHeight="343.0" prefWidth="469.0" spacing="10.0">
+            <children>
+                <Label text="Create Your Test Questions and Answers" />
+                <Label text="Enter a question:" />
+                <TextField fx:id="questionTextField" promptText="Type your question here" />
+                <Label text="Enter answer options (comma-separated):" />
+                <TextField fx:id="answersTextField" promptText="Option 1, Option 2, Option 3, ..." />
+                <Label text="Select correct answers:" />
+            <TextField fx:id="answersTextField1" promptText="Option 1, Option 2, Option 3, ..." />
+                <VBox fx:id="checkBoxContainer" />
+            </children>
+        </VBox>
+        <Button layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
+      <Button layoutX="377.0" layoutY="343.0" mnemonicParsing="false" text="Add next question" />
+    </children>
+</AnchorPane>
