@@ -74,9 +74,9 @@ public class LoginController {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/generalka.fxml"));
         Parent parent = loader.load();
-        Scene scene = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        Scene generalkaScene = new Scene(parent);
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        stage.setScene(generalkaScene);
+
     }
 }
