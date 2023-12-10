@@ -1,5 +1,6 @@
 package org.generalka.storage;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TestQuestion {
@@ -10,10 +11,13 @@ public class TestQuestion {
 
     private Test test;
 
-    public TestQuestion(Long id, String question, Test test) {
+    private List<Answer> answers;
+
+    public TestQuestion(Long id, String question, Test test, List<Answer> answers) {
         this.id = id;
         this.question = question;
         this.test = test;
+        this.answers = answers;
     }
 
     public Long getId() {
@@ -40,14 +44,24 @@ public class TestQuestion {
         this.test = test;
     }
 
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     @Override
     public String toString() {
         return "TestQuestion{" +
                 "id=" + id +
                 ", question='" + question + '\'' +
                 ", test=" + test +
+                ", answers=" + answers +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);

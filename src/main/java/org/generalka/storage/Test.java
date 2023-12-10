@@ -1,11 +1,12 @@
 package org.generalka.storage;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Test {
 
-    private Long id;
+    private int id;
 
     private String topic;
 
@@ -17,20 +18,23 @@ public class Test {
 
     private User user;
 
-    public Test(Long id, String topic, int isWholeSemester, Date date, Subject subject, User user) {
+    private List<TestQuestion> testQuestions;
+
+    public Test(int id, String topic, int isWholeSemester, Date date, Subject subject, User user, List<TestQuestion> testQuestions) {
         this.id = id;
         this.topic = topic;
         this.isWholeSemester = isWholeSemester;
         this.date = date;
         this.subject = subject;
         this.user = user;
+        this.testQuestions = testQuestions;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -74,6 +78,14 @@ public class Test {
         this.user = user;
     }
 
+    public List<TestQuestion> getTestQuestions() {
+        return testQuestions;
+    }
+
+    public void setTestQuestions(List<TestQuestion> testQuestions) {
+        this.testQuestions = testQuestions;
+    }
+
     @Override
     public String toString() {
         return "Test{" +
@@ -83,8 +95,10 @@ public class Test {
                 ", date=" + date +
                 ", subject=" + subject +
                 ", user=" + user +
+                ", testQuestions=" + testQuestions +
                 '}';
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
