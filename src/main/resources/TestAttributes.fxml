@@ -7,10 +7,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestAttributesController">
     <children>
-        <Button layoutX="452.0" layoutY="346.0" mnemonicParsing="false" onAction="#moveToTestCreation" prefHeight="18.0" prefWidth="92.0" text="Create" />
-          <Label layoutX="229.0" layoutY="9.0" text="Define Test Attributes" />
+        <Button fx:id="moveToCreateTestButton" layoutX="452.0" layoutY="346.0" mnemonicParsing="false" onAction="#moveToCreateTest" prefHeight="18.0" prefWidth="92.0" text="Create" />
+          <Label layoutX="229.0" layoutY="17.0" text="Define Test Attributes" />
           <Label layoutX="80.0" layoutY="62.0" text="Test Description:" />
           <TextField fx:id="descriptionTextField" layoutX="84.0" layoutY="93.0" prefHeight="69.0" prefWidth="432.0" promptText="Enter test description" />
           <Label layoutX="88.0" layoutY="192.0" text="Year of Study:" />
@@ -20,5 +20,6 @@
           <Label layoutX="99.0" layoutY="241.0" text="Semester:" />
           <ComboBox fx:id="semesterComboBox" layoutX="172.0" layoutY="187.0" promptText="Select semester" />
           <CheckBox fx:id="wholeSemesterCheckBox" layoutX="380.0" layoutY="241.0" text="Whole Semester" />
+      <Button fx:id="returnToGeneralkaButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#returnToGeneralka" prefHeight="26.0" prefWidth="100.0" text="Return" />
     </children>
 </AnchorPane>

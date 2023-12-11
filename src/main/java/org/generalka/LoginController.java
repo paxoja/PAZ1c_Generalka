@@ -22,14 +22,18 @@ public class LoginController {
 
     @FXML
     private Button loginButton;
+
     @FXML
-    private Button registerButton;
-    @FXML
-    private Label wrongLogIn;
-    @FXML
-    private TextField username;
+    private Button moveToRegisterButton;
+
     @FXML
     private PasswordField password;
+
+    @FXML
+    private TextField username;
+
+    @FXML
+    private Label wrongLogIn;
 
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
 
@@ -38,7 +42,7 @@ public class LoginController {
                 getClass().getResource("/register.fxml"));
         Parent parent = loader.load();
         Scene registerScene = new Scene(parent);
-        Stage stage = (Stage) loginButton.getScene().getWindow();
+        Stage stage = (Stage) moveToRegisterButton.getScene().getWindow();
         stage.setScene(registerScene);
         stage.setTitle("Attender");
     }

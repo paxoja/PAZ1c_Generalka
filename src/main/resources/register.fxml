@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #a290f3;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #a290f3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.RegisterController">
    <children>
       <Label layoutX="191.0" layoutY="8.0" prefHeight="126.0" prefWidth="220.0" text="Success begins here." textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
@@ -18,9 +18,9 @@
       <Label layoutX="190.0" layoutY="200.0" text="Password" textFill="WHITE" />
       <PasswordField fx:id="password" layoutX="191.0" layoutY="222.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
       <TextField fx:id="username" layoutX="190.0" layoutY="157.0" prefHeight="26.0" prefWidth="220.0" promptText="Username" />
-      <Button fx:id="button" layoutX="234.0" layoutY="276.0" mnemonicParsing="false" onAction="#userRegister" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #423B63;" text="Register" textFill="WHITE" />
+      <Button fx:id="registerButton" layoutX="234.0" layoutY="276.0" mnemonicParsing="false" onAction="#userRegister" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #423B63;" text="Register" textFill="WHITE" />
       <Label layoutX="197.0" layoutY="343.0" text=" Already have an account ?" textFill="WHITE" />
       <Label fx:id="wrongUsername" layoutX="209.0" layoutY="109.0" prefHeight="18.0" prefWidth="182.0" />
-      <Button fx:id="registerButton" layoutX="344.0" layoutY="339.0" mnemonicParsing="false" onAction="#moveToLogin" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #a290f3;" text="Sign In" textFill="WHITE" />
+      <Button fx:id="moveToLoginButton" layoutX="344.0" layoutY="339.0" mnemonicParsing="false" onAction="#moveToLogin" prefHeight="26.0" prefWidth="57.0" style="-fx-background-color: #a290f3;" text="Sign In" textFill="WHITE" />
    </children>
 </AnchorPane>

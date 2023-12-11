@@ -21,14 +21,15 @@ public class RegisterController {
 
     private UserDao userDAO = DaoFactory.INSTANCE.getUserDao();
 
-    @FXML
-    private Button button;
 
     @FXML
-    private Button registerButton;
+    private Button moveToLoginButton;
 
     @FXML
     private PasswordField password;
+
+    @FXML
+    private Button registerButton;
 
     @FXML
     private TextField username;
@@ -43,7 +44,7 @@ public class RegisterController {
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();
         Scene registerScene = new Scene(parent);
-        Stage stage = (Stage) registerButton.getScene().getWindow();
+        Stage stage = (Stage) moveToLoginButton.getScene().getWindow();
         stage.setScene(registerScene);
         stage.setTitle("Attender");
     }
@@ -52,10 +53,8 @@ public class RegisterController {
     @FXML
     void userRegister(ActionEvent event) {
         User newUser = new User();
-        newUser.setAdmin(false); // ak je admoin tak true
         newUser.setUsername(username.getText());
         newUser.setPassword(password.getText());
-
         userDAO.insertUser(newUser);
     }
 

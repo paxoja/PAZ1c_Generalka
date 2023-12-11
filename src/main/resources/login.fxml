@@ -8,9 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.LoginController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a290f3" height="400.0" layoutX="-2.0" stroke="#a290f3" strokeType="INSIDE" width="312.0" />
       <Label layoutX="361.0" layoutY="62.0" text="Hello! Sign in to your account" textFill="#78768c">
@@ -31,6 +29,6 @@
       <Button fx:id="loginButton" layoutX="380.0" layoutY="270.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #423B63;" text="Log In" textFill="WHITE" />
       <Label layoutX="349.0" layoutY="333.0" text="Don't have an account ?" textFill="#78768c" />
       <Label fx:id="wrongLogIn" layoutX="362.0" layoutY="88.0" prefHeight="18.0" prefWidth="182.0" />
-      <Button fx:id="registerButton" layoutX="480.0" layoutY="329.0" mnemonicParsing="false" onAction="#moveToRegister" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #FFFFFF;" text="Register now" textFill="#78768c" />
+      <Button fx:id="moveToRegisterButton" layoutX="480.0" layoutY="329.0" mnemonicParsing="false" onAction="#moveToRegister" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #FFFFFF;" text="Register now" textFill="#78768c" />
    </children>
 </AnchorPane>
