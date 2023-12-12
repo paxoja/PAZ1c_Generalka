@@ -21,7 +21,7 @@ USE `mydb` ;
 -- Table `mydb`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`User` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `is_admin` TINYINT NOT NULL,
   `username` VARCHAR(64) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
@@ -34,14 +34,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Test`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Test` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `topic` VARCHAR(64) NOT NULL,
   `is_whole_semester` TINYINT NULL,
   `date` DATETIME NOT NULL,
   `subject` VARCHAR(64) NOT NULL,
   `semester` INT NOT NULL,
   `year_of_study` INT NOT NULL,
-  `User_id` INT NOT NULL,
+  `User_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Test_User1_idx` (`User_id` ASC) VISIBLE,
   CONSTRAINT `fk_Test_User1`
@@ -56,12 +56,12 @@ ENGINE = InnoDB;
 -- Table `mydb`.`TestHistory`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`TestHistory` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `score` INT NOT NULL,
   `report` TEXT NULL,
   `date` DATETIME NOT NULL,
-  `Test_id` INT NOT NULL,
-  `User_id` INT NOT NULL,
+  `Test_id` BIGINT NOT NULL,
+  `User_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_TestHistory_Test_idx` (`Test_id` ASC) VISIBLE,
   INDEX `fk_TestHistory_User1_idx` (`User_id` ASC) VISIBLE,
@@ -82,9 +82,9 @@ ENGINE = InnoDB;
 -- Table `mydb`.`TestQuestion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`TestQuestion` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `question` TEXT NOT NULL,
-  `Test_id` INT NOT NULL,
+  `Test_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_TestQuestion_Test1_idx` (`Test_id` ASC) VISIBLE,
   CONSTRAINT `fk_TestQuestion_Test1`
@@ -99,10 +99,10 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Answer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Answer` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `answer` TEXT NOT NULL,
   `is_correct` TINYINT NOT NULL,
-  `TestQuestion_id` INT NOT NULL,
+  `TestQuestion_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Answer_TestQuestion1_idx` (`TestQuestion_id` ASC) VISIBLE,
   CONSTRAINT `fk_Answer_TestQuestion1`

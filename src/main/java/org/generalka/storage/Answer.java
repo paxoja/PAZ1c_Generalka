@@ -3,12 +3,12 @@ package org.generalka.storage;
 import java.util.Objects;
 
 public class Answer {
-    private int id;
+    private Long id;
     private String answer;
     private boolean isCorrect;
-    private TestQuestion testQuestion; // TestQuestion object representing the foreign key relationship
+    private TestQuestion testQuestion;
 
-    public Answer(int id, String answer, boolean isCorrect, TestQuestion testQuestion) {
+    public Answer(Long id, String answer, boolean isCorrect, TestQuestion testQuestion) {
         this.id = id;
         this.answer = answer;
         this.isCorrect = isCorrect;
@@ -19,11 +19,11 @@ public class Answer {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,5 +52,4 @@ public class Answer {
     }
 
 
-    // Constructors, getters, setters
 }

@@ -18,14 +18,13 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
         return new RowMapper<TestHistory>() {
             @Override
             public TestHistory mapRow(ResultSet rs, int rowNum) throws SQLException {
-                int id = rs.getInt("id");
+                Long id = rs.getLong("id");
                 int score = rs.getInt("score");
                 String report = rs.getString("report");
                 java.util.Date date = rs.getDate("date");
-                int testId = rs.getInt("Test_id");
+                Long testId = rs.getLong("Test_id");
                 int userId = rs.getInt("User_id");
 
-                // You may need to fetch the actual test and user from the database
                 Test test = new MysqlTestDao(jdbcTemplate).getTestById(testId);
                 User user = new User();
                 user.setId(userId);
@@ -48,7 +47,7 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
     }
 
     @Override
-    public TestHistory getTestHistoryById(int id) {
+    public TestHistory getTestHistoryById(Long id) {
         String sql = "SELECT * FROM TestHistory WHERE id=?";
         return jdbcTemplate.queryForObject(sql, testHistoryRowMapper(), id);
     }
@@ -67,7 +66,7 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
     }
 
     @Override
-    public void deleteTestHistory(int id) {
+    public void deleteTestHistory(Long id) {
         String sql = "DELETE FROM TestHistory WHERE id=?";
         jdbcTemplate.update(sql, id);
     }

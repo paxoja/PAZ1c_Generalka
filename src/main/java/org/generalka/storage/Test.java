@@ -5,21 +5,21 @@ import java.util.Objects;
 import java.util.Date;
 
 public class Test {
-    private int id;
-    private String name;
+    private  Long id;
     private String topic;
     private boolean isWholeSemester;
     private Date date;
     private String subject;
-    private int semester;
+    private String semester;
     private int yearOfStudy;
     private User user; // User object representing the foreign key relationship
 
-    // Constructors, getters, setters
+    public Test(){
 
-    public Test(int id, String name, String topic, boolean isWholeSemester, Date date, String subject, int semester, int yearOfStudy, User user) {
+    }
+
+    public Test(Long id, String topic, boolean isWholeSemester, Date date, String subject, String semester, int yearOfStudy, User user) {
         this.id = id;
-        this.name = name;
         this.topic = topic;
         this.isWholeSemester = isWholeSemester;
         this.date = date;
@@ -29,20 +29,12 @@ public class Test {
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTopic() {
@@ -77,11 +69,11 @@ public class Test {
         this.subject = subject;
     }
 
-    public int getSemester() {
+    public String getSemester() {
         return semester;
     }
 
-    public void setSemester(int semester) {
+    public void setSemester(String semester) {
         this.semester = semester;
     }
 
@@ -105,7 +97,6 @@ public class Test {
     public String toString() {
         return "Test{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", topic='" + topic + '\'' +
                 ", isWholeSemester=" + isWholeSemester +
                 ", date=" + date +

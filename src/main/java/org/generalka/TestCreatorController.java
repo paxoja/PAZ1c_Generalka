@@ -80,7 +80,7 @@ public class TestCreatorController {
     void returnToTestAttributes(ActionEvent event) throws IOException {
         // Handle any necessary logic before returning to Test Attributes
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/path/to/TestAttributes.fxml")); // Replace with the actual path
+                getClass().getResource("/TestAttributes.fxml"));
         Parent parent = loader.load();
         Scene testAttributesScene = new Scene(parent);
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();

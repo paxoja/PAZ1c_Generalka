@@ -10,10 +10,10 @@ public interface  TestDao {
     void updateTest(Test test) throws EntityNotFoundException;;
 
     // Delete a test by its ID
-    void deleteTest(int testId) throws EntityNotFoundException;;
+    void deleteTest(Long testId) throws EntityNotFoundException;;
 
     // Get a test by its ID
-    Test getTestById(int testId) throws EntityNotFoundException;;
+    Test getTestById(Long testId) throws EntityNotFoundException;;
 
     // Get all tests
     List<Test> getAllTests() throws EntityNotFoundException;;

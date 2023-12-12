@@ -3,17 +3,17 @@ package org.generalka.storage;
 public class User {
 
     // vytvorenie premennych podla tabulky User
-    private int id;
+    private long id;
     private boolean isAdmin;
     private String username;
     private String password;
 
     // getters + setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

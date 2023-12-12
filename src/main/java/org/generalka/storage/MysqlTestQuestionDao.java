@@ -18,11 +18,10 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
         return new RowMapper<TestQuestion>() {
             @Override
             public TestQuestion mapRow(ResultSet rs, int rowNum) throws SQLException {
-                int id = rs.getInt("id");
+                Long id = rs.getLong("id");
                 String question = rs.getString("question");
-                int testId = rs.getInt("Test_id");
+                Long testId = rs.getLong("Test_id");
 
-                // You may need to fetch the actual test from the database
                 Test test = new MysqlTestDao(jdbcTemplate).getTestById(testId);
 
                 return new TestQuestion(id, question, test, null);
@@ -43,13 +42,13 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
     }
 
     @Override
-    public void deleteTestQuestion(int testQuestionId) {
+    public void deleteTestQuestion(Long testQuestionId) {
         String sql = "DELETE FROM TestQuestion WHERE id=?";
         jdbcTemplate.update(sql, testQuestionId);
     }
 
     @Override
-    public TestQuestion getTestQuestionById(int testQuestionId) {
+    public TestQuestion getTestQuestionById(Long testQuestionId) {
         String sql = "SELECT * FROM TestQuestion WHERE id=?";
         return jdbcTemplate.queryForObject(sql, testQuestionRowMapper(), testQuestionId);
     }
@@ -61,7 +60,7 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
     }
 
     @Override
-    public List<TestQuestion> getTestQuestionsByTestId(int testId) {
+    public List<TestQuestion> getTestQuestionsByTestId(Long testId) {
         String sql = "SELECT * FROM TestQuestion WHERE Test_id = ?";
         return jdbcTemplate.query(sql, testQuestionRowMapper(), testId);
     }

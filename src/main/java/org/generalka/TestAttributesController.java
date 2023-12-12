@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.generalka.storage.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,35 +43,59 @@ public class TestAttributesController {
         @FXML
         private CheckBox wholeSemesterCheckBox;
 
+        private TestFxModel testFxModel;
+
+        private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
+
+        public TestAttributesController(){testFxModel = new TestFxModel();}
+
         @FXML
         private void initialize() {
+                descriptionTextField.textProperty().bindBidirectional(testFxModel.topicProperty());
+                wholeSemesterCheckBox.selectedProperty().bindBidirectional(testFxModel.isWholeSemesterProperty());
+
                 // Populate ComboBoxes with data
-                ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3, 4); // Add your actual years
+                ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3);
                 yearComboBox.setItems(years);
 
-                List<String> subjects = Arrays.asList("Subject A", "Subject B", "Subject C"); // Add your actual subjects
+                ObservableList<String> subjects = FXCollections.observableArrayList("UGR1", "NUM", "MZI", "UGR1", "SXM1", "PAZ1c", "OSY1", "DGS", "BDS1a", "MSU", "DSM3a");
                 subjectComboBox.getItems().addAll(subjects);
 
-                ObservableList<String> semesters = FXCollections.observableArrayList("Semester 1", "Semester 2"); // Add your actual semesters
+                ObservableList<String> semesters = FXCollections.observableArrayList("winter", "summer");
                 semesterComboBox.setItems(semesters);
         }
 
         @FXML
         void moveToCreateTest(ActionEvent event) throws IOException {
-                // Save test attributes to the database or perform any necessary logic
+                // Create a Test object with the entered attributes
+                Test test = new Test();
+                test.setTopic(descriptionTextField.getText());
+                test.setYearOfStudy(yearComboBox.getValue());
+                test.setSubject(subjectComboBox.getValue());
+                test.setSemester(semesterComboBox.getValue());
+                test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
 
-                // Move to the create test scene
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/CreateTest.fxml")); // Replace with the actual path
-                Parent parent = loader.load();
-                Scene createTestScene = new Scene(parent);
-                Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
-                stage.setScene(createTestScene);
+
+                try {
+                        // Save the test to the database
+                        testDao.saveTest(test);
+
+                        // Move to the create test scene
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
+                        Parent parent = loader.load();
+                        Scene createTestScene = new Scene(parent);
+                        Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
+                        stage.setScene(createTestScene);
+                } catch (EntityNotFoundException e) {
+
+                        e.printStackTrace();
+                }
         }
 
         @FXML
         private void returnToGeneralka() throws IOException {
                 // Move back to the Generalka scene
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/Generalka.fxml")); // Replace with the actual path
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
                 Parent parent = loader.load();
                 Scene generalkaScene = new Scene(parent);
                 Stage stage = (Stage) returnToGeneralkaButton.getScene().getWindow();

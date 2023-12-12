@@ -4,14 +4,14 @@ import java.util.Date;
 import java.util.Objects;
 
 public class TestHistory {
-    private int id;
+    private Long id;
     private int score;
     private String report;
     private Date date;
-    private Test test; // Test object representing the foreign key relationship
-    private User user; // User object representing the foreign key relationship
+    private Test test;
+    private User user;
 
-    public TestHistory(int id, int score, String report, Date date, Test test, User user) {
+    public TestHistory(Long id, int score, String report, Date date, Test test, User user) {
         this.id = id;
         this.score = score;
         this.report = report;
@@ -20,11 +20,11 @@ public class TestHistory {
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -68,5 +68,5 @@ public class TestHistory {
         this.user = user;
     }
 
-    // Constructors, getters, setters
+
 }

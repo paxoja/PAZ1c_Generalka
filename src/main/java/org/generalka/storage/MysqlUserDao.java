@@ -39,7 +39,7 @@ public class MysqlUserDao implements UserDao {
             }
         }, keyHolder);
 
-        int id = keyHolder.getKey().intValue();
+        long id = keyHolder.getKey().longValue();
         user.setId(id);
     }
 
@@ -53,5 +53,10 @@ public class MysqlUserDao implements UserDao {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Optional<User> getCurrentUser() {
+        return Optional.empty();
     }
 }
