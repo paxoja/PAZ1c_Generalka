@@ -35,7 +35,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Test` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(64) NOT NULL,
   `topic` VARCHAR(64) NOT NULL,
   `is_whole_semester` TINYINT NULL,
   `date` DATETIME NOT NULL,

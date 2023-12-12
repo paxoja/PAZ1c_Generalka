@@ -24,7 +24,7 @@ public class MysqlAnswerDao implements AnswerDao {
                 int questionId = rs.getInt("TestQuestion_id");
 
                 // You may need to fetch the actual test question from the database
-                TestQuestion testQuestion = new TestQuestion(questionId, null, null, null);
+                TestQuestion testQuestion = new MysqlTestQuestionDao(jdbcTemplate).getTestQuestionById(questionId);
 
                 return new Answer(id, answer, isCorrect, testQuestion);
             }
@@ -35,6 +35,30 @@ public class MysqlAnswerDao implements AnswerDao {
     public void saveAnswer(Answer answer) {
         String sql = "INSERT INTO Answer (answer, is_correct, TestQuestion_id) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, answer.getAnswer(), answer.getIsCorrect(), answer.getTestQuestion().getId());
+    }
+
+    @Override
+    public void updateAnswer(Answer answer) {
+        String sql = "UPDATE Answer SET answer=?, is_correct=?, TestQuestion_id=? WHERE id=?";
+        jdbcTemplate.update(sql, answer.getAnswer(), answer.getIsCorrect(), answer.getTestQuestion().getId(), answer.getId());
+    }
+
+    @Override
+    public void deleteAnswer(int answerId) {
+        String sql = "DELETE FROM Answer WHERE id=?";
+        jdbcTemplate.update(sql, answerId);
+    }
+
+    @Override
+    public Answer getAnswerById(int answerId) {
+        String sql = "SELECT * FROM Answer WHERE id=?";
+        return jdbcTemplate.queryForObject(sql, answerRowMapper(), answerId);
+    }
+
+    @Override
+    public List<Answer> getAllAnswers() {
+        String sql = "SELECT * FROM Answer";
+        return jdbcTemplate.query(sql, answerRowMapper());
     }
 
     @Override

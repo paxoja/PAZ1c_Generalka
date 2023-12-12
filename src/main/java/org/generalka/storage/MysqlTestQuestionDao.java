@@ -23,7 +23,7 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
                 int testId = rs.getInt("Test_id");
 
                 // You may need to fetch the actual test from the database
-                Test test = new Test(testId, null, false, null, null, null, null);
+                Test test = new MysqlTestDao(jdbcTemplate).getTestById(testId);
 
                 return new TestQuestion(id, question, test, null);
             }
@@ -34,6 +34,30 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
     public void saveTestQuestion(TestQuestion testQuestion) {
         String sql = "INSERT INTO TestQuestion (question, Test_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, testQuestion.getQuestion(), testQuestion.getTest().getId());
+    }
+
+    @Override
+    public void updateTestQuestion(TestQuestion testQuestion) {
+        String sql = "UPDATE TestQuestion SET question=?, Test_id=? WHERE id=?";
+        jdbcTemplate.update(sql, testQuestion.getQuestion(), testQuestion.getTest().getId(), testQuestion.getId());
+    }
+
+    @Override
+    public void deleteTestQuestion(int testQuestionId) {
+        String sql = "DELETE FROM TestQuestion WHERE id=?";
+        jdbcTemplate.update(sql, testQuestionId);
+    }
+
+    @Override
+    public TestQuestion getTestQuestionById(int testQuestionId) {
+        String sql = "SELECT * FROM TestQuestion WHERE id=?";
+        return jdbcTemplate.queryForObject(sql, testQuestionRowMapper(), testQuestionId);
+    }
+
+    @Override
+    public List<TestQuestion> getAllTestQuestions() {
+        String sql = "SELECT * FROM TestQuestion";
+        return jdbcTemplate.query(sql, testQuestionRowMapper());
     }
 
     @Override

@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class TestCreatorController {
 
     @FXML
@@ -38,7 +36,6 @@ public class TestCreatorController {
     private TestQuestionDao testQuestionDao = DaoFactory.INSTANCE.getTestQuestionDao();
     private AnswerDao answerDao = DaoFactory.INSTANCE.getAnswerDao();
 
-
     @FXML
     private void handleSubmit() {
         // Save question and answers to the database
@@ -57,9 +54,9 @@ public class TestCreatorController {
 
             // Check if the current answer is marked as correct by the user
             if (option.equalsIgnoreCase(correctAnswerTextField.getText())) {
-                answer.setCorrect(true);
+                answer.setIsCorrect(true);
             } else {
-                answer.setCorrect(false);
+                answer.setIsCorrect(false);
             }
 
             answerDao.saveAnswer(answer);
@@ -81,8 +78,9 @@ public class TestCreatorController {
 
     @FXML
     void returnToTestAttributes(ActionEvent event) throws IOException {
+        // Handle any necessary logic before returning to Test Attributes
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/TestAttributes.fxml"));
+                getClass().getResource("/path/to/TestAttributes.fxml")); // Replace with the actual path
         Parent parent = loader.load();
         Scene testAttributesScene = new Scene(parent);
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();

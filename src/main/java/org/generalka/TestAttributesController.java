@@ -1,29 +1,25 @@
 package org.generalka;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.generalka.storage.DaoFactory;
-import org.generalka.storage.Subject;
-import org.generalka.storage.SubjectDao;
-import org.generalka.storage.Test;
-import org.generalka.storage.TestDao;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
-
 public class TestAttributesController {
-
-        @FXML
-        private TextField descriptionTextField;
 
         @FXML
         private Button moveToCreateTestButton;
@@ -32,46 +28,39 @@ public class TestAttributesController {
         private Button returnToGeneralkaButton;
 
         @FXML
-        private ComboBox<Subject> semesterComboBox;
+        private TextField descriptionTextField;
 
         @FXML
-        private ComboBox<Subject> subjectComboBox;
+        private ComboBox<Integer> yearComboBox;
+
+        @FXML
+        private ComboBox<String> subjectComboBox;
+
+        @FXML
+        private ComboBox<String> semesterComboBox;
 
         @FXML
         private CheckBox wholeSemesterCheckBox;
 
         @FXML
-        private ComboBox<Integer> yearComboBox;
-
-        private SubjectDao subjectDao = DaoFactory.INSTANCE.getSubjectDao();
-        private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
-
-        @FXML
         private void initialize() {
-                // Populate ComboBoxes with data from the database
-                List<Subject> subjects = subjectDao.getAllSubjects();
+                // Populate ComboBoxes with data
+                ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3, 4); // Add your actual years
+                yearComboBox.setItems(years);
+
+                List<String> subjects = Arrays.asList("Subject A", "Subject B", "Subject C"); // Add your actual subjects
                 subjectComboBox.getItems().addAll(subjects);
-                semesterComboBox.getItems().addAll(subjects);
-                yearComboBox.getItems().addAll(/* Fetch years from database */);
+
+                ObservableList<String> semesters = FXCollections.observableArrayList("Semester 1", "Semester 2"); // Add your actual semesters
+                semesterComboBox.setItems(semesters);
         }
 
         @FXML
         void moveToCreateTest(ActionEvent event) throws IOException {
-                // Save test attributes to the database
-                Subject selectedSubject = subjectComboBox.getValue();
+                // Save test attributes to the database or perform any necessary logic
 
-                Test test = new Test();
-                test.setTopic(descriptionTextField.getText());
-                test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
-                test.setSubject(selectedSubject);
-                // Set yearOfStudy directly from the selected Subject
-                test.setYearOfStudy(selectedSubject.getYearOfStudy());
-
-                testDao.saveTest(test);
-
-                // Move to the next scene
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/TestCreator.fxml"));
+                // Move to the create test scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/CreateTest.fxml")); // Replace with the actual path
                 Parent parent = loader.load();
                 Scene createTestScene = new Scene(parent);
                 Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
@@ -80,15 +69,11 @@ public class TestAttributesController {
 
         @FXML
         private void returnToGeneralka() throws IOException {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/generalka.fxml"));
+                // Move back to the Generalka scene
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/Generalka.fxml")); // Replace with the actual path
                 Parent parent = loader.load();
                 Scene generalkaScene = new Scene(parent);
                 Stage stage = (Stage) returnToGeneralkaButton.getScene().getWindow();
                 stage.setScene(generalkaScene);
         }
 }
-
-
-
-

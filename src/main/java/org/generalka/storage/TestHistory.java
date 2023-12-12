@@ -4,18 +4,12 @@ import java.util.Date;
 import java.util.Objects;
 
 public class TestHistory {
-
     private int id;
-
     private int score;
-
     private String report;
-
     private Date date;
-
-    private Test test;
-
-    private User user;
+    private Test test; // Test object representing the foreign key relationship
+    private User user; // User object representing the foreign key relationship
 
     public TestHistory(int id, int score, String report, Date date, Test test, User user) {
         this.id = id;
@@ -74,31 +68,5 @@ public class TestHistory {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "TestHistory{" +
-                "id=" + id +
-                ", score=" + score +
-                ", report='" + report + '\'' +
-                ", date=" + date +
-                ", test=" + test +
-                ", user=" + user +
-                '}';
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        TestHistory other = (TestHistory) obj;
-        return Objects.equals(id, other.id);
-    }
+    // Constructors, getters, setters
 }

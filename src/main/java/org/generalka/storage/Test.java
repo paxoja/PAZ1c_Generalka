@@ -1,38 +1,32 @@
 package org.generalka.storage;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Date;
 
 public class Test {
-
     private int id;
-
+    private String name;
     private String topic;
-
     private boolean isWholeSemester;
-
     private Date date;
-
-    private Subject subject;
-
-    private User user;
+    private String subject;
+    private int semester;
     private int yearOfStudy;
+    private User user; // User object representing the foreign key relationship
 
-    private List<TestQuestion> testQuestions;
+    // Constructors, getters, setters
 
-    public Test(){
-
-    }
-
-    public Test(int id, String topic, boolean isWholeSemester, Date date, Subject subject, User user, List<TestQuestion> testQuestions) {
+    public Test(int id, String name, String topic, boolean isWholeSemester, Date date, String subject, int semester, int yearOfStudy, User user) {
         this.id = id;
+        this.name = name;
         this.topic = topic;
         this.isWholeSemester = isWholeSemester;
         this.date = date;
         this.subject = subject;
+        this.semester = semester;
+        this.yearOfStudy = yearOfStudy;
         this.user = user;
-        this.testQuestions = testQuestions;
     }
 
     public int getId() {
@@ -41,6 +35,14 @@ public class Test {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTopic() {
@@ -67,28 +69,20 @@ public class Test {
         this.date = date;
     }
 
-    public Subject getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    public User getUser() {
-        return user;
+    public int getSemester() {
+        return semester;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<TestQuestion> getTestQuestions() {
-        return testQuestions;
-    }
-
-    public void setTestQuestions(List<TestQuestion> testQuestions) {
-        this.testQuestions = testQuestions;
+    public void setSemester(int semester) {
+        this.semester = semester;
     }
 
     public int getYearOfStudy() {
@@ -99,34 +93,26 @@ public class Test {
         this.yearOfStudy = yearOfStudy;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public String toString() {
         return "Test{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
                 ", topic='" + topic + '\'' +
                 ", isWholeSemester=" + isWholeSemester +
                 ", date=" + date +
-                ", subject=" + subject +
+                ", subject='" + subject + '\'' +
+                ", semester=" + semester +
+                ", yearOfStudy=" + yearOfStudy +
                 ", user=" + user +
-                ", testQuestions=" + testQuestions +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Test other = (Test) obj;
-        return Objects.equals(id, other.id);
     }
 }

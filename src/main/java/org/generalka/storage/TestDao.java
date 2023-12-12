@@ -2,8 +2,21 @@ package org.generalka.storage;
 
 import java.util.List;
 
-public interface TestDao {
-    void saveTest(Test test);
-    List<Test> getAllTests();
-}
+public interface  TestDao {
 
+    void saveTest(Test test) throws EntityNotFoundException;;
+
+    // Update an existing test
+    void updateTest(Test test) throws EntityNotFoundException;;
+
+    // Delete a test by its ID
+    void deleteTest(int testId) throws EntityNotFoundException;;
+
+    // Get a test by its ID
+    Test getTestById(int testId) throws EntityNotFoundException;;
+
+    // Get all tests
+    List<Test> getAllTests() throws EntityNotFoundException;;
+
+
+}
