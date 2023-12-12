@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Subject {
 
-    private Long id;
+    private int id;
 
     private String subject;
 
@@ -12,18 +12,18 @@ public class Subject {
 
     private int yearOfStudy;
 
-    public Subject(Long id, String subject, int semester, int yearOfStudy) {
+    public Subject(int id, String subject, int semester, int yearOfStudy) {
         this.id = id;
         this.subject = subject;
         this.semester = semester;
         this.yearOfStudy = yearOfStudy;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -10,17 +10,22 @@ public class Test {
 
     private String topic;
 
-    private int isWholeSemester;
+    private boolean isWholeSemester;
 
     private Date date;
 
     private Subject subject;
 
     private User user;
+    private int yearOfStudy;
 
     private List<TestQuestion> testQuestions;
 
-    public Test(int id, String topic, int isWholeSemester, Date date, Subject subject, User user, List<TestQuestion> testQuestions) {
+    public Test(){
+
+    }
+
+    public Test(int id, String topic, boolean isWholeSemester, Date date, Subject subject, User user, List<TestQuestion> testQuestions) {
         this.id = id;
         this.topic = topic;
         this.isWholeSemester = isWholeSemester;
@@ -46,11 +51,11 @@ public class Test {
         this.topic = topic;
     }
 
-    public int getIsWholeSemester() {
+    public boolean getIsWholeSemester() {
         return isWholeSemester;
     }
 
-    public void setIsWholeSemester(int isWholeSemester) {
+    public void setIsWholeSemester(boolean isWholeSemester) {
         this.isWholeSemester = isWholeSemester;
     }
 
@@ -85,6 +90,15 @@ public class Test {
     public void setTestQuestions(List<TestQuestion> testQuestions) {
         this.testQuestions = testQuestions;
     }
+
+    public int getYearOfStudy() {
+        return yearOfStudy;
+    }
+
+    public void setYearOfStudy(int yearOfStudy) {
+        this.yearOfStudy = yearOfStudy;
+    }
+
 
     @Override
     public String toString() {

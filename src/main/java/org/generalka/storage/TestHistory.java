@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class TestHistory {
 
-    private Long id;
+    private int id;
 
     private int score;
 
@@ -17,7 +17,7 @@ public class TestHistory {
 
     private User user;
 
-    public TestHistory(Long id, int score, String report, Date date, Test test, User user) {
+    public TestHistory(int id, int score, String report, Date date, Test test, User user) {
         this.id = id;
         this.score = score;
         this.report = report;
@@ -26,11 +26,11 @@ public class TestHistory {
         this.user = user;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

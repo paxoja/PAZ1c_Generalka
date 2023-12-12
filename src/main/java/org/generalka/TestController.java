@@ -24,6 +24,13 @@ public class TestController {
         loadQuestionAndAnswers();
     }
 
+    // Set questions and answer options
+    public void setQuestionsAndAnswers(List<String> questions, List<List<String>> answerOptions) {
+        this.questions = questions;
+        this.answerOptions = answerOptions;
+        loadQuestionAndAnswers();
+    }
+
     private void loadQuestionAndAnswers() {
         if (currentQuestionIndex < questions.size()) {
             // naloadujeme otazku

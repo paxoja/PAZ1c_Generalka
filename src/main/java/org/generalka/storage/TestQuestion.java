@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class TestQuestion {
 
-    private Long id;
+    private int id;
 
     private String question;
 
@@ -13,18 +13,22 @@ public class TestQuestion {
 
     private List<Answer> answers;
 
-    public TestQuestion(Long id, String question, Test test, List<Answer> answers) {
+    public TestQuestion(){
+
+    }
+
+    public TestQuestion(int id, String question, Test test, List<Answer> answers) {
         this.id = id;
         this.question = question;
         this.test = test;
         this.answers = answers;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

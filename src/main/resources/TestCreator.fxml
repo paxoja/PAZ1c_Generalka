@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
     <children>
         <VBox alignment="CENTER" layoutX="66.0" prefHeight="343.0" prefWidth="469.0" spacing="10.0">
             <children>
@@ -16,7 +16,7 @@
                 <Label text="Enter answer options (comma-separated):" />
                 <TextField fx:id="answersTextField" promptText="Option 1, Option 2, Option 3, ..." />
                 <Label text="Select correct answers:" />
-            <TextField fx:id="answersTextField1" promptText="Option 1, Option 2, Option 3, ..." />
+            <TextField fx:id="correctAnswerTextField" promptText="Option 1, Option 2, Option 3, ..." />
                 <VBox fx:id="checkBoxContainer" />
             </children>
         </VBox>

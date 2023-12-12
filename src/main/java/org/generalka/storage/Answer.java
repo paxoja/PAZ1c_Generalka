@@ -4,26 +4,30 @@ import java.util.Objects;
 
 public class Answer {
 
-    private Long id;
+    private int id;
 
     private String answer;
 
-    private int isCorrect;
+    private Boolean isCorrect;
 
     private TestQuestion testQuestion;
 
-    public Answer(Long id, String answer, int isCorrect, TestQuestion testQuestion) {
+    public Answer(){
+
+    }
+
+    public Answer(int id, String answer, boolean isCorrect, TestQuestion testQuestion) {
         this.id = id;
         this.answer = answer;
         this.isCorrect = isCorrect;
         this.testQuestion = testQuestion;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,11 +39,11 @@ public class Answer {
         this.answer = answer;
     }
 
-    public int getIsCorrect() {
+    public boolean getIsCorrect() {
         return isCorrect;
     }
 
-    public void setIsCorrect(int isCorrect) {
+    public void setCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
 

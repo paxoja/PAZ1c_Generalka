@@ -12,6 +12,10 @@ public enum DaoFactory {
     INSTANCE;
 
     private UserDao userDao;
+    private TestDao testDao;
+    private TestQuestionDao testQuestionDao;
+    private AnswerDao answerDao;
+    private SubjectDao subjectDao;
     private JdbcTemplate jdbcTemplate;
 
     private JdbcTemplate getJdbcTemplate() {
@@ -29,5 +33,29 @@ public enum DaoFactory {
         if (userDao == null)
             userDao = new MysqlUserDao(getJdbcTemplate());
         return userDao;
+    }
+
+    public TestDao getTestDao() {
+        if (testDao == null)
+            testDao = new MysqlTestDao(getJdbcTemplate());
+        return testDao;
+    }
+
+    public TestQuestionDao getTestQuestionDao() {
+        if (testQuestionDao == null)
+            testQuestionDao = new MysqlTestQuestionDao(getJdbcTemplate());
+        return testQuestionDao;
+    }
+
+    public AnswerDao getAnswerDao() {
+        if (answerDao == null)
+            answerDao = new MysqlAnswerDao(getJdbcTemplate());
+        return answerDao;
+    }
+
+    public SubjectDao getSubjectDao() {
+        if (subjectDao == null)
+            subjectDao = new MysqlSubjectDao(getJdbcTemplate());
+        return subjectDao;
     }
 }
