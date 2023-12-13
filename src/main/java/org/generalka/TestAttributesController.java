@@ -19,6 +19,7 @@ import org.generalka.storage.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class TestAttributesController {
 
@@ -67,7 +68,7 @@ public class TestAttributesController {
 
         @FXML
         void moveToCreateTest(ActionEvent event) throws IOException {
-                // Create a Test object with the entered attributes
+                // vytvarame test, nastavujeme setters
                 Test test = new Test();
                 test.setTopic(descriptionTextField.getText());
                 test.setYearOfStudy(yearComboBox.getValue());
@@ -75,23 +76,36 @@ public class TestAttributesController {
                 test.setSemester(semesterComboBox.getValue());
                 test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
 
+                // retrievneme current user z UserDao, opat pomocou Optional
+                UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+                Optional<User> currentUser = userDao.getCurrentUser();
 
-                try {
-                        // Save the test to the database
-                        testDao.saveTest(test);
+                // pozrieme ci mame usera
+                if (currentUser.isPresent()) {
+                        // setUser ak mame usera
+                        test.setUser(currentUser.get());
 
-                        // Move to the create test scene
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
-                        Parent parent = loader.load();
-                        Scene createTestScene = new Scene(parent);
-                        Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
-                        stage.setScene(createTestScene);
-                } catch (EntityNotFoundException e) {
+                        try {
+                                // test sa ulozi do databazy
+                                testDao.saveTest(test);
 
-                        e.printStackTrace();
+                                // prechod do createTestScene
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
+                                Parent parent = loader.load();
+                                Scene createTestScene = new Scene(parent);
+                                Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
+                                stage.setScene(createTestScene);
+                        } catch (EntityNotFoundException e) {
+                                e.printStackTrace();
+                        }
+                }
+                else {
+                        System.err.println("No current user found");
                 }
         }
 
+
+        // return button do main screenu
         @FXML
         private void returnToGeneralka() throws IOException {
                 // Move back to the Generalka scene

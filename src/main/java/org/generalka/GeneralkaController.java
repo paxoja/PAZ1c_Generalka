@@ -5,9 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.generalka.storage.DaoFactory;
+import org.generalka.storage.User;
+import org.generalka.storage.UserDao;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class GeneralkaController {
 
@@ -23,7 +28,22 @@ public class GeneralkaController {
     @FXML
     private Button moveToTakeTestButton;
 
+    @FXML
+    private Label loggedInUserLabel; // na menenie mena v generalke
 
+    // z DaoFactory volame pomocou instance userDao
+    private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+
+    // po loadnuti FXML ziskame current user z Dao, ak mame pouzivatela tak nastavi jeho username
+    // pouzivame Optional, co zisti pritomnost objektu cez get
+    @FXML
+    private void initialize() {
+        Optional<User> currentUser = userDao.getCurrentUser();
+        if (currentUser.isPresent()) {
+            User user = currentUser.get();
+            loggedInUserLabel.setText(user.getUsername() + "!");
+        }
+    }
 
     @FXML
     private void moveToProfile() throws IOException {

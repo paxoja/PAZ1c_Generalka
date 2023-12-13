@@ -65,7 +65,7 @@ public class LoginController {
             User user = userOptional.get();
             if (enteredPassword.equals(user.getPassword())) {
                 wrongLogIn.setText("Login successful!");
-
+                userDao.setCurrentUser(user);
                 openGeneralkaScreen();
             } else {
                 wrongLogIn.setText("Wrong password!");

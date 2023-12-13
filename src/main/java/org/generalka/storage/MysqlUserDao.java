@@ -15,6 +15,7 @@ import java.util.Optional;
 public class MysqlUserDao implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
+    private User currentUser; // na ulozenie current user
 
     public MysqlUserDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -57,6 +58,11 @@ public class MysqlUserDao implements UserDao {
 
     @Override
     public Optional<User> getCurrentUser() {
-        return Optional.empty();
+        return Optional.ofNullable(currentUser);
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
     }
 }
