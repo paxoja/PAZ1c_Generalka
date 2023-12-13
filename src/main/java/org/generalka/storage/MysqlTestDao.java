@@ -19,7 +19,7 @@ public class MysqlTestDao implements TestDao {
         return new RowMapper<Test>() {
             @Override
             public Test mapRow(ResultSet rs, int rowNum) throws SQLException {
-                long id = rs.getInt("id");
+                long id = rs.getLong("id");
                 String topic = rs.getString("topic");
                 boolean isWholeSemester = rs.getBoolean("is_whole_semester");
                 Timestamp date = rs.getTimestamp("date");
@@ -48,10 +48,13 @@ public class MysqlTestDao implements TestDao {
         Objects.requireNonNull(test.getUser(), "Test user cannot be null");
         Objects.requireNonNull(test.getUser().getId(), "User ID cannot be null");
 
-
-
         if (test.getId() == null) { // INSERT
             String sql = "INSERT INTO Test (topic, is_whole_semester, date, subject, semester, year_of_study, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            // Debug information
+            System.out.println("Generated SQL for INSERT: " + sql);
+            System.out.println("Test object: " + test);
+
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(con -> {
                 PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -68,6 +71,11 @@ public class MysqlTestDao implements TestDao {
             test.setId(id);
         } else {    // UPDATE
             String sql = "UPDATE Test SET topic=?, is_whole_semester=?, date=?, subject=?, semester=?, year_of_study=?, user_id=? WHERE id=?";
+
+            // Debug information
+            System.out.println("Generated SQL for UPDATE: " + sql);
+            System.out.println("Test object: " + test);
+
             jdbcTemplate.update(
                     sql,
                     test.getTopic(),
@@ -81,6 +89,7 @@ public class MysqlTestDao implements TestDao {
             );
         }
     }
+
 
     @Override
     public void deleteTest(Long testId) {
