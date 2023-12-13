@@ -22,10 +22,7 @@ public class TestCreatorController {
     private TextField answersTextField;
 
     @FXML
-    private TextField correctAnswerTextField;  // Add this field
-
-    @FXML
-    private VBox checkBoxContainer;
+    private TextField correctAnswerTextField;
 
     @FXML
     private TextField questionTextField;
@@ -66,14 +63,6 @@ public class TestCreatorController {
 
         testQuestion.setAnswers(answers);
 
-        // Clear previous checkboxes
-        checkBoxContainer.getChildren().clear();
-
-        // Create new checkboxes based on user input
-        for (Answer answer : answers) {
-            CheckBox checkBox = new CheckBox(answer.getAnswer());
-            checkBoxContainer.getChildren().add(checkBox);
-        }
     }
 
     @FXML

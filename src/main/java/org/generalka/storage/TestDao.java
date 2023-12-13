@@ -6,9 +6,6 @@ public interface  TestDao {
 
     void saveTest(Test test) throws EntityNotFoundException;;
 
-    // Update an existing test
-    void updateTest(Test test) throws EntityNotFoundException;;
-
     // Delete a test by its ID
     void deleteTest(Long testId) throws EntityNotFoundException;;
 

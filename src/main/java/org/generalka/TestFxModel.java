@@ -5,13 +5,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.generalka.storage.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class TestFxModel {
     long id;
     private StringProperty topic = new SimpleStringProperty();
     private BooleanProperty isWholeSemester = new SimpleBooleanProperty();
-    private ObjectProperty<Date> date = new SimpleObjectProperty<>();
+    private ObjectProperty<Timestamp> date = new SimpleObjectProperty<>();
     private StringProperty subject = new SimpleStringProperty();
     private StringProperty semester = new SimpleStringProperty();
     private IntegerProperty yearOfStudy = new SimpleIntegerProperty();
@@ -65,15 +66,15 @@ public class TestFxModel {
         this.isWholeSemester.set(isWholeSemester);
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date.get();
     }
 
-    public ObjectProperty<Date> dateProperty() {
+    public ObjectProperty<Timestamp> dateProperty() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date.set(date);
     }
 

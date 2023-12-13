@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import java.sql.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class MysqlTestDao implements TestDao {
                 long id = rs.getInt("id");
                 String topic = rs.getString("topic");
                 boolean isWholeSemester = rs.getBoolean("is_whole_semester");
-                Date date = rs.getTimestamp("date");
+                Timestamp date = rs.getTimestamp("date");
                 String subject = rs.getString("subject");
                 String semester = rs.getString("semester");
                 int yearOfStudy = rs.getInt("year_of_study");
@@ -47,6 +46,9 @@ public class MysqlTestDao implements TestDao {
         Objects.requireNonNull(test.getSemester(), "Test semester cannot be null");
         Objects.requireNonNull(test.getYearOfStudy(), "Test year of study cannot be null");
         Objects.requireNonNull(test.getUser(), "Test user cannot be null");
+        Objects.requireNonNull(test.getUser().getId(), "User ID cannot be null");
+
+
 
         if (test.getId() == null) { // INSERT
             String sql = "INSERT INTO Test (topic, is_whole_semester, date, subject, semester, year_of_study, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -55,7 +57,7 @@ public class MysqlTestDao implements TestDao {
                 PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, test.getTopic());
                 statement.setBoolean(2, test.getIsWholeSemester());
-                statement.setTimestamp(3, new Timestamp(test.getDate().getTime()));
+                statement.setTimestamp(3, test.getDate());
                 statement.setString(4, test.getSubject());
                 statement.setString(5, test.getSemester());
                 statement.setInt(6, test.getYearOfStudy());
@@ -78,22 +80,6 @@ public class MysqlTestDao implements TestDao {
                     test.getId()
             );
         }
-    }
-
-    @Override
-    public void updateTest(Test test) {
-        String sql = "UPDATE Test SET topic=?, is_whole_semester=?, date=?, subject=?, semester=?, year_of_study=?, user_id=? WHERE id=?";
-        jdbcTemplate.update(
-                sql,
-                test.getTopic(),
-                test.getIsWholeSemester(),
-                test.getDate(),
-                test.getSubject(),
-                test.getSemester(),
-                test.getYearOfStudy(),
-                (test.getUser() != null) ? test.getUser().getId() : null,
-                test.getId()
-        );
     }
 
     @Override
