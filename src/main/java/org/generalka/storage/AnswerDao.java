@@ -7,9 +7,6 @@ public interface AnswerDao {
     // Save a new answer
     void saveAnswer(Answer answer) throws EntityNotFoundException;;
 
-    // Update an existing answer
-    void updateAnswer(Answer answer) throws EntityNotFoundException;;
-
     // Delete an answer by its ID
     void deleteAnswer(Long answerId) throws EntityNotFoundException;;
 

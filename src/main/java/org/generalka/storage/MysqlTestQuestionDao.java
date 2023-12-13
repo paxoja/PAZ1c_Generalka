@@ -2,10 +2,14 @@ package org.generalka.storage;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 public class MysqlTestQuestionDao implements TestQuestionDao {
     private JdbcTemplate jdbcTemplate;
@@ -31,14 +35,33 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
 
     @Override
     public void saveTestQuestion(TestQuestion testQuestion) {
-        String sql = "INSERT INTO TestQuestion (question, Test_id) VALUES (?, ?)";
-        jdbcTemplate.update(sql, testQuestion.getQuestion(), testQuestion.getTest().getId());
-    }
+        Objects.requireNonNull(testQuestion, "TestQuestion cannot be null");
+        Objects.requireNonNull(testQuestion.getQuestion(), "Question text cannot be null");
+        Objects.requireNonNull(testQuestion.getTest(), "Test cannot be null");
+        Objects.requireNonNull(testQuestion.getTest().getId(), "Test ID cannot be null");
 
-    @Override
-    public void updateTestQuestion(TestQuestion testQuestion) {
-        String sql = "UPDATE TestQuestion SET question=?, Test_id=? WHERE id=?";
-        jdbcTemplate.update(sql, testQuestion.getQuestion(), testQuestion.getTest().getId(), testQuestion.getId());
+        if (testQuestion.getId() == null) { // INSERT
+            String sql = "INSERT INTO TestQuestion (question, Test_id) VALUES (?, ?)";
+
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(con -> {
+                PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, testQuestion.getQuestion());
+                statement.setLong(2, testQuestion.getTest().getId());
+                return statement;
+            }, keyHolder);
+            long id = keyHolder.getKey().longValue();
+            testQuestion.setId(id);
+        } else {    // UPDATE
+            String sql = "UPDATE TestQuestion SET question=?, Test_id=? WHERE id=?";
+
+            jdbcTemplate.update(
+                    sql,
+                    testQuestion.getQuestion(),
+                    testQuestion.getTest().getId(),
+                    testQuestion.getId()
+            );
+        }
     }
 
     @Override

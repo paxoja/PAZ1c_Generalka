@@ -68,7 +68,9 @@ public class TestCreatorController {
         testQuestion.setQuestion(questionTextField.getText());
         testQuestion.setTest(currentTest);
 
-        String[] answerOptions = answersTextField.getText().split(",\\s*");
+        testQuestionDao.saveTestQuestion(testQuestion);
+
+        String[] answerOptions = answersTextField.getText().split("\\s*,\\s*");
         List<Answer> answers = new ArrayList<>();
 
         for (String option : answerOptions) {
@@ -83,11 +85,13 @@ public class TestCreatorController {
 
             answer.setTestQuestion(testQuestion);
             answers.add(answer);
+
+            // Save the answer to the database
+            answerDao.saveAnswer(answer);
         }
 
         testQuestion.setAnswers(answers);
 
-        testQuestionDao.saveTestQuestion(testQuestion);
 
         return testQuestion;
     }

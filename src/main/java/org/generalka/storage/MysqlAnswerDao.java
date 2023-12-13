@@ -2,10 +2,14 @@ package org.generalka.storage;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 public class MysqlAnswerDao implements AnswerDao {
     private JdbcTemplate jdbcTemplate;
@@ -32,15 +36,43 @@ public class MysqlAnswerDao implements AnswerDao {
 
     @Override
     public void saveAnswer(Answer answer) {
-        String sql = "INSERT INTO Answer (answer, is_correct, TestQuestion_id) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, answer.getAnswer(), answer.getIsCorrect(), answer.getTestQuestion().getId());
+
+        try {
+        Objects.requireNonNull(answer, "Answer cannot be null");
+        Objects.requireNonNull(answer.getAnswer(), "Answer text cannot be null");
+        Objects.requireNonNull(answer.getTestQuestion(), "TestQuestion cannot be null");
+        Objects.requireNonNull(answer.getTestQuestion().getId(), "TestQuestion ID cannot be null");
+
+        if (answer.getId() == null) { // INSERT
+            String sql = "INSERT INTO Answer (answer, is_correct, TestQuestion_id) VALUES (?, ?, ?)";
+
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbcTemplate.update(con -> {
+                PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, answer.getAnswer());
+                statement.setBoolean(2, answer.getIsCorrect());
+                statement.setLong(3, answer.getTestQuestion().getId());
+                return statement;
+            }, keyHolder);
+            long id = keyHolder.getKey().longValue();
+            answer.setId(id);
+        } else {    // UPDATE
+            String sql = "UPDATE Answer SET answer=?, is_correct=?, TestQuestion_id=? WHERE id=?";
+
+            jdbcTemplate.update(
+                    sql,
+                    answer.getAnswer(),
+                    answer.getIsCorrect(),
+                    answer.getTestQuestion().getId(),
+                    answer.getId()
+            );
+        }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void updateAnswer(Answer answer) {
-        String sql = "UPDATE Answer SET answer=?, is_correct=?, TestQuestion_id=? WHERE id=?";
-        jdbcTemplate.update(sql, answer.getAnswer(), answer.getIsCorrect(), answer.getTestQuestion().getId(), answer.getId());
-    }
 
     @Override
     public void deleteAnswer(Long answerId) {
