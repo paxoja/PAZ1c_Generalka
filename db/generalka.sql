@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Test` (
   `is_whole_semester` TINYINT NULL,
   `date` DATETIME NOT NULL,
   `subject` VARCHAR(64) NOT NULL,
-  `semester` INT NOT NULL,
+  `semester` VARCHAR(10) NOT NULL,
   `year_of_study` INT NOT NULL,
   `User_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),

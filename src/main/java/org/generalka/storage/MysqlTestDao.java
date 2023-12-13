@@ -51,9 +51,6 @@ public class MysqlTestDao implements TestDao {
         if (test.getId() == null) { // INSERT
             String sql = "INSERT INTO Test (topic, is_whole_semester, date, subject, semester, year_of_study, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            // Debug information
-            System.out.println("Generated SQL for INSERT: " + sql);
-            System.out.println("Test object: " + test);
 
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(con -> {
@@ -72,9 +69,6 @@ public class MysqlTestDao implements TestDao {
         } else {    // UPDATE
             String sql = "UPDATE Test SET topic=?, is_whole_semester=?, date=?, subject=?, semester=?, year_of_study=?, user_id=? WHERE id=?";
 
-            // Debug information
-            System.out.println("Generated SQL for UPDATE: " + sql);
-            System.out.println("Test object: " + test);
 
             jdbcTemplate.update(
                     sql,

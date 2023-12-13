@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import org.generalka.storage.*;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +76,7 @@ public class TestAttributesController {
                 test.setSubject(subjectComboBox.getValue());
                 test.setSemester(semesterComboBox.getValue());
                 test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
+                test.setDate(new Timestamp(System.currentTimeMillis()));
 
                 // retrievneme current user z UserDao, opat pomocou Optional
                 UserDao userDao = DaoFactory.INSTANCE.getUserDao();
