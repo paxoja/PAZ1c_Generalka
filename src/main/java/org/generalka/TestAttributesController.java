@@ -45,18 +45,19 @@ public class TestAttributesController {
         @FXML
         private CheckBox wholeSemesterCheckBox;
 
-        private TestFxModel testFxModel;
-
         private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
 
-        public TestAttributesController(){testFxModel = new TestFxModel();}
+        private TestFxModel testFxModel;
+
+        public TestAttributesController() {
+                testFxModel = new TestFxModel();
+        }
 
         @FXML
         private void initialize() {
                 descriptionTextField.textProperty().bindBidirectional(testFxModel.topicProperty());
                 wholeSemesterCheckBox.selectedProperty().bindBidirectional(testFxModel.isWholeSemesterProperty());
 
-                // Populate ComboBoxes with data
                 ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3);
                 yearComboBox.setItems(years);
 
@@ -69,7 +70,20 @@ public class TestAttributesController {
 
         @FXML
         void moveToCreateTest(ActionEvent event) throws IOException {
-                // vytvarame test, nastavujeme setters
+                Test test = createTest();
+
+                if (test != null) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
+                        Parent parent = loader.load();
+                        TestCreatorController testCreatorController = loader.getController();
+                        testCreatorController.setTest(test);
+                        Scene createTestScene = new Scene(parent);
+                        Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
+                        stage.setScene(createTestScene);
+                }
+        }
+
+        private Test createTest() {
                 Test test = new Test();
                 test.setTopic(descriptionTextField.getText());
                 test.setYearOfStudy(yearComboBox.getValue());
@@ -78,39 +92,26 @@ public class TestAttributesController {
                 test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
                 test.setDate(new Timestamp(System.currentTimeMillis()));
 
-                // retrievneme current user z UserDao, opat pomocou Optional
                 UserDao userDao = DaoFactory.INSTANCE.getUserDao();
                 Optional<User> currentUser = userDao.getCurrentUser();
 
-                // pozrieme ci mame usera
                 if (currentUser.isPresent()) {
-                        // setUser ak mame usera
                         test.setUser(currentUser.get());
-
                         try {
-                                // test sa ulozi do databazy
                                 testDao.saveTest(test);
-
-                                // prechod do createTestScene
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
-                                Parent parent = loader.load();
-                                Scene createTestScene = new Scene(parent);
-                                Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
-                                stage.setScene(createTestScene);
+                                return test;
                         } catch (EntityNotFoundException e) {
                                 e.printStackTrace();
                         }
-                }
-                else {
+                } else {
                         System.err.println("No current user found");
                 }
+
+                return null;
         }
 
-
-        // return button do main screenu
         @FXML
         private void returnToGeneralka() throws IOException {
-                // Move back to the Generalka scene
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
                 Parent parent = loader.load();
                 Scene generalkaScene = new Scene(parent);
