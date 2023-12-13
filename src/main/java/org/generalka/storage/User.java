@@ -42,5 +42,6 @@ public class User {
     }
 
 
+    // doplnit age/datum narodenia a country dropbox aby to nebolo take prazdne v profile
 
 }
