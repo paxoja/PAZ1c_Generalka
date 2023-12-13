@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
     <children>
         <Button layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
-      <Button layoutX="377.0" layoutY="343.0" mnemonicParsing="false" text="Add next question" />
+      <Button layoutX="377.0" layoutY="343.0" mnemonicParsing="false" onAction="#addNextQuestion" text="Add next question" />
       <Button fx:id="returnToTestAttributesButton" layoutX="7.0" layoutY="1.0" mnemonicParsing="false" onAction="#returnToTestAttributes" prefHeight="26.0" prefWidth="100.0" text="Return" />
           <Label layoutX="162.0" layoutY="45.0" text="Create Your Test Questions and Answers" />
           <Label layoutX="228.0" layoutY="99.0" text="Enter a question:" />

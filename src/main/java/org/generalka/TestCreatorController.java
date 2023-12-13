@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.generalka.storage.*;
 
@@ -33,13 +31,46 @@ public class TestCreatorController {
     private TestQuestionDao testQuestionDao = DaoFactory.INSTANCE.getTestQuestionDao();
     private AnswerDao answerDao = DaoFactory.INSTANCE.getAnswerDao();
 
+    private List<TestQuestion> testQuestions = new ArrayList<>();
+
     @FXML
-    private void handleSubmit() {
+    private void handleSubmit() throws IOException {
         // Save question and answers to the database
+        if (isDataValid()) {
+            TestQuestion testQuestion = createTestQuestion();
+            testQuestions.add(testQuestion);
+            // Clear the fields for the next question
+            clearFields();
+            // Optionally, you can exit the scene or perform other actions here
+        }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
+        Parent parent = loader.load();
+        Scene generalkaScene = new Scene(parent);
+        Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();
+        stage.setScene(generalkaScene);
+    }
+
+    @FXML
+    private void addNextQuestion() {
+        // Save question and answers to the database
+        if (isDataValid()) {
+            TestQuestion testQuestion = createTestQuestion();
+            testQuestions.add(testQuestion);
+            // Clear the fields for the next question
+            clearFields();
+        }
+    }
+
+    private boolean isDataValid() {
+        // Implement validation logic here
+        // For example, check if questionTextField and answersTextField are not empty
+        return !questionTextField.getText().isEmpty() && !answersTextField.getText().isEmpty();
+    }
+
+    private TestQuestion createTestQuestion() {
         TestQuestion testQuestion = new TestQuestion();
         testQuestion.setQuestion(questionTextField.getText());
-
-        testQuestionDao.saveTestQuestion(testQuestion);
 
         // Split answers and create Answer objects
         String[] answerOptions = answersTextField.getText().split(",\\s*");
@@ -56,13 +87,26 @@ public class TestCreatorController {
                 answer.setIsCorrect(false);
             }
 
-            answerDao.saveAnswer(answer);
+            // Set the TestQuestion for the answer
+            answer.setTestQuestion(testQuestion);
 
             answers.add(answer);
         }
 
+        // Set the created answers to the testQuestion
         testQuestion.setAnswers(answers);
 
+        // Save the testQuestion (which includes saving associated answers)
+        testQuestionDao.saveTestQuestion(testQuestion);
+
+        return testQuestion;
+    }
+
+
+    private void clearFields() {
+        questionTextField.clear();
+        answersTextField.clear();
+        correctAnswerTextField.clear();
     }
 
     @FXML
