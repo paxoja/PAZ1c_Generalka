@@ -114,7 +114,6 @@ public class TestSelectionController implements Initializable {
         TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
 
         if (selectedTest != null) {
-            System.out.println("Selected Test ID: " + selectedTest.getId());
 
             // gettneme otazky podla test id
             List<TestQuestion> testQuestions = testQuestionDao.getTestQuestionsByTestId(selectedTest.getId());
