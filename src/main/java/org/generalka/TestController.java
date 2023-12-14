@@ -4,7 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.generalka.storage.Answer;
+import org.generalka.storage.TestQuestion;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class TestController {
@@ -14,9 +17,7 @@ public class TestController {
     @FXML
     private VBox answersContainer;
 
-    private List<String> questions;
-    private List<List<String>> answerOptions; // zoznam odpovedi
-
+    private List<TestQuestion> testQuestions;
     private int currentQuestionIndex = 0;
 
     @FXML
@@ -24,28 +25,28 @@ public class TestController {
         loadQuestionAndAnswers();
     }
 
-    // Set questions and answer options
-    public void setQuestionsAndAnswers(List<String> questions, List<List<String>> answerOptions) {
-        this.questions = questions;
-        this.answerOptions = answerOptions;
+    // Set test questions
+    public void setTestQuestions(List<TestQuestion> testQuestions) {
+        this.testQuestions = testQuestions;
         loadQuestionAndAnswers();
     }
 
     private void loadQuestionAndAnswers() {
-        if (currentQuestionIndex < questions.size()) {
-            // naloadujeme otazku
-            questionLabel.setText(questions.get(currentQuestionIndex));
+        if (currentQuestionIndex < testQuestions.size()) {
+            // Load question
+            TestQuestion currentQuestion = testQuestions.get(currentQuestionIndex);
+            questionLabel.setText(currentQuestion.getQuestion());
 
-            // vymazu sa predosle answer options
+            // Clear previous answer options
             answersContainer.getChildren().clear();
 
-            // naloaduju sa answer options
-            for (String option : answerOptions.get(currentQuestionIndex)) {
-                CheckBox checkBox = new CheckBox(option);
+            // Load answer options
+            for (Answer answer : currentQuestion.getAnswers()) {
+                CheckBox checkBox = new CheckBox(answer.getAnswer());
                 answersContainer.getChildren().add(checkBox);
             }
         } else {
-            // uplny konec testu, ked uz nebudu ine otazky
+            // End of the test
             questionLabel.setText("End of the test.");
             answersContainer.getChildren().clear();
         }
@@ -53,11 +54,15 @@ public class TestController {
 
     @FXML
     private void handleSubmit() {
-        // handler pre terajsiu otazku
+        // Handle the current question (check selected answers, save results, etc.)
 
-        // presun na dalsiu otazku
+        // Move to the next question
         currentQuestionIndex++;
         loadQuestionAndAnswers();
     }
-}
 
+    @FXML
+    void moveToGeneralka(ActionEvent event) {
+
+    }
+}

@@ -84,6 +84,12 @@ public class MysqlTestDao implements TestDao {
         }
     }
 
+    @Override
+    public void getTabletest() throws EntityNotFoundException {
+        String sql = "SELECT id, topic, subject, semester, year_of_study FROM test";
+        jdbcTemplate.query(sql, testRowMapper());
+    }
+
 
     @Override
     public void deleteTest(Long testId) {
