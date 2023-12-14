@@ -15,6 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.generalka.storage.DaoFactory;
 import org.generalka.storage.EntityNotFoundException;
+import org.generalka.storage.TestQuestion;
+import org.generalka.storage.TestQuestionDao;
+import org.generalka.storage.TestQuestionDaoImpl;
 import org.generalka.table.OverviewManager;
 import org.generalka.table.OverviewManagerImpl;
 import org.generalka.table.TestOverview;
@@ -58,6 +61,7 @@ public class TestSelectionController implements Initializable {
     private Button returnToGeneralkaButton;
 
     private OverviewManager overviewManager = new OverviewManagerImpl();
+    private TestQuestionDao testQuestionDao = new TestQuestionDaoImpl();
 
     ObservableList<TestOverview> testOverviewObservableList = FXCollections.observableArrayList();
 
@@ -73,12 +77,12 @@ public class TestSelectionController implements Initializable {
 
             ObservableList<String> semesters = FXCollections.observableArrayList("winter", "summer");
             semesterComboBox.setItems(semesters);
-            // Get the test summary from the OverviewManager
+            // test summary z OverviewManager
             List<TestOverview> testOverviews = overviewManager.getTestSummary();
 
             testOverviewObservableList.addAll(testOverviews);
 
-            // Set the items in the TableView
+            // nastavia sa veci do TestTable
             TestTable.setItems(testOverviewObservableList);
 
         } catch (EntityNotFoundException e) {
@@ -92,6 +96,7 @@ public class TestSelectionController implements Initializable {
         yearOfStudyColmn.setCellValueFactory(new PropertyValueFactory<>("yearOfStudy"));
     }
 
+    // prechod spat na main screen
     @FXML
     private void returnToGeneralka() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -100,5 +105,35 @@ public class TestSelectionController implements Initializable {
         Scene generalkaScene = new Scene(parent);
         Stage stage = (Stage) returnToGeneralkaButton.getScene().getWindow();
         stage.setScene(generalkaScene);
+    }
+
+
+    // otvorenie test sceny
+    @FXML
+    private void openTestScene() {
+        TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
+
+        if (selectedTest != null) {
+            System.out.println("Selected Test ID: " + selectedTest.getId());
+
+            // gettneme otazky podla test id
+            List<TestQuestion> testQuestions = testQuestionDao.getTestQuestionsByTestId(selectedTest.getId());
+
+            try {
+                // otvori sa TestController a preda sa mu test ID
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Test.fxml"));
+                Parent parent = loader.load();
+                TestController testController = loader.getController();
+                testController.setTestId(selectedTest.getId());
+                testController.setTestQuestions(testQuestions);
+
+                Scene testScene = new Scene(parent);
+                Stage stage = (Stage) TestTable.getScene().getWindow();
+                stage.setScene(testScene);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
