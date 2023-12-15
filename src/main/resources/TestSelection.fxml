@@ -15,11 +15,11 @@
       <TextField layoutX="111.0" layoutY="21.0" prefHeight="26.0" prefWidth="450.0" />
       <Label layoutX="14.0" layoutY="26.0" text="Name of Test:" />
       <Label layoutX="14.0" layoutY="58.0" text="Year of study:" />
-      <ComboBox fx:id="yearOfStudyComboBox" layoutX="111.0" layoutY="53.0" prefHeight="26.0" prefWidth="450.0" promptText="Select a study year" />
+      <ComboBox fx:id="yearOfStudyComboBox" layoutX="111.0" layoutY="53.0" prefHeight="26.0" prefWidth="450.0" promptText="Select a study year" onAction="#handleYearOfStudyChange" />
       <Label layoutX="14.0" layoutY="90.0" prefHeight="18.0" prefWidth="74.0" text="Subject:" />
-      <ComboBox fx:id="subjectComboBox" layoutX="111.0" layoutY="85.0" prefHeight="26.0" prefWidth="450.0" promptText="Select subject" />
+      <ComboBox fx:id="subjectComboBox" layoutX="111.0" layoutY="85.0" prefHeight="26.0" prefWidth="450.0" promptText="Select subject" onAction="#handleSubjectChange" />
       <Label layoutX="15.0" layoutY="121.0" prefHeight="18.0" prefWidth="74.0" text="Semester:" />
-      <ComboBox fx:id="semesterComboBox" layoutX="111.0" layoutY="117.0" prefHeight="26.0" prefWidth="450.0" promptText="Select semester" />
+      <ComboBox fx:id="semesterComboBox" layoutX="111.0" layoutY="117.0" prefHeight="26.0" prefWidth="450.0" promptText="Select semester" onAction="#handleSemesterChange" />
       <CheckBox layoutX="111.0" layoutY="156.0" mnemonicParsing="false" text="The test is based on lectures from the whole semester" />
       <Line endX="410.0" endY="-1.52587890625E-5" layoutX="170.0" layoutY="185.0" startX="-153.20001220703125" startY="-1.52587890625E-5" stroke="#817e7e" />
        <TableView fx:id="TestTable" layoutX="18.0" layoutY="185.0" prefHeight="200.0" prefWidth="564.0" onMouseClicked="#openTestScene">

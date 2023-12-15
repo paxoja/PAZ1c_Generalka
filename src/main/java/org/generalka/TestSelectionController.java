@@ -2,6 +2,7 @@ package org.generalka;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TestSelectionController implements Initializable {
 
@@ -65,6 +67,8 @@ public class TestSelectionController implements Initializable {
 
     ObservableList<TestOverview> testOverviewObservableList = FXCollections.observableArrayList();
 
+    private List<TestOverview> originalTestOverviews;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -85,6 +89,20 @@ public class TestSelectionController implements Initializable {
             // nastavia sa veci do TestTable
             TestTable.setItems(testOverviewObservableList);
 
+            // zoznam na ulozenie pri filtrovani - trebalo ho lebo sme sa nevedeli pri zvoleni filtru potom pri inom filtre dostat k inemu predmetu
+            originalTestOverviews = overviewManager.getTestSummary();
+
+            // odstranenie duplicit
+            testOverviewObservableList.clear();
+
+            // pridanie predmetov
+            testOverviewObservableList.addAll(originalTestOverviews);
+
+            // set predmety
+            TestTable.setItems(testOverviewObservableList);
+
+
+
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
         }
@@ -94,6 +112,42 @@ public class TestSelectionController implements Initializable {
         semesterColmn.setCellValueFactory(new PropertyValueFactory<>("semester"));
         subjectColmn.setCellValueFactory(new PropertyValueFactory<>("subject"));
         yearOfStudyColmn.setCellValueFactory(new PropertyValueFactory<>("yearOfStudy"));
+    }
+
+    // aplikuje filtrovanie pre roky
+    @FXML
+    private void handleYearOfStudyChange(ActionEvent event) {
+        applyFilters();
+    }
+
+    // aplikuje filtrovanie pre predmety
+    @FXML
+    private void handleSubjectChange(ActionEvent event) {
+        applyFilters();
+    }
+
+    // aplikuje filtrovanie pre semester
+    @FXML
+    private void handleSemesterChange(ActionEvent event) {
+        applyFilters();
+    }
+
+    private void applyFilters() {
+        Integer selectedYearOfStudy = yearOfStudyComboBox.getValue();
+        String selectedSubject = subjectComboBox.getValue();
+        String selectedSemester = semesterComboBox.getValue();
+
+        List<TestOverview> filteredList = originalTestOverviews
+                .stream()
+                .filter(testOverview ->
+                        (selectedYearOfStudy == null || testOverview.getYearOfStudy() == selectedYearOfStudy) &&
+                                (selectedSubject == null || testOverview.getSubject().equals(selectedSubject)) &&
+                                (selectedSemester == null || testOverview.getSemester().equals(selectedSemester)))
+                .collect(Collectors.toList());
+
+        // vzdy ked menime filter z jedneho na druhy tak najprv vymaze vsetko a potom prida nanovo prefiltrovane veci
+        testOverviewObservableList.clear();
+        testOverviewObservableList.addAll(filteredList);
     }
 
     // prechod spat na main screen
