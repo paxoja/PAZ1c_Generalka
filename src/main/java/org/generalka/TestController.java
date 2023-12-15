@@ -2,21 +2,19 @@ package org.generalka;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.generalka.storage.Answer;
-import org.generalka.storage.TestQuestion;
+import org.generalka.storage.*;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 
 public class TestController {
+
     @FXML
     private Label questionLabel;
 
@@ -27,61 +25,76 @@ public class TestController {
 
     @FXML
     private Button returnToTestSelectionButton;
+
     private Long testId;
+    private TestQuestionDao testQuestionDao = DaoFactory.INSTANCE.getTestQuestionDao();
+    private AnswerDao answerDao = DaoFactory.INSTANCE.getAnswerDao();
     private int currentQuestionIndex = 0;
 
     @FXML
     public void initialize() {
-        if (testQuestions != null) {
-            loadQuestionAndAnswers();
+        if (testId != null) {
+            loadTestQuestions();
         }
     }
 
-    // setter pre ktory test bereme
     public void setTestId(Long testId) {
         this.testId = testId;
-
+        loadTestQuestions();
     }
 
-    // setter pre otazky
-    public void setTestQuestions(List<TestQuestion> testQuestions) {
-        this.testQuestions = testQuestions;
-        if (questionLabel != null && answersContainer != null) {
+    private void loadTestQuestions() {
+        testQuestions = testQuestionDao.getTestQuestionsByTestId(testId);
+
+        if (testQuestions != null && !testQuestions.isEmpty()) {
             loadQuestionAndAnswers();
+        } else {
+            questionLabel.setText("No questions found for the test.");
+            answersContainer.getChildren().clear();
         }
     }
 
     private void loadQuestionAndAnswers() {
         if (currentQuestionIndex < testQuestions.size()) {
-            // nacita otazku
             TestQuestion currentQuestion = testQuestions.get(currentQuestionIndex);
             questionLabel.setText(currentQuestion.getQuestion());
 
-            // pri dalsej odstrani veci zo starej
             answersContainer.getChildren().clear();
 
-            // nacita odpovede moznosti
-            for (Answer answer : currentQuestion.getAnswers()) {
-                CheckBox checkBox = new CheckBox(answer.getAnswer());
-                answersContainer.getChildren().add(checkBox);
+            // Check if answers are not null before iterating
+            List<Answer> answers = answerDao.getAnswersByQuestionId(currentQuestion.getId());
+
+            if (answers != null && !answers.isEmpty()) {
+                ToggleGroup toggleGroup = new ToggleGroup();
+
+                for (Answer answer : answers) {
+                    RadioButton radioButton = new RadioButton(answer.getAnswer());
+                    radioButton.setToggleGroup(toggleGroup);
+
+                    // Set margin between radio buttons
+                    VBox.setMargin(radioButton, new Insets(5, 0, 5, 0));
+
+                    answersContainer.getChildren().add(radioButton);
+                }
+            } else {
+                // Handle the case where answers are null or empty
+                // You might want to display a message or take appropriate action
             }
         } else {
-            // koniec testu
             questionLabel.setText("End of the test.");
             answersContainer.getChildren().clear();
         }
     }
 
+
     @FXML
     private void handleSubmit() {
-        // check selected answers, save results atd
+        // Check selected answers, save results, etc.
 
-        // prechod na dalsiu otazku
         currentQuestionIndex++;
         loadQuestionAndAnswers();
     }
 
-    // prechod spat na vyber testov
     @FXML
     void returnToTestSelection() throws IOException {
         FXMLLoader loader = new FXMLLoader(

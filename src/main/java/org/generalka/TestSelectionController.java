@@ -124,7 +124,6 @@ public class TestSelectionController implements Initializable {
                 Parent parent = loader.load();
                 TestController testController = loader.getController();
                 testController.setTestId(selectedTest.getId());
-                testController.setTestQuestions(testQuestions);
 
                 Scene testScene = new Scene(parent);
                 Stage stage = (Stage) TestTable.getScene().getWindow();
