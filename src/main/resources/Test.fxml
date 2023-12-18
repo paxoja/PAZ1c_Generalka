@@ -17,7 +17,8 @@
             <Insets bottom="20.0" left="20.0" top="20.0" />
          </padding>
         </VBox>
-        <Button layoutX="512.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmit" text="Next" />
+        <Button layoutX="512.0" layoutY="345.0" mnemonicParsing="false" onAction="#nextQuestion" text="Next" />
         <Button fx:id="returnToTestSelectionButton" layoutX="36.0" layoutY="345.0" mnemonicParsing="false" onAction="#returnToTestSelection" text="Return" />
+      <Button layoutX="448.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
     </children>
 </AnchorPane>
