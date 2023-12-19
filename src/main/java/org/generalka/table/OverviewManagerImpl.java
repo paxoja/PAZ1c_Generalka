@@ -18,12 +18,21 @@ public class OverviewManagerImpl implements OverviewManager {
 
         List<TestOverview> testOverviews = new ArrayList<>();
         for (Test test : tests) {
-            TestOverview testOverview = new TestOverview();
-            testOverview.setId(test.getId());
+            TestOverview testOverview = new TestOverview(
+                    test.getId(),
+                    test.getTopic(),
+                    test.getSubject(),
+                    test.getSemester(),
+                    test.getYearOfStudy(),
+                    test.getIsWholeSemester()
+            );
+
             testOverview.setTopic(test.getTopic());
             testOverview.setSubject(test.getSubject());
             testOverview.setSemester(test.getSemester());
             testOverview.setYearOfStudy(test.getYearOfStudy());
+            testOverview.setWholeSemester(test.getIsWholeSemester());
+
             testOverviews.add(testOverview);
         }
 

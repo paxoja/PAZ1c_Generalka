@@ -1,22 +1,20 @@
 package org.generalka.table;
 
 public class TestOverview {
-
-    private  Long id;
+    private Long id;
     private String topic;
     private String subject;
     private String semester;
     private int yearOfStudy;
+    private boolean isWholeSemester;
 
-    public TestOverview(){
-
-    }
-    public TestOverview(Long id, String topic, String subject, String semester, int yearOfStudy) {
+    public TestOverview(Long id, String topic, String subject, String semester, int yearOfStudy, boolean isWholeSemester) {
         this.id = id;
         this.topic = topic;
         this.subject = subject;
         this.semester = semester;
         this.yearOfStudy = yearOfStudy;
+        this.isWholeSemester = isWholeSemester;
     }
 
     public Long getId() {
@@ -58,4 +56,14 @@ public class TestOverview {
     public void setYearOfStudy(int yearOfStudy) {
         this.yearOfStudy = yearOfStudy;
     }
+
+    public boolean isWholeSemester() {
+        return isWholeSemester;
+    }
+
+    public void setWholeSemester(boolean wholeSemester) {
+        isWholeSemester = wholeSemester;
+    }
 }
+
+
