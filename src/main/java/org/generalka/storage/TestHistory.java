@@ -1,5 +1,6 @@
 package org.generalka.storage;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,11 +8,15 @@ public class TestHistory {
     private Long id;
     private int score;
     private String report;
-    private Date date;
+    private Timestamp date;
     private Test test;
     private User user;
 
-    public TestHistory(Long id, int score, String report, Date date, Test test, User user) {
+    public TestHistory() {
+
+    }
+
+    public TestHistory(Long id, int score, String report, Timestamp date, Test test, User user) {
         this.id = id;
         this.score = score;
         this.report = report;
@@ -44,11 +49,11 @@ public class TestHistory {
         this.report = report;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

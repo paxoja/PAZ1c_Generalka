@@ -15,6 +15,7 @@ public enum DaoFactory {
     private TestDao testDao;
     private TestQuestionDao testQuestionDao;
     private AnswerDao answerDao;
+    private TestHistoryDao testHistoryDao;
     private JdbcTemplate jdbcTemplate;
 
     private JdbcTemplate getJdbcTemplate() {
@@ -50,6 +51,12 @@ public enum DaoFactory {
         if (answerDao == null)
             answerDao = new MysqlAnswerDao(getJdbcTemplate());
         return answerDao;
+    }
+
+    public TestHistoryDao getTestHistoryDao(){
+        if (testHistoryDao == null)
+            testHistoryDao = new MysqlTestHistoryDao(getJdbcTemplate());
+            return testHistoryDao;
     }
 
 }
