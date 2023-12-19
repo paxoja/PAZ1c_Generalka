@@ -92,4 +92,11 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
             );
         }
     }
+
+    @Override
+    public List<TestHistory> getTestHistoryByUserId(Long userId) throws EntityNotFoundException {
+        String sql = "SELECT * FROM TestHistory WHERE User_id=?";
+        return jdbcTemplate.query(sql, testHistoryRowMapper(), userId);
+
+    }
 }

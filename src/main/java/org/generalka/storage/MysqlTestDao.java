@@ -108,4 +108,10 @@ public class MysqlTestDao implements TestDao {
         String sql = "SELECT * FROM Test";
         return jdbcTemplate.query(sql, testRowMapper());
     }
+
+    @Override
+    public int getNumberOfQuestions(Long testId) throws EntityNotFoundException {
+        String sql = "SELECT COUNT(*) FROM TestQuestion WHERE Test_id = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, testId);
+    }
 }

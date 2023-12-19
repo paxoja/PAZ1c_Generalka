@@ -1,5 +1,7 @@
 package org.generalka;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +9,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.generalka.storage.DaoFactory;
-import org.generalka.storage.User;
-import org.generalka.storage.UserDao;
+import org.generalka.storage.*;
+import org.generalka.table.OverviewManagerImpl;
+import org.generalka.table.TestHistoryProfile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 public class ProfileController {
@@ -32,7 +39,33 @@ public class ProfileController {
     @FXML
     private Button returnToGeneralkaButton;
 
+    @FXML
+    private TableView<TestHistoryProfile> testHistoryTable;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, Long> historyIdColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, String> historyTopicColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, String> historySubjectColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, String> historySemesterColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, Integer> historyYearOfStudyColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, String> historyScoreColmn;
+
+    @FXML
+    private TableColumn<TestHistoryProfile, Timestamp> historyDateColmn;
+
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+    private TestHistoryDao testHistoryDao = DaoFactory.INSTANCE.getTestHistoryDao();
+    private OverviewManagerImpl overviewManager = new OverviewManagerImpl(); // Add this line
 
     // po loadnuti FXML ziskame current user z Dao, ak mame pouzivatela tak nastavi jeho username
     // pouzivame Optional, co zisti pritomnost objektu cez get
@@ -42,6 +75,22 @@ public class ProfileController {
         if (currentUser.isPresent()) {
             User user = currentUser.get();
             profileUsername.setText(user.getUsername());
+        }
+
+        historyIdColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        historyTopicColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
+        historySubjectColmn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        historySemesterColmn.setCellValueFactory(new PropertyValueFactory<>("semester"));
+        historyYearOfStudyColmn.setCellValueFactory(new PropertyValueFactory<>("yearOfStudy"));
+        historyScoreColmn.setCellValueFactory(new PropertyValueFactory<>("scoreString"));
+        historyDateColmn.setCellValueFactory(new PropertyValueFactory<>("formattedDate"));
+
+        try {
+            List<TestHistoryProfile> testHistoryProfiles = overviewManager.getHistorySummary();
+            ObservableList<TestHistoryProfile> testHistoryObservableList = FXCollections.observableArrayList(testHistoryProfiles);
+            testHistoryTable.setItems(testHistoryObservableList);
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

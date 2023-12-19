@@ -1,16 +1,17 @@
 package org.generalka.table;
 
-import org.generalka.storage.EntityNotFoundException;
-import org.generalka.storage.Test;
-import org.generalka.storage.TestDao;
-import org.generalka.storage.DaoFactory;
+import org.generalka.storage.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class OverviewManagerImpl implements OverviewManager {
 
     private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
+    private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+    private TestHistoryDao testHistoryDao = DaoFactory.INSTANCE.getTestHistoryDao();
 
     @Override
     public List<TestOverview> getTestSummary() throws EntityNotFoundException {
@@ -38,4 +39,38 @@ public class OverviewManagerImpl implements OverviewManager {
 
         return testOverviews;
     }
+
+    @Override
+    public List<TestHistoryProfile> getHistorySummary() throws EntityNotFoundException {
+        Optional<User> currentUser = userDao.getCurrentUser();
+        if (currentUser.isPresent()) {
+            Long userId = currentUser.get().getId();
+            List<TestHistory> testHistories = testHistoryDao.getTestHistoryByUserId(userId);
+
+            List<TestHistoryProfile> testHistoryProfiles = new ArrayList<>();
+            for (TestHistory testHistory : testHistories) {
+                Test test = testHistory.getTest();
+                int totalQuestions = testDao.getNumberOfQuestions(test.getId());
+
+                TestHistoryProfile testHistoryProfile = new TestHistoryProfile(
+                        testHistory.getId(),
+                        test.getTopic(),
+                        test.getSubject(),
+                        test.getSemester(),
+                        test.getYearOfStudy(),
+                        testHistory.getScore(),
+                        totalQuestions,
+                        testHistory.getDate()
+                );
+
+                testHistoryProfiles.add(testHistoryProfile);
+            }
+
+            return testHistoryProfiles;
+        }
+        return Collections.emptyList();
+    }
 }
+
+
+

@@ -17,5 +17,6 @@ public interface  TestDao {
     // Get all tests
     List<Test> getAllTests() throws EntityNotFoundException;
 
+    int getNumberOfQuestions(Long testId) throws EntityNotFoundException;
 
 }

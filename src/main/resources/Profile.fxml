@@ -60,10 +60,15 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <TableView layoutX="27.0" layoutY="270.0" prefHeight="116.0" prefWidth="528.0">
+      <TableView fx:id="testHistoryTable" layoutX="27.0" layoutY="270.0" prefHeight="116.0" prefWidth="528.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="historyIdColmn" prefWidth="26.0" text="ID" />
+          <TableColumn fx:id="historyTopicColmn" prefWidth="145.0" text="Name" />
+            <TableColumn fx:id="historySubjectColmn" prefWidth="59.0" text="Subject" />
+            <TableColumn fx:id="historySemesterColmn" prefWidth="85.0" text="Year of study" />
+            <TableColumn fx:id="historyYearOfStudyColmn" prefWidth="62.0" text="semester" />
+            <TableColumn fx:id="historyScoreColmn" prefWidth="49.0" text="score" />
+            <TableColumn fx:id="historyDateColmn" prefWidth="101.0" text="date" />
         </columns>
       </TableView>
    </children>

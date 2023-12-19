@@ -9,5 +9,7 @@ public interface TestHistoryDao {
     // Save a new test history entry
     void saveTestHistory(TestHistory testHistory) throws EntityNotFoundException;
 
+    List<TestHistory> getTestHistoryByUserId(Long userId) throws EntityNotFoundException;
+
 }
 
