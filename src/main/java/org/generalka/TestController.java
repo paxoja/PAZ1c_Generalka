@@ -3,9 +3,11 @@ package org.generalka;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.generalka.storage.*;
@@ -17,6 +19,15 @@ public class TestController {
 
     @FXML
     private Label questionLabel;
+
+    @FXML
+    private Label endOfTestLabel;
+
+    @FXML
+    private Button backButton;
+
+    @FXML
+    private Button nextButton;
 
     @FXML
     private VBox answersContainer;
@@ -112,9 +123,13 @@ public class TestController {
                 // You might want to display a message or take appropriate action
             }
         } else {
-            questionLabel.setText("End of the test.");
             answersContainer.getChildren().clear();
-            selectedAnswersMap = null; // Clear selectedAnswersMap when reaching the end of the test
+            questionLabel.setText("");
+            endOfTestLabel.setText("End of the test");
+            endOfTestLabel.setStyle("-fx-font-size: 40;");
+            nextButton.setVisible(false);
+            backButton.setVisible(false);
+            selectedAnswersMap = null;
         }
     }
 

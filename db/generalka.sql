@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`TestHistory` (
   CONSTRAINT `fk_TestHistory_Test`
     FOREIGN KEY (`Test_id`)
     REFERENCES `mydb`.`Test` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TestHistory_User1`
     FOREIGN KEY (`User_id`)
@@ -117,7 +117,4 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-select * from user;
-
-
-
+SELECT * FROM user;

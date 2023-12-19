@@ -7,10 +7,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestController">
     <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="368.0" layoutX="24.0" layoutY="16.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="552.0" />
-          <Label fx:id="questionLabel" layoutX="133.0" layoutY="14.0" prefHeight="98.0" prefWidth="334.0" textAlignment="CENTER" />
+          <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" prefHeight="98.0" prefWidth="600.0" textAlignment="CENTER" />
+      <Label fx:id="endOfTestLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="131.0" prefHeight="138.0" prefWidth="600.0" textAlignment="CENTER" />
         <VBox fx:id="checkBoxContainter" alignment="CENTER" layoutX="54.0" layoutY="104.0" prefHeight="222.0" prefWidth="493.0" spacing="10.0">
             <children>
                 <VBox fx:id="answersContainer" />
@@ -19,9 +20,9 @@
             <Insets bottom="20.0" left="20.0" top="20.0" />
          </padding>
         </VBox>
-        <Button layoutX="481.0" layoutY="345.0" mnemonicParsing="false" onAction="#nextQuestion" text="Next" textFill="WHITE" />
+        <Button fx:id="nextButton" layoutX="388.0" layoutY="345.0" mnemonicParsing="false" onAction="#nextQuestion" text="Next" textFill="WHITE" />
         <Button fx:id="returnToTestSelectionButton" layoutX="39.0" layoutY="345.0" mnemonicParsing="false" onAction="#returnToTestSelection" text="Return" textFill="WHITE" />
-      <Button layoutX="390.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" textFill="WHITE" />
-      <Button layoutX="301.0" layoutY="345.0" mnemonicParsing="false" onAction="#questionBefore" text="Back" textFill="WHITE" />
+      <Button layoutX="481.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" textFill="WHITE" />
+      <Button fx:id="backButton" layoutX="300.0" layoutY="345.0" mnemonicParsing="false" onAction="#questionBefore" text="Back" textFill="WHITE" />
     </children>
 </AnchorPane>
