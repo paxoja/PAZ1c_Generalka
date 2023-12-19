@@ -115,6 +115,7 @@ public class TestAttributesController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
                 Parent parent = loader.load();
                 Scene generalkaScene = new Scene(parent);
+                generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
                 Stage stage = (Stage) returnToGeneralkaButton.getScene().getWindow();
                 stage.setScene(generalkaScene);
         }

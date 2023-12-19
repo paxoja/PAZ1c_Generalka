@@ -13,6 +13,9 @@ public class MainScene extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
+
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Generalka");
         primaryStage.show();
@@ -22,3 +25,4 @@ public class MainScene extends Application {
         launch(args);
     }
 }
+

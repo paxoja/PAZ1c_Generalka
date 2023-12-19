@@ -1,0 +1,63 @@
+/* style.css */
+
+/* Apply styles to AnchorPane */
+.anchor-pane {
+    -fx-background: linear-gradient(to left, #82a5fe, #e099f9);
+}
+
+/* Apply styles to labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Dark gray */
+}
+
+/* Apply styles to text fields and password fields */
+.text-field, .password-field {
+    -fx-border-color: #99ccff; /* Light blue */
+    -fx-border-radius: 20; /* Increased border radius for a rounder look */
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Dark gray */
+}
+
+/* Apply styles to buttons */
+.button {
+    -fx-font-weight: bold;
+    -fx-border-radius: 20; /* Increased border radius for a rounder look */
+    -fx-background-radius: 20; /* Make the button round */
+    -fx-background-color: #e099f9; /* Light blue background */
+    -fx-min-width: 80; /* Set a minimum width for the buttons */
+}
+
+/* Apply styles to the login button */
+#loginButton {
+    -fx-background-radius: 20; /* Make the button round */
+    -fx-background-color: #e099f9; /* Light blue background */
+    -fx-text-fill: white; /* White text color */
+}
+
+/* Apply styles to the register button */
+#moveToRegisterButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #99ccff; /* Light blue */
+    -fx-border-color: transparent;
+}
+
+/* Apply styles to the wrongLogIn label */
+#wrongLogIn {
+    -fx-text-fill: #ff5555; /* Red color */
+}
+
+/* Customize focus appearance */
+.text-field:focused, .password-field:focused, .button:focused {
+    -fx-border-color: #99ccff; /* Light blue */
+    -fx-border-width: 0; /* Remove border width */
+    -fx-faint-focus-color: transparent; /* Remove faint focus color */
+    -fx-background-radius: 20; /* Make the button round */
+}
+
+/* Apply styles to the rectangle for circular round edges */
+.rectangle {
+    -fx-arc-width: 50; /* Adjust the arc width for the circular round edges */
+    -fx-arc-height: 50; /* Adjust the arc height for the circular round edges */
+}

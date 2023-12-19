@@ -68,10 +68,10 @@ public class LoginController {
                 userDao.setCurrentUser(user);
                 openGeneralkaScreen();
             } else {
-                wrongLogIn.setText("Wrong password!");
+                wrongLogIn.setText("Your username or password is incorrect.");
             }
         } else {
-            wrongLogIn.setText("User not found.");
+            wrongLogIn.setText("Your username or password is incorrect.");
         }
     }
 
@@ -79,7 +79,10 @@ public class LoginController {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/generalka.fxml"));
         Parent parent = loader.load();
+
         Scene generalkaScene = new Scene(parent);
+
+        generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.setScene(generalkaScene);
 

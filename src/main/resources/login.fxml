@@ -8,27 +8,39 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.LoginController">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a290f3" height="400.0" layoutX="-2.0" stroke="#a290f3" strokeType="INSIDE" width="312.0" />
-      <Label layoutX="361.0" layoutY="62.0" text="Hello! Sign in to your account" textFill="#78768c">
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="16.0" layoutY="42.0" prefHeight="282.0" prefWidth="266.0" text="Success begins here." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-         <font>
-            <Font name="Arial" size="31.0" />
-         </font>
-      </Label>
-      <Label layoutX="39.0" layoutY="212.0" prefHeight="70.0" prefWidth="220.0" text="Join the journey! Create an account to be a part of our community." textAlignment="CENTER" textFill="WHITE" wrapText="true" />
-      <Label layoutX="340.0" layoutY="121.0" text="Username" textFill="#78768c" />
-      <Label layoutX="340.0" layoutY="183.0" text="Password" textFill="#78768c" />
-      <PasswordField fx:id="password" layoutX="340.0" layoutY="210.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
-      <TextField fx:id="username" layoutX="340.0" layoutY="143.0" prefHeight="26.0" prefWidth="220.0" promptText="Username" />
-      <Button fx:id="loginButton" layoutX="380.0" layoutY="270.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="26.0" prefWidth="134.0" style="-fx-background-color: #423B63;" text="Log In" textFill="WHITE" />
-      <Label layoutX="349.0" layoutY="333.0" text="Don't have an account ?" textFill="#78768c" />
-      <Label fx:id="wrongLogIn" layoutX="362.0" layoutY="88.0" prefHeight="18.0" prefWidth="182.0" />
-      <Button fx:id="moveToRegisterButton" layoutX="480.0" layoutY="329.0" mnemonicParsing="false" onAction="#moveToRegister" prefHeight="26.0" prefWidth="89.0" style="-fx-background-color: #FFFFFF;" text="Register now" textFill="#78768c" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.LoginController">
+   <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="357.0" layoutX="105.0" layoutY="22.0"
+              width="391.0" styleClass="rectangle"/>
+   <Label layoutX="208.0" layoutY="98.0" styleClass="custom-label" text="Hello! Sign in to your account">
+      <font>
+         <Font name="SansSerif Regular" size="18.0"/>
+      </font>
+   </Label>
+   <Label layoutX="190.0" layoutY="140.0" styleClass="custom-label" text="Username">
+      <font>
+         <Font name="SansSerif Regular" size="14.0"/>
+      </font>
+   </Label>
+   <Label layoutX="190.0" layoutY="204.0" styleClass="custom-label" text="Password">
+      <font>
+         <Font name="SansSerif Regular" size="14.0"/>
+      </font>
+   </Label>
+   <PasswordField fx:id="password" layoutX="190.0" layoutY="230.0" prefHeight="26.0" prefWidth="220.0"
+                  promptText="Password" styleClass="custom-password-field"/>
+   <TextField fx:id="username" layoutX="190.0" layoutY="164.0" prefHeight="26.0" prefWidth="220.0" promptText="Username"
+              styleClass="custom-text-field"/>
+   <Button fx:id="loginButton" layoutX="240.0" layoutY="282.0" minHeight="27.0" mnemonicParsing="false"
+           onAction="#userLogin" prefHeight="27.0" prefWidth="120.0" styleClass="custom-button" text="Log In"/>
+   <Label layoutX="178.0" layoutY="339.0" styleClass="custom-label" text="Don't have an account ?">
+      <font>
+         <Font name="SansSerif Regular" size="14.0"/>
+      </font>
+   </Label>
+   <Label fx:id="wrongLogIn" layoutX="176.0" layoutY="317.0" prefHeight="20.0" prefWidth="266.0"/>
+   <Button fx:id="moveToRegisterButton" layoutX="323.0" layoutY="335.0" mnemonicParsing="false"
+           onAction="#moveToRegister" prefHeight="27.0" prefWidth="114.0" styleClass="custom-button"
+           text="Register now"/>
 </AnchorPane>
