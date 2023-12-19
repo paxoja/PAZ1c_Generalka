@@ -86,12 +86,11 @@ public class ShowTestResultController {
         userAnswerCol.setCellValueFactory(new PropertyValueFactory<>("userAnswer"));
         correctAnswerCol.setCellValueFactory(new PropertyValueFactory<>("correctAnswer"));
 
-        // Add columns to the table
-        resultsTable.getColumns().addAll(questionNumberCol, userAnswerCol, correctAnswerCol);
     }
 
     private void loadTestResults() {
         // Initialize the total correct answers count
+        testResultObservableList.clear();
         int totalCorrectAnswers = 0;
 
         // Iterate through each test question and get the user's answers and correct answers

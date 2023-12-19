@@ -9,15 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.generalka.storage.EntityNotFoundException;
-import org.generalka.storage.TestQuestionDao;
-import org.generalka.storage.TestQuestionDaoImpl;
+import org.generalka.storage.*;
 import org.generalka.table.OverviewManager;
 import org.generalka.table.OverviewManagerImpl;
 import org.generalka.table.TestOverview;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TestSelectionController {
@@ -55,8 +54,15 @@ public class TestSelectionController {
     @FXML
     private Button returnToGeneralkaButton;
 
+    @FXML
+    private Button adminDeleteTestButton;
+
     private final OverviewManager overviewManager = new OverviewManagerImpl();
     private final TestQuestionDao testQuestionDao = new TestQuestionDaoImpl();
+
+    private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
+
+    private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
 
     ObservableList<TestOverview> testOverviewObservableList = FXCollections.observableArrayList();
 
@@ -64,6 +70,13 @@ public class TestSelectionController {
 
     @FXML
     public void initialize() {
+
+        Optional<User> currentUser = userDao.getCurrentUser();
+        if (currentUser.isPresent() && currentUser.get().isAdmin()) {
+            adminDeleteTestButton.setVisible(true);
+        } else {
+            adminDeleteTestButton.setVisible(false);
+        }
         // nastavenie tabulky - vytvorenie nazvov pre stlpce
         idColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
@@ -179,6 +192,28 @@ public class TestSelectionController {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void deleteTest() {
+        // Implement test deletion logic here
+        TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
+        if (selectedTest != null) {
+            try {
+                // Delete the test using the appropriate DAO method
+                testDao.deleteTest(selectedTest.getId());
+
+                // Refresh the table after deletion
+                originalTestOverviews = overviewManager.getTestSummary();
+                testOverviewObservableList.clear();
+                testOverviewObservableList.addAll(originalTestOverviews);
+                TestTable.setItems(testOverviewObservableList);
+
+            } catch (EntityNotFoundException e) {
+                e.printStackTrace();
+                // Handle the exception as needed
             }
         }
     }

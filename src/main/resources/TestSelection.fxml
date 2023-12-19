@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestSelectionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestSelectionController">
    <children>
       <Label layoutX="14.0" layoutY="58.0" text="Year of study:" />
       <ComboBox fx:id="yearOfStudyComboBox" layoutX="111.0" layoutY="53.0" onAction="#handleYearOfStudyChange" prefHeight="26.0" prefWidth="450.0" promptText="Select a study year" />
@@ -29,5 +29,6 @@
         </columns>
       </TableView>
       <Button fx:id="returnToGeneralkaButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToGeneralka" text="Return" />
+      <Button fx:id="adminDeleteTestButton" layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteTest" text="delete" />
    </children>
 </AnchorPane>
