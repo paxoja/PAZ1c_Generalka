@@ -11,9 +11,7 @@ import javafx.stage.Stage;
 import org.generalka.storage.*;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TestController {
 
@@ -37,15 +35,13 @@ public class TestController {
     private TestHistoryDao testHistoryDao = DaoFactory.INSTANCE.getTestHistoryDao();
     private int currentQuestionIndex = 0;
 
-    private Map<Answer, RadioButton> userAnswersMap;
-
-    private List<Answer> userAnswers;
-
+    private Map<Integer, Answer> selectedAnswersMap;
+    private Map<Integer, Answer> userAnswersMap;
 
     @FXML
     public void initialize() {
+        selectedAnswersMap = new HashMap<>();
         userAnswersMap = new HashMap<>();
-        userAnswers = new ArrayList<>();
         if (testId != null) {
             loadTestQuestions();
         }
@@ -54,6 +50,15 @@ public class TestController {
     public void setTestId(Long testId) {
         this.testId = testId;
         loadTestQuestions();
+    }
+
+    public List<Answer> getUserAnswers() {
+        // Convert userAnswersMap values to a List
+        return new ArrayList<>(userAnswersMap.values());
+    }
+
+    public List<TestQuestion> getTestQuestions() {
+        return testQuestions;
     }
 
     private void loadTestQuestions() {
@@ -66,6 +71,8 @@ public class TestController {
             answersContainer.getChildren().clear();
         }
     }
+
+
 
     private void loadQuestionAndAnswers() {
         if (currentQuestionIndex < testQuestions.size()) {
@@ -87,25 +94,18 @@ public class TestController {
                     // Set margin between radio buttons
                     VBox.setMargin(radioButton, new Insets(5, 0, 5, 0));
 
+                    // Update selectedAnswer when the user selects an answer
                     radioButton.setOnAction(event -> {
-                        // Print statements for debugging
-                        System.out.println("RadioButton selected: " + radioButton.isSelected());
-                        System.out.println("Answer: " + answer.getAnswer());
-
-                        // Update userAnswersMap when the user selects an answer
-                        if (radioButton.isSelected()) {
-                            userAnswersMap.put(answer, radioButton);
-                            userAnswers.add(answer);
-                        } else {
-                            userAnswersMap.remove(answer);
-                            userAnswers.remove(answer);
-                        }
-
-                        // Print userAnswersMap for debugging
-                        System.out.println("User Answers Map: " + userAnswersMap);
+                        selectedAnswersMap.put(currentQuestionIndex, answer);
                     });
 
                     answersContainer.getChildren().add(radioButton);
+                }
+
+                // Check if there is a selected answer for the current question
+                if (selectedAnswersMap.containsKey(currentQuestionIndex)) {
+                    Answer selectedAnswer = selectedAnswersMap.get(currentQuestionIndex);
+
                 }
             } else {
                 // Handle the case where answers are null or empty
@@ -114,7 +114,7 @@ public class TestController {
         } else {
             questionLabel.setText("End of the test.");
             answersContainer.getChildren().clear();
-            userAnswersMap = null; // Clear userAnswersMap when reaching the end of the test
+            selectedAnswersMap = null; // Clear selectedAnswersMap when reaching the end of the test
         }
     }
 
@@ -122,30 +122,79 @@ public class TestController {
 
     @FXML
     private void handleSubmit() throws IOException {
+        // Iterate over the selectedAnswersMap entries and add them to the userAnswersMap
+        if (selectedAnswersMap == null) {
+            selectedAnswersMap = new HashMap<>();
+        }
+
+        // Iterate through the userAnswersMap and update selectedAnswersMap
+        for (Map.Entry<Integer, Answer> entry : userAnswersMap.entrySet()) {
+            int index = entry.getKey();
+            Answer answer = entry.getValue();
+            selectedAnswersMap.put(index, answer);
+        }
+
         int score = calculateScore();
         saveTestHistory(score);
 
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/TestSelection.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowTestResult.fxml"));
         Parent parent = loader.load();
-        Scene testSelectionScene = new Scene(parent);
+        ShowTestResultController showTestResultController = loader.getController();
+
+        // Pass the current TestController instance
+        showTestResultController.setTestController(this);
+
+        Scene showTestResultScene = new Scene(parent);
         Stage stage = (Stage) returnToTestSelectionButton.getScene().getWindow();
-        stage.setScene(testSelectionScene);
+        stage.setScene(showTestResultScene);
+
+        // Set the controller to null to ensure a new instance is created next time
+        loader.setController(null);
     }
 
     @FXML
     void nextQuestion() {
+        if (selectedAnswersMap.containsKey(currentQuestionIndex)) {
+            Answer previousAnswer = userAnswersMap.get(currentQuestionIndex);
+
+            // If there was a previous answer for the current question, remove it
+            if (previousAnswer != null) {
+                userAnswersMap.remove(currentQuestionIndex);
+            }
+
+            // Add the selected answer to the userAnswersMap
+            userAnswersMap.put(currentQuestionIndex, selectedAnswersMap.get(currentQuestionIndex));
+        }
+
+        // Proceed to the next question
         currentQuestionIndex++;
         loadQuestionAndAnswers();
     }
 
+    @FXML
+    void questionBefore() {
+        if (currentQuestionIndex > 0) {
+            // Update selected answer when going back to the previous question
+            selectedAnswersMap.put(currentQuestionIndex, null);
+
+            // Remove the current answer from userAnswersMap if it exists
+            userAnswersMap.remove(currentQuestionIndex);
+
+            currentQuestionIndex--;
+            loadQuestionAndAnswers();
+        } else {
+            // Handle the case where there are no previous questions (e.g., user is on the first question)
+            System.out.println("No previous question available");
+        }
+    }
+
     private int calculateScore() {
-        if (userAnswers == null) {
+        if (userAnswersMap == null) {
             return 0;
         }
 
         // Count correct answers among user-selected answers
-        long correctAnswersCount = userAnswers.stream().filter(Answer::getIsCorrect).count();
+        long correctAnswersCount = userAnswersMap.values().stream().filter(Answer::getIsCorrect).count();
 
         // Calculate and return the score
         return (int) correctAnswersCount;
@@ -163,7 +212,7 @@ public class TestController {
         testHistoryDao.saveTestHistory(testHistory);
     }
 
-    @FXML
+        @FXML
     void returnToTestSelection() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/TestSelection.fxml"));

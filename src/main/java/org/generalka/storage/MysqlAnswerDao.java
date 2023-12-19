@@ -97,4 +97,11 @@ public class MysqlAnswerDao implements AnswerDao {
         String sql = "SELECT * FROM Answer WHERE TestQuestion_id = ?";
         return jdbcTemplate.query(sql, answerRowMapper(), questionId);
     }
+
+    @Override
+    public Answer getCorrectAnswerByQuestionId(Long questionId) throws EntityNotFoundException {
+        String sql = "SELECT * FROM Answer WHERE TestQuestion_id = ? AND is_correct = true";
+        return jdbcTemplate.queryForObject(sql, answerRowMapper(), questionId);
+    }
+
 }

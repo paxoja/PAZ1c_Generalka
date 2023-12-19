@@ -8,8 +8,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestController">
     <children>
-          <Label fx:id="questionLabel" layoutX="172.0" layoutY="27.0" prefHeight="43.0" prefWidth="261.0" textAlignment="CENTER" />
-        <VBox fx:id="checkBoxContainter" alignment="CENTER" layoutX="54.0" layoutY="75.0" prefHeight="251.0" prefWidth="493.0" spacing="10.0">
+          <Label fx:id="questionLabel" layoutX="133.0" layoutY="14.0" prefHeight="98.0" prefWidth="334.0" textAlignment="CENTER" />
+        <VBox fx:id="checkBoxContainter" alignment="CENTER" layoutX="54.0" layoutY="104.0" prefHeight="222.0" prefWidth="493.0" spacing="10.0">
             <children>
                 <VBox fx:id="answersContainer" />
             </children>
@@ -20,5 +20,6 @@
         <Button layoutX="512.0" layoutY="345.0" mnemonicParsing="false" onAction="#nextQuestion" text="Next" />
         <Button fx:id="returnToTestSelectionButton" layoutX="36.0" layoutY="345.0" mnemonicParsing="false" onAction="#returnToTestSelection" text="Return" />
       <Button layoutX="448.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
+      <Button layoutX="394.0" layoutY="345.0" mnemonicParsing="false" onAction="#questionBefore" text="back" />
     </children>
 </AnchorPane>
