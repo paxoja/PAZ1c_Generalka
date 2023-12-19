@@ -218,6 +218,7 @@ public class TestController {
                 getClass().getResource("/TestSelection.fxml"));
         Parent parent = loader.load();
         Scene testSelectionScene = new Scene(parent);
+        testSelectionScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) returnToTestSelectionButton.getScene().getWindow();
         stage.setScene(testSelectionScene);
     }

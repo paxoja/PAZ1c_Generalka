@@ -78,6 +78,7 @@ public class TestAttributesController {
                         TestCreatorController testCreatorController = loader.getController();
                         testCreatorController.setTest(test);
                         Scene createTestScene = new Scene(parent);
+                        createTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
                         Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
                         stage.setScene(createTestScene);
                 }

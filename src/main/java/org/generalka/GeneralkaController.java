@@ -51,6 +51,7 @@ public class GeneralkaController {
                 getClass().getResource("/Profile.fxml"));
         Parent parent = loader.load();
         Scene profileScene = new Scene(parent);
+        profileScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToProfileButton.getScene().getWindow();
         stage.setScene(profileScene);
 
@@ -62,6 +63,7 @@ public class GeneralkaController {
                 getClass().getResource("/TestAttributes.fxml"));
         Parent parent = loader.load();
         Scene createTestScene = new Scene(parent);
+        createTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
         stage.setScene(createTestScene);
 
@@ -73,6 +75,7 @@ public class GeneralkaController {
                 getClass().getResource("/TestSelection.fxml"));
         Parent parent = loader.load();
         Scene takeTestScene = new Scene(parent);
+        takeTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToTakeTestButton.getScene().getWindow();
         stage.setScene(takeTestScene);
 

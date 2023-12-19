@@ -8,18 +8,30 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestSelectionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestSelectionController">
    <children>
-      <Label layoutX="14.0" layoutY="58.0" text="Year of study:" />
-      <ComboBox fx:id="yearOfStudyComboBox" layoutX="111.0" layoutY="53.0" onAction="#handleYearOfStudyChange" prefHeight="26.0" prefWidth="450.0" promptText="Select a study year" />
-      <Label layoutX="14.0" layoutY="90.0" prefHeight="18.0" prefWidth="74.0" text="Subject:" />
-      <ComboBox fx:id="subjectComboBox" layoutX="111.0" layoutY="85.0" onAction="#handleSubjectChange" prefHeight="26.0" prefWidth="450.0" promptText="Select subject" />
-      <Label layoutX="15.0" layoutY="121.0" prefHeight="18.0" prefWidth="74.0" text="Semester:" />
-      <ComboBox fx:id="semesterComboBox" layoutX="111.0" layoutY="117.0" onAction="#handleSemesterChange" prefHeight="26.0" prefWidth="450.0" promptText="Select semester" />
-      <CheckBox fx:id="wholeSemesterCheckbox" layoutX="111.0" layoutY="156.0" mnemonicParsing="false" onAction="#chooseWholeSemester" text="The test is based on lectures from the whole semester" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="382.0" layoutX="7.0" layoutY="9.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="582.0" />
+      <Label layoutX="14.0" layoutY="58.0" text="Year of study:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+      <ComboBox fx:id="yearOfStudyComboBox" layoutX="111.0" layoutY="53.0" onAction="#handleYearOfStudyChange" prefHeight="26.0" prefWidth="450.0" promptText="Select a study year" styleClass="combobox" />
+      <Label layoutX="14.0" layoutY="90.0" prefHeight="18.0" prefWidth="74.0" text="Subject:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+      <ComboBox fx:id="subjectComboBox" layoutX="111.0" layoutY="85.0" onAction="#handleSubjectChange" prefHeight="26.0" prefWidth="450.0" promptText="Select subject" styleClass="combobox" />
+      <Label layoutX="15.0" layoutY="121.0" prefHeight="18.0" prefWidth="74.0" text="Semester:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+      <ComboBox fx:id="semesterComboBox" layoutX="111.0" layoutY="117.0" onAction="#handleSemesterChange" prefHeight="26.0" prefWidth="450.0" promptText="Select semester" styleClass="combobox" />
+      <CheckBox fx:id="wholeSemesterCheckbox" layoutX="111.0" layoutY="156.0" mnemonicParsing="false" onAction="#chooseWholeSemester" styleClass="checkbox" text="The test is based on lectures from the whole semester" />
       <Line endX="410.0" endY="-1.52587890625E-5" layoutX="170.0" layoutY="185.0" startX="-153.20001220703125" startY="-1.52587890625E-5" stroke="#817e7e" />
-       <TableView fx:id="TestTable" layoutX="18.0" layoutY="185.0" onMouseClicked="#openTestScene" prefHeight="200.0" prefWidth="564.0">
+       <TableView fx:id="TestTable" layoutX="18.0" layoutY="181.0" onMouseClicked="#openTestScene" prefHeight="200.0" prefWidth="564.0" styleClass="table">
         <columns>
           <TableColumn fx:id="idColmn" minWidth="-1.0" prefWidth="75.0" text="id" />
           <TableColumn fx:id="nameColmn" minWidth="-1.0" prefWidth="112.0" text="Name" />
@@ -28,7 +40,13 @@
             <TableColumn fx:id="semesterColmn" minWidth="-1.0" prefWidth="120.0" text="Semester" />
         </columns>
       </TableView>
-      <Button fx:id="returnToGeneralkaButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#returnToGeneralka" text="Return" />
-      <Button fx:id="adminDeleteTestButton" layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteTest" text="delete" />
+      <Button fx:id="returnToGeneralkaButton" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" onAction="#returnToGeneralka" text="Return" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
+      <Button fx:id="adminDeleteTestButton" layoutX="481.0" layoutY="17.0" mnemonicParsing="false" onAction="#deleteTest" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>

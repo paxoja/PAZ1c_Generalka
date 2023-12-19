@@ -187,7 +187,9 @@ public class TestSelectionController {
                 TestController testController = loader.getController();
                 testController.setTestId(selectedTest.getId());
 
+
                 Scene testScene = new Scene(parent);
+                testScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
                 Stage stage = (Stage) TestTable.getScene().getWindow();
                 stage.setScene(testScene);
 

@@ -29,9 +29,9 @@
       </font>
    </Label>
    <PasswordField fx:id="password" layoutX="190.0" layoutY="230.0" prefHeight="26.0" prefWidth="220.0"
-                  promptText="Password" styleClass="custom-password-field"/>
+                  promptText="Password" styleClass="password-field"/>
    <TextField fx:id="username" layoutX="190.0" layoutY="164.0" prefHeight="26.0" prefWidth="220.0" promptText="Username"
-              styleClass="custom-text-field"/>
+              styleClass="text-field"/>
    <Button fx:id="loginButton" layoutX="240.0" layoutY="282.0" minHeight="27.0" mnemonicParsing="false"
            onAction="#userLogin" prefHeight="27.0" prefWidth="120.0" styleClass="custom-button" text="Log In"/>
    <Label layoutX="178.0" layoutY="339.0" styleClass="custom-label" text="Don't have an account ?">

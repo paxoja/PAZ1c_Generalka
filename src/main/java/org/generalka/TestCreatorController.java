@@ -46,7 +46,9 @@ public class TestCreatorController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
         Parent parent = loader.load();
         Scene generalkaScene = new Scene(parent);
+        generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();
+
         stage.setScene(generalkaScene);
     }
 
@@ -112,6 +114,7 @@ public class TestCreatorController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestAttributes.fxml"));
         Parent parent = loader.load();
         Scene testAttributesScene = new Scene(parent);
+        testAttributesScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();
         stage.setScene(testAttributesScene);
     }

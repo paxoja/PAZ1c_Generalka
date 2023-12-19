@@ -6,20 +6,50 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestAttributesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestAttributesController">
     <children>
-        <Button fx:id="moveToCreateTestButton" layoutX="452.0" layoutY="346.0" mnemonicParsing="false" onAction="#moveToCreateTest" prefHeight="18.0" prefWidth="92.0" text="Create" />
-          <Label layoutX="229.0" layoutY="17.0" text="Define Test Attributes" />
-          <Label layoutX="80.0" layoutY="62.0" text="Test Description:" />
-          <TextField fx:id="descriptionTextField" layoutX="84.0" layoutY="93.0" prefHeight="69.0" prefWidth="432.0" promptText="Enter test description" />
-          <Label layoutX="89.0" layoutY="239.0" text="Year of Study:" />
-          <ComboBox fx:id="yearComboBox" layoutX="176.0" layoutY="236.0" promptText="Select year" />
-          <Label layoutX="318.0" layoutY="192.0" text="Subject:" />
-          <ComboBox fx:id="subjectComboBox" layoutX="375.0" layoutY="188.0" promptText="Select subject" />
-          <Label layoutX="109.0" layoutY="191.0" text="Semester:" />
-          <ComboBox fx:id="semesterComboBox" layoutX="172.0" layoutY="187.0" promptText="Select semester" />
-          <CheckBox fx:id="wholeSemesterCheckBox" layoutX="380.0" layoutY="241.0" text="Whole Semester" />
-      <Button fx:id="returnToGeneralkaButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#returnToGeneralka" prefHeight="26.0" prefWidth="100.0" text="Return" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="370.0" layoutX="25.0" layoutY="15.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="551.0" />
+        <Button fx:id="moveToCreateTestButton" layoutX="457.0" layoutY="342.0" mnemonicParsing="false" onAction="#moveToCreateTest" prefHeight="27.0" prefWidth="100.0" text="Create" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
+          <Label layoutX="229.0" layoutY="36.0" text="Define Test Attributes">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <Label layoutX="80.0" layoutY="62.0" text="Test Description:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <TextField fx:id="descriptionTextField" layoutX="84.0" layoutY="93.0" prefHeight="69.0" prefWidth="432.0" promptText="Enter test description" styleClass="testTextField">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></TextField>
+          <Label layoutX="109.0" layoutY="239.0" text="Year of Study:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <ComboBox fx:id="yearComboBox" layoutX="198.0" layoutY="235.0" promptText="Select year" styleClass="combobox" />
+          <Label layoutX="318.0" layoutY="192.0" text="Subject:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <ComboBox fx:id="subjectComboBox" layoutX="375.0" layoutY="188.0" promptText="Select subject" styleClass="combobox" />
+          <Label layoutX="109.0" layoutY="191.0" text="Semester:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <ComboBox fx:id="semesterComboBox" layoutX="172.0" layoutY="187.0" promptText="Select semester" styleClass="combobox" />
+          <CheckBox fx:id="wholeSemesterCheckBox" layoutX="380.0" layoutY="241.0" styleClass="checkbox" text="Whole Semester">
+         <font>
+            <Font name="SansSerif Regular" size="30.0" />
+         </font></CheckBox>
+      <Button fx:id="returnToGeneralkaButton" layoutX="40.0" layoutY="342.0" minWidth="61.0" mnemonicParsing="false" onAction="#returnToGeneralka" prefHeight="26.0" prefWidth="100.0" text="Return" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
     </children>
 </AnchorPane>

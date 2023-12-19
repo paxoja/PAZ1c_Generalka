@@ -75,3 +75,118 @@
     -fx-arc-width: 50; /* Adjust the arc width for the circular round edges */
     -fx-arc-height: 50; /* Adjust the arc height for the circular round edges */
 }
+
+
+.testTextField {
+    -fx-background-color: white; /* White background */
+    -fx-text-fill: black; /* Black text color */
+    -fx-border-radius: 0; /* Remove border radius */
+}
+
+
+.combobox {
+    -fx-background-color: white;
+    -fx-border-color: #99ccff;
+    -fx-font-size: 12px;
+}
+
+
+.combobox .arrow-button {
+    -fx-background-color: #99ccff;
+}
+
+
+.combobox .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #99ccff;
+}
+
+/* Apply styles to CheckBox with style class checkbox */
+.checkbox {
+    -fx-font-size: 12px; /* Adjust font size as needed */
+    -fx-text-fill: #333333; /* Dark gray text color */
+
+}
+
+/* Apply styles to the box part of the CheckBox */
+.checkbox .box {
+    -fx-border-color: #99ccff; /* Light blue border color */
+        -fx-background-color: white /* Light blue background for the check mark */
+}
+
+
+
+/* Apply styles to the text part of the CheckBox */
+.checkbox .text {
+    -fx-padding: 0 0 0 5; /* Adjust padding as needed */
+}
+
+/* Apply styles to the table */
+#TestTable {
+    -fx-table-cell-border-color: derive(-fx-control-inner-background, -10%);
+    -fx-table-header-border-color: derive(-fx-control-inner-background, -20%);
+}
+
+/* Apply styles to table columns */
+#idColmn, #nameColmn, #subjectColmn, #yearOfStudyColmn, #semesterColmn {
+    -fx-alignment: CENTER;
+}
+
+
+/* Apply hover effect on rows */
+#TestTable .table-row-cell:hover {
+    -fx-background-color: #d9d9d9;
+}
+
+/* Apply styles to selected rows */
+#TestTable .table-row-cell:selected {
+    -fx-background-color: #99ccff;
+
+}
+
+/* Apply styles to column headers */
+#TestTable .column-header {
+    -fx-background-color: #99ccff;
+    -fx-text-fill: white;
+
+}
+
+
+/* Apply hover effect on rows */
+#resultsTable .table-row-cell:hover {
+    -fx-background-color: #d9d9d9;
+}
+
+/* Apply styles to selected rows */
+#resultsTable .table-row-cell:selected {
+    -fx-background-color: #99ccff;
+
+}
+
+/* Apply styles to column headers */
+#resultsTable .column-header {
+    -fx-background-color: #99ccff;
+    -fx-text-fill: white;
+
+}
+
+
+/* Apply hover effect on rows */
+#testHistoryTable .table-row-cell:hover {
+    -fx-background-color: #d9d9d9;
+}
+
+/* Apply styles to selected rows */
+#testHistoryTable .table-row-cell:selected {
+    -fx-background-color: #99ccff;
+
+}
+
+/* Apply styles to column headers */
+#testHistoryTable .column-header {
+    -fx-background-color: #99ccff;
+    -fx-text-fill: white;
+
+}
+
+.usernameText {    -fx-text-fill: white;}

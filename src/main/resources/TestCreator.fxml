@@ -4,18 +4,51 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
     <children>
-        <Button layoutX="507.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleSubmit" text="Submit" />
-      <Button layoutX="377.0" layoutY="343.0" mnemonicParsing="false" onAction="#addNextQuestion" text="Add next question" />
-      <Button fx:id="returnToTestAttributesButton" layoutX="7.0" layoutY="1.0" mnemonicParsing="false" onAction="#returnToTestAttributes" prefHeight="26.0" prefWidth="100.0" text="Return" />
-          <Label layoutX="162.0" layoutY="45.0" text="Create Your Test Questions and Answers" />
-          <Label layoutX="228.0" layoutY="99.0" text="Enter a question:" />
-          <TextField fx:id="questionTextField" layoutX="116.0" layoutY="132.0" prefHeight="26.0" prefWidth="329.0" promptText="Type your question here" />
-          <Label layoutX="170.0" layoutY="183.0" text="Enter answer options (comma-separated):" />
-          <TextField fx:id="answersTextField" layoutX="116.0" layoutY="207.0" prefHeight="26.0" prefWidth="329.0" promptText="Option 1, Option 2, Option 3, ..." />
-      <TextField fx:id="correctAnswerTextField" layoutX="205.0" layoutY="288.0" promptText="Option 1, Option 2, Option 3, ..." />
-          <Label layoutX="221.0" layoutY="260.0" text="Select correct answers:" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="379.0" layoutX="15.0" layoutY="11.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="568.0" />
+        <Button layoutX="476.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="26.0" prefWidth="80.0" text="Submit" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
+      <Button layoutX="343.0" layoutY="351.0" mnemonicParsing="false" onAction="#addNextQuestion" prefHeight="26.0" prefWidth="121.0" text="Add next question" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
+      <Button fx:id="returnToTestAttributesButton" layoutX="50.0" layoutY="351.0" mnemonicParsing="false" onAction="#returnToTestAttributes" prefHeight="26.0" prefWidth="100.0" text="Return" textFill="WHITE">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Button>
+          <Label layoutX="175.0" layoutY="43.0" text="Create Your Test Questions and Answers">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <Label layoutX="248.0" layoutY="102.0" text="Enter a question:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <TextField fx:id="questionTextField" layoutX="135.0" layoutY="132.0" prefHeight="26.0" prefWidth="329.0" promptText="Type your question here">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></TextField>
+          <Label layoutX="170.0" layoutY="181.0" text="Enter answer options (comma-separated):">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
+          <TextField fx:id="answersTextField" layoutX="135.0" layoutY="209.0" prefHeight="26.0" prefWidth="329.0" promptText="Option 1, Option 2, Option 3, ...">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></TextField>
+      <TextField fx:id="correctAnswerTextField" layoutX="214.0" layoutY="288.0" promptText="Option 1, Option 2, Option 3, ...">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></TextField>
+          <Label layoutX="230.0" layoutY="258.0" text="Select correct answers:">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font></Label>
     </children>
 </AnchorPane>
