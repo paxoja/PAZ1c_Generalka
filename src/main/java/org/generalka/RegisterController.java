@@ -44,6 +44,7 @@ public class RegisterController {
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();
         Scene registerScene = new Scene(parent);
+        registerScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToLoginButton.getScene().getWindow();
         stage.setScene(registerScene);
         stage.setTitle("Attender");

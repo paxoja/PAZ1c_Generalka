@@ -84,6 +84,7 @@ public class GeneralkaController {
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();
         Scene logoutScene = new Scene(parent);
+        logoutScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) logoutButton.getScene().getWindow();
         stage.setScene(logoutScene);
 

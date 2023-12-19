@@ -31,13 +31,27 @@
 
 /* Apply styles to the login button */
 #loginButton {
-    -fx-background-radius: 20; /* Make the button round */
-    -fx-background-color: #e099f9; /* Light blue background */
-    -fx-text-fill: white; /* White text color */
+    -fx-background-radius: 20;
+    -fx-background-color: #e099f9;
+    -fx-text-fill: white;
+}
+
+
+#registerButton {
+    -fx-background-radius: 20;
+    -fx-background-color: #e099f9;
+    -fx-text-fill: white;
 }
 
 /* Apply styles to the register button */
 #moveToRegisterButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #99ccff; /* Light blue */
+    -fx-border-color: transparent;
+}
+
+/* Apply styles to the register button */
+#moveToLoginButton {
     -fx-background-color: transparent;
     -fx-text-fill: #99ccff; /* Light blue */
     -fx-border-color: transparent;
