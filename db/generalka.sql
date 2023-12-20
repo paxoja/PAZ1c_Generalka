@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`TestQuestion` (
   CONSTRAINT `fk_TestQuestion_Test1`
     FOREIGN KEY (`Test_id`)
     REFERENCES `mydb`.`Test` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Answer` (
   CONSTRAINT `fk_Answer_TestQuestion1`
     FOREIGN KEY (`TestQuestion_id`)
     REFERENCES `mydb`.`TestQuestion` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
