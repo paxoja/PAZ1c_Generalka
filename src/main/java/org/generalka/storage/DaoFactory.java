@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import javax.sql.DataSource;
+
 public enum DaoFactory {
 
     INSTANCE;
@@ -27,6 +29,14 @@ public enum DaoFactory {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         return jdbcTemplate;
+    }
+
+    private DataSource getDataSource() {
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUser("root");
+        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/mydb");
+        return dataSource;
     }
 
     public UserDao getUserDao() {
@@ -57,6 +67,10 @@ public enum DaoFactory {
         if (testHistoryDao == null)
             testHistoryDao = new MysqlTestHistoryDao(getJdbcTemplate());
             return testHistoryDao;
+    }
+
+    public DataSource getFullDataSource() {
+        return getDataSource();
     }
 
 }

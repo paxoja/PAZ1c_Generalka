@@ -64,8 +64,6 @@ public class AdminEditController {
 
     private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
 
-    private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
-
     ObservableList<TestOverview> testOverviewObservableList = FXCollections.observableArrayList();
 
     private List<TestOverview> originalTestOverviews;
@@ -83,8 +81,9 @@ public class AdminEditController {
         nameColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
         semesterColmn.setCellValueFactory(new PropertyValueFactory<>("semester"));
         subjectColmn.setCellValueFactory(new PropertyValueFactory<>("subject"));
-        yearOfStudyColmn.setCellValueFactory(new PropertyValueFactory<>("yearOfStudy"));
+        yearOfStudyColmn.setCellValueFactory(new PropertyValueFactory<>("yearOfStudy"));//
 
+        // center text
         idColmn.setCellFactory(new CenterTextTable<>());
         semesterColmn.setCellFactory(new CenterTextTable<>());
         subjectColmn.setCellFactory(new CenterTextTable<>());
