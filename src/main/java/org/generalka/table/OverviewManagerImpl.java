@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+// used to fill the tables
 public class OverviewManagerImpl implements OverviewManager {
 
     private TestDao testDao = DaoFactory.INSTANCE.getTestDao();

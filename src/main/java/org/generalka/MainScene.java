@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class MainScene extends Application {
 
+    // first the login screen opens
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));

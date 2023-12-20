@@ -130,3 +130,4 @@ public class TestFxModel {
         return new Test(getId(), getTopic(), getIsWholeSemester(), getDate(), getSubject(), getSemester(), getYearOfStudy(), getUser());
     }
 }
+

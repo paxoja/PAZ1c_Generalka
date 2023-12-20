@@ -33,13 +33,16 @@ public class TestCreatorController {
 
     private List<TestQuestion> testQuestions = new ArrayList<>();
 
-    private Test currentTest; // tu storujeme test aky robime
+    private Test currentTest; // here we store which test we are taking
 
+    //
     @FXML
     private void handleSubmit() throws IOException {
         if (isDataValid()) {
+            // adds question to List testQuestions
             TestQuestion testQuestion = createTestQuestion();
             testQuestions.add(testQuestion);
+            // field which we write question into resets
             clearFields();
         }
 
@@ -61,24 +64,31 @@ public class TestCreatorController {
         }
     }
 
+    // window cant be empty, nor the answers cant be empty
     private boolean isDataValid() {
         return !questionTextField.getText().isEmpty() && !answersTextField.getText().isEmpty();
     }
 
     private TestQuestion createTestQuestion() {
+
+        // questions takes text fields, sets which test it belongs to
         TestQuestion testQuestion = new TestQuestion();
         testQuestion.setQuestion(questionTextField.getText());
         testQuestion.setTest(currentTest);
 
+        // saves question using Dao
         testQuestionDao.saveTestQuestion(testQuestion);
 
+        // answers split into multiple strings and is saved into answers List
         String[] answerOptions = answersTextField.getText().split("\\s*,\\s*");
         List<Answer> answers = new ArrayList<>();
 
+        // cycle - goes through answersOptions string pool, saves answers
         for (String option : answerOptions) {
             Answer answer = new Answer();
             answer.setAnswer(option);
 
+            // sets which answer is true
             if (option.equalsIgnoreCase(correctAnswerTextField.getText())) {
                 answer.setIsCorrect(true);
             } else {
@@ -88,10 +98,11 @@ public class TestCreatorController {
             answer.setTestQuestion(testQuestion);
             answers.add(answer);
 
-            // Save the answer to the database
+            // saving answers to database table with answers
             answerDao.saveAnswer(answer);
         }
 
+        // saves to testQuestions table which we use in test
         testQuestion.setAnswers(answers);
 
 
@@ -104,13 +115,13 @@ public class TestCreatorController {
         correctAnswerTextField.clear();
     }
 
-    // setneme aky test editujeme TestAttributesController
+    // setting which test we are editing
     public void setTest(Test test) {
         this.currentTest = test;
     }
 
     @FXML
-    void returnToTestAttributes(ActionEvent event) throws IOException {
+    void returnToTestAttributes() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestAttributes.fxml"));
         Parent parent = loader.load();
         Scene testAttributesScene = new Scene(parent);

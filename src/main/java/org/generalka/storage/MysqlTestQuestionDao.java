@@ -64,11 +64,6 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
         }
     }
 
-    @Override
-    public void deleteTestQuestion(Long testQuestionId) {
-        String sql = "DELETE FROM TestQuestion WHERE id=?";
-        jdbcTemplate.update(sql, testQuestionId);
-    }
 
     @Override
     public TestQuestion getTestQuestionById(Long testQuestionId) {
@@ -76,11 +71,6 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
         return jdbcTemplate.queryForObject(sql, testQuestionRowMapper(), testQuestionId);
     }
 
-    @Override
-    public List<TestQuestion> getAllTestQuestions() {
-        String sql = "SELECT * FROM TestQuestion";
-        return jdbcTemplate.query(sql, testQuestionRowMapper());
-    }
 
     @Override
     public List<TestQuestion> getTestQuestionsByTestId(Long testId) {

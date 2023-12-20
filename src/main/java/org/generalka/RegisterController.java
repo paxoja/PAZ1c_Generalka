@@ -39,7 +39,7 @@ public class RegisterController {
 
 
     @FXML
-    void moveToLogin(ActionEvent event) throws IOException {
+    void moveToLogin() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();

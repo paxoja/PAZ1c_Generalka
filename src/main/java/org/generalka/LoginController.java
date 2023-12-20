@@ -37,7 +37,8 @@ public class LoginController {
 
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
 
-    public void moveToRegister(ActionEvent event) throws IOException {
+    // move to register using button
+    public void moveToRegister() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/register.fxml"));
         Parent parent = loader.load();
@@ -48,10 +49,12 @@ public class LoginController {
         stage.setTitle("Attender");
     }
 
-    public void userLogin(ActionEvent event) throws IOException {
+    public void userLogin() throws IOException {
         checkLogin();
     }
 
+
+    // source: https://www.youtube.com/watch?v=HBBtlwGpBek
     private void checkLogin() throws IOException {
         String enteredUsername = username.getText();
         String enteredPassword = password.getText();
@@ -61,6 +64,7 @@ public class LoginController {
             return;
         }
 
+        // if the password and username matches and the user is also in database, the login is successful
         Optional<User> userOptional = userDao.getUserByUsername(enteredUsername);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -76,6 +80,7 @@ public class LoginController {
         }
     }
 
+    // move to main screen using login button
     private void openGeneralkaScreen() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/generalka.fxml"));

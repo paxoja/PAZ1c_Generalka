@@ -6,37 +6,38 @@ import java.util.List;
 public class TestQuestionDaoImpl implements TestQuestionDao {
     private List<TestQuestion> testQuestions = new ArrayList<>();
 
+
     @Override
     public void saveTestQuestion(TestQuestion testQuestion) {
         testQuestions.add(testQuestion);
     }
 
-    @Override
-    public void deleteTestQuestion(Long testQuestionId) {
-        testQuestions.removeIf(question -> question.getId().equals(testQuestionId));
-    }
 
     @Override
     public TestQuestion getTestQuestionById(Long testQuestionId) {
-        return testQuestions.stream()
-                .filter(question -> question.getId().equals(testQuestionId))
-                .findFirst()
-                .orElse(null);
+        for (TestQuestion question : testQuestions) {
+            // check if the current questions id matches the specified testQuestionId
+            if (question.getId().equals(testQuestionId)) {
+                return question;
+            }
+        }
+        // we return null if no TestQuestion with the specified ID is found
+        return null;
     }
 
-    @Override
-    public List<TestQuestion> getAllTestQuestions() {
-        return new ArrayList<>(testQuestions);
-    }
+
 
     @Override
     public List<TestQuestion> getTestQuestionsByTestId(Long testId) {
         List<TestQuestion> questionsByTestId = new ArrayList<>();
         for (TestQuestion question : testQuestions) {
+            // we check if the current question is associated with the specific test id
             if (question.getTest().getId().equals(testId)) {
                 questionsByTestId.add(question);
             }
         }
+
+        // return the list of TestQuestions of specific test
         return questionsByTestId;
     }
 }

@@ -15,6 +15,8 @@ public class MysqlTestDao implements TestDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    // fetching the tests from the database
     private RowMapper<Test> testRowMapper() {
         return new RowMapper<Test>() {
             @Override
@@ -48,7 +50,7 @@ public class MysqlTestDao implements TestDao {
         Objects.requireNonNull(test.getUser(), "Test user cannot be null");
         Objects.requireNonNull(test.getUser().getId(), "User ID cannot be null");
 
-        if (test.getId() == null) { // INSERT
+        if (test.getId() == null) {
             String sql = "INSERT INTO Test (topic, is_whole_semester, date, subject, semester, year_of_study, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 
@@ -66,7 +68,7 @@ public class MysqlTestDao implements TestDao {
             }, keyHolder);
             long id = keyHolder.getKey().longValue();
             test.setId(id);
-        } else {    // UPDATE
+        } else {
             String sql = "UPDATE Test SET topic=?, is_whole_semester=?, date=?, subject=?, semester=?, year_of_study=?, user_id=? WHERE id=?";
 
 
@@ -84,31 +86,29 @@ public class MysqlTestDao implements TestDao {
         }
     }
 
-    @Override
-    public void getTabletest() throws EntityNotFoundException {
-        String sql = "SELECT id, topic, subject, semester, year_of_study FROM test";
-        jdbcTemplate.query(sql, testRowMapper());
-    }
 
-
+    // deleting specific test based on id
     @Override
     public void deleteTest(Long testId) {
         String sql = "DELETE FROM Test WHERE id=?";
         jdbcTemplate.update(sql, testId);
     }
 
+    // fetching test
     @Override
     public Test getTestById(Long testId) {
         String sql = "SELECT * FROM Test WHERE id=?";
         return jdbcTemplate.queryForObject(sql, testRowMapper(), testId);
     }
 
+    // fetching all tests to show in table
     @Override
     public List<Test> getAllTests() {
         String sql = "SELECT * FROM Test";
         return jdbcTemplate.query(sql, testRowMapper());
     }
 
+    // getting number of questions - to count possible points
     @Override
     public int getNumberOfQuestions(Long testId) throws EntityNotFoundException {
         String sql = "SELECT COUNT(*) FROM TestQuestion WHERE Test_id = ?";

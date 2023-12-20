@@ -31,11 +31,12 @@ public class GeneralkaController {
     @FXML
     private Label loggedInUserLabel; // na menenie mena v generalke
 
-    // z DaoFactory volame pomocou instance userDao
+    // we call the user instance using DaoFactory
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
 
-    // po loadnuti FXML ziskame current user z Dao, ak mame pouzivatela tak nastavi jeho username
-    // pouzivame Optional, co zisti pritomnost objektu cez get
+    // after loading the FXML we retrieve current user from DAO
+    // if  we have a user, it sets its username to the top of the screen
+    // we use Optional, which finds the presence of the object through get
     @FXML
     private void initialize() {
         Optional<User> currentUser = userDao.getCurrentUser();
@@ -45,6 +46,8 @@ public class GeneralkaController {
         }
     }
 
+
+    // move to profile using button
     @FXML
     private void moveToProfile() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -57,6 +60,7 @@ public class GeneralkaController {
 
     }
 
+    // move to create test using button
     @FXML
     private void moveToCreateTest() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -69,6 +73,7 @@ public class GeneralkaController {
 
     }
 
+    // move to take test using button
     @FXML
     private void moveToTakeTest() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -81,6 +86,7 @@ public class GeneralkaController {
 
     }
 
+    // logout using button
     @FXML
     private void logout() throws IOException {
         FXMLLoader loader = new FXMLLoader(

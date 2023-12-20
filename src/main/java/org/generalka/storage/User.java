@@ -2,13 +2,11 @@ package org.generalka.storage;
 
 public class User {
 
-    // vytvorenie premennych podla tabulky User
     private long id;
     private boolean isAdmin;
     private String username;
     private String password;
 
-    // getters + setters
     public long getId() {
         return id;
     }
@@ -40,8 +38,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-    // doplnit age/datum narodenia a country dropbox aby to nebolo take prazdne v profile
 
 }

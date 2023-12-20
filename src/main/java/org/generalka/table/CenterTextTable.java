@@ -5,6 +5,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
+//  centering in table cells
 public class CenterTextTable<S, T> implements Callback<TableColumn<S, T>, TableCell<S, T>> {
 
         @Override

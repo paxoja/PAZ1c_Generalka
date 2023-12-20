@@ -61,9 +61,6 @@ public class TestSelectionController {
     private final OverviewManager overviewManager = new OverviewManagerImpl();
     private final TestQuestionDao testQuestionDao = new TestQuestionDaoImpl();
 
-    private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
-
-    private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
 
     ObservableList<TestOverview> testOverviewObservableList = FXCollections.observableArrayList();
 
@@ -71,8 +68,7 @@ public class TestSelectionController {
 
     @FXML
     public void initialize() {
-        
-        // nastavenie tabulky - vytvorenie nazvov pre stlpce
+        // setting names for headers
         idColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
         semesterColmn.setCellValueFactory(new PropertyValueFactory<>("semester"));
@@ -85,29 +81,30 @@ public class TestSelectionController {
         yearOfStudyColmn.setCellFactory(new CenterTextTable<>());
 
         try {
-            // test summary z OverviewManager
+            // test summary from OverviewManager
             List<TestOverview> testOverviews = overviewManager.getTestSummary();
             testOverviewObservableList.addAll(testOverviews);
 
-            // nastavia sa veci do TestTable
+            // set items to the TestTable
             TestTable.setItems(testOverviewObservableList);
 
-            // zoznam na ulozenie pri filtrovani
+            // saving in filtering
             originalTestOverviews = overviewManager.getTestSummary();
 
-            // odstranenie duplicit
+            // removing duplicites
             testOverviewObservableList.clear();
 
-            // pridanie predmetov
+            // adding subjects
             testOverviewObservableList.addAll(originalTestOverviews);
 
-            // set predmety
+            // set subjects
             TestTable.setItems(testOverviewObservableList);
 
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
         }
 
+        // lists to fill the comboboxes
         ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3);
         yearOfStudyComboBox.setItems(years);
 
@@ -138,12 +135,14 @@ public class TestSelectionController {
         applyFilters();
     }
 
+    //
     private void applyFilters() {
         Integer selectedYearOfStudy = yearOfStudyComboBox.getValue();
         String selectedSubject = subjectComboBox.getValue();
         String selectedSemester = semesterComboBox.getValue();
         boolean wholeSemesterSelected = wholeSemesterCheckbox.isSelected();
 
+        // if the parameters are not null it shows the filtered results
         List<TestOverview> filteredList = originalTestOverviews
                 .stream()
                 .filter(testOverview ->
@@ -157,7 +156,7 @@ public class TestSelectionController {
         testOverviewObservableList.addAll(filteredList);
     }
 
-    // prechod spat na main screen
+    // return to main screen
     @FXML
     private void returnToGeneralka() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -170,18 +169,18 @@ public class TestSelectionController {
     }
 
 
-    // otvorenie test sceny
+    // opening the test scene
     @FXML
     private void openTestScene() {
         TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
 
         if (selectedTest != null) {
 
-            // gettneme otazky podla test id
+            // getting questions based on the test id
             testQuestionDao.getTestQuestionsByTestId(selectedTest.getId());
 
             try {
-                // otvori sa TestController a preda sa mu test ID
+                // TestController opens and retrieves test ID which it shows
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Test.fxml"));
                 Parent parent = loader.load();
                 TestController testController = loader.getController();

@@ -3,17 +3,15 @@ package org.generalka.storage;
 import java.util.List;
 
 public interface TestQuestionDao {
+
+    // save test question
     void saveTestQuestion(TestQuestion testQuestion) throws EntityNotFoundException;;
 
-    // Delete a test question by its ID
-    void deleteTestQuestion(Long testQuestionId) throws EntityNotFoundException;;
 
-    // Get a test question by its ID
+    // get a test question by its id
     TestQuestion getTestQuestionById(Long testQuestionId) throws EntityNotFoundException;;
 
-    // Get all test questions
-    List<TestQuestion> getAllTestQuestions() throws EntityNotFoundException;;
-
+    // get questions which belong to specific test
     List<TestQuestion> getTestQuestionsByTestId(Long testId) throws EntityNotFoundException;;
 }
 

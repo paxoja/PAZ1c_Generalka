@@ -60,7 +60,6 @@ public class AdminEditController {
     private Button adminDeleteTestButton;
 
     private final OverviewManager overviewManager = new OverviewManagerImpl();
-    private final TestQuestionDao testQuestionDao = new TestQuestionDaoImpl();
 
     private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
 
@@ -68,7 +67,7 @@ public class AdminEditController {
 
     private List<TestOverview> originalTestOverviews;
 
-    // Variable to store the selected test
+    // variable to store the selected test
     private TestOverview selectedTest;
     private void setSelectedTest(TestOverview test) {
         this.selectedTest = test;
@@ -76,7 +75,7 @@ public class AdminEditController {
 
     @FXML
     public void initialize() {
-        // nastavenie tabulky - vytvorenie nazvov pre stlpce
+        // setting the table
         idColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
         semesterColmn.setCellValueFactory(new PropertyValueFactory<>("semester"));
@@ -89,13 +88,13 @@ public class AdminEditController {
         subjectColmn.setCellFactory(new CenterTextTable<>());
         yearOfStudyColmn.setCellFactory(new CenterTextTable<>());
 
-        // Set up the row click event handler
+        // set up the row click event handler
         TestTable.setRowFactory(tv -> {
             TableRow<TestOverview> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
                     TestOverview selectedTest = row.getItem();
-                    // Store the selected test for later use
+                    // store the selected test to open or delete it
                     setSelectedTest(selectedTest);
                 }
             });
@@ -103,23 +102,23 @@ public class AdminEditController {
         });
 
         try {
-            // test summary z OverviewManager
+            // test summary from OverviewManager
             List<TestOverview> testOverviews = overviewManager.getTestSummary();
             testOverviewObservableList.addAll(testOverviews);
 
-            // nastavia sa veci do TestTable
+            // sets items to test table
             TestTable.setItems(testOverviewObservableList);
 
-            // zoznam na ulozenie pri filtrovani
+            // list for saving during filtring
             originalTestOverviews = overviewManager.getTestSummary();
 
-            // odstranenie duplicit
+            // remove duplicites
             testOverviewObservableList.clear();
 
-            // pridanie predmetov
+            // adding
             testOverviewObservableList.addAll(originalTestOverviews);
 
-            // set predmety
+            // setting items
             TestTable.setItems(testOverviewObservableList);
 
         } catch (EntityNotFoundException e) {
@@ -175,7 +174,7 @@ public class AdminEditController {
         testOverviewObservableList.addAll(filteredList);
     }
 
-    // prechod spat na main screen
+    // return to main screen
     @FXML
     private void returnToGeneralka() throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -189,14 +188,15 @@ public class AdminEditController {
 
         @FXML
         private void deleteTest() {
-            // Implement test deletion logic here
+
+        // we take selected test
             TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
             if (selectedTest != null) {
                 try {
-                    // Delete the test using the appropriate DAO method
+                    // deletes test using its id
                     testDao.deleteTest(selectedTest.getId());
 
-                    // Refresh the table after deletion
+                    // refresh table
                     originalTestOverviews = overviewManager.getTestSummary();
                     testOverviewObservableList.clear();
                     testOverviewObservableList.addAll(originalTestOverviews);
@@ -204,7 +204,7 @@ public class AdminEditController {
 
                 } catch (EntityNotFoundException e) {
                     e.printStackTrace();
-                    // Handle the exception as needed
+
                 }
             }
         }

@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MysqlUserDao implements UserDao {
 
     private JdbcTemplate jdbcTemplate;
-    private User currentUser; // na ulozenie current user
+    private User currentUser; // holds the currently logged-in user
 
     public MysqlUserDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -25,7 +25,6 @@ public class MysqlUserDao implements UserDao {
     public void insertUser(User user) {
         Objects.requireNonNull(user, "User cannot be null");
         Objects.requireNonNull(user.getPassword(), "Password cannot be null");
-
         String query = "INSERT INTO User (is_admin, username, password) VALUES (?, ?, ?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -40,10 +39,13 @@ public class MysqlUserDao implements UserDao {
             }
         }, keyHolder);
 
+        // retrieving the user id and setting it in the User
         long id = keyHolder.getKey().longValue();
         user.setId(id);
     }
 
+
+    // source: https://www.youtube.com/watch?v=HBBtlwGpBek
     @Override
     public Optional<User> getUserByUsername(String username) {
         String query = "SELECT * FROM User WHERE username = ?";
@@ -52,15 +54,17 @@ public class MysqlUserDao implements UserDao {
                     new BeanPropertyRowMapper<>(User.class));
             return Optional.ofNullable(user);
         } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
+            return Optional.empty(); // if no user is found we return an empty Optional
         }
     }
 
+    // getting user by id which is current logged in user
     @Override
     public Optional<User> getCurrentUser() {
         return Optional.ofNullable(currentUser);
     }
 
+    // setting current user
     @Override
     public void setCurrentUser(User user) {
         this.currentUser = user;

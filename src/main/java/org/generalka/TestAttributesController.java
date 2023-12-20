@@ -53,6 +53,8 @@ public class TestAttributesController {
                 testFxModel = new TestFxModel();
         }
 
+
+        // initializes comboboxes
         @FXML
         private void initialize() {
                 descriptionTextField.textProperty().bindBidirectional(testFxModel.topicProperty());
@@ -68,8 +70,9 @@ public class TestAttributesController {
                 semesterComboBox.setItems(semesters);
         }
 
+        // return button
         @FXML
-        void moveToCreateTest(ActionEvent event) throws IOException {
+        void moveToCreateTest() throws IOException {
                 Test test = createTest();
 
                 if (test != null) {
@@ -84,7 +87,9 @@ public class TestAttributesController {
                 }
         }
 
+
         private Test createTest() {
+                // chosen attributes save to test
                 Test test = new Test();
                 test.setTopic(descriptionTextField.getText());
                 test.setYearOfStudy(yearComboBox.getValue());
@@ -93,6 +98,7 @@ public class TestAttributesController {
                 test.setIsWholeSemester(wholeSemesterCheckBox.isSelected());
                 test.setDate(new Timestamp(System.currentTimeMillis()));
 
+                // we get user ids to define which user created it
                 UserDao userDao = DaoFactory.INSTANCE.getUserDao();
                 Optional<User> currentUser = userDao.getCurrentUser();
 
@@ -111,6 +117,8 @@ public class TestAttributesController {
                 return null;
         }
 
+
+        // return
         @FXML
         private void returnToGeneralka() throws IOException {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));

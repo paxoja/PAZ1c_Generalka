@@ -20,6 +20,8 @@ public enum DaoFactory {
     private TestHistoryDao testHistoryDao;
     private JdbcTemplate jdbcTemplate;
 
+
+    // setting up the database
     private JdbcTemplate getJdbcTemplate() {
         if (jdbcTemplate == null) {
             MysqlDataSource dataSource = new MysqlDataSource();
@@ -31,6 +33,7 @@ public enum DaoFactory {
         return jdbcTemplate;
     }
 
+    // inicialization of the database for unit tests
     private DataSource getDataSource() {
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setUser("root");
@@ -39,6 +42,7 @@ public enum DaoFactory {
         return dataSource;
     }
 
+    // getters of instances for Daos
     public UserDao getUserDao() {
         if (userDao == null)
             userDao = new MysqlUserDao(getJdbcTemplate());
@@ -69,6 +73,7 @@ public enum DaoFactory {
             return testHistoryDao;
     }
 
+    // calling the method
     public DataSource getFullDataSource() {
         return getDataSource();
     }

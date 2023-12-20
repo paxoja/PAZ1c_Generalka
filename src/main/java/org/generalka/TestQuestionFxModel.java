@@ -82,7 +82,7 @@ public class TestQuestionFxModel {
         return new TestQuestion(getId(), getQuestion(), getTest(), getAnswersAsList());
     }
 
-    // Add a method to get answers as a List of Answer objects
+    // method to get answers as a List of Answer objects
     public List<Answer> getAnswersAsList() {
         List<Answer> answers = new ArrayList<>();
         for (AnswerFxModel answerModel : getAnswers()) {

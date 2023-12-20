@@ -17,6 +17,7 @@ import java.util.*;
 
 public class TestController {
 
+
     @FXML
     private Label questionLabel;
 
@@ -49,6 +50,7 @@ public class TestController {
     private Map<Integer, Answer> selectedAnswersMap;
     private Map<Integer, Answer> userAnswersMap;
 
+    // initializing the hashmaps
     @FXML
     public void initialize() {
         selectedAnswersMap = new HashMap<>();
@@ -58,23 +60,28 @@ public class TestController {
         }
     }
 
+    // sets which test we are doing
     public void setTestId(Long testId) {
         this.testId = testId;
         loadTestQuestions();
     }
 
+    // answers which are in test, which the user chose - we use in creating score
     public List<Answer> getUserAnswers() {
-        // Convert userAnswersMap values to a List
+        // convert userAnswersMap values to a List
         return new ArrayList<>(userAnswersMap.values());
     }
 
+    // questions in test
     public List<TestQuestion> getTestQuestions() {
         return testQuestions;
     }
 
+    // we choose questions based on test id
     private void loadTestQuestions() {
         testQuestions = testQuestionDao.getTestQuestionsByTestId(testId);
 
+        // if questions arent null its loaded
         if (testQuestions != null && !testQuestions.isEmpty()) {
             loadQuestionAndAnswers();
         } else {
@@ -86,43 +93,56 @@ public class TestController {
 
 
     private void loadQuestionAndAnswers() {
+
+        // loads current question in test
         if (currentQuestionIndex < testQuestions.size()) {
             TestQuestion currentQuestion = testQuestions.get(currentQuestionIndex);
             questionLabel.setText(currentQuestion.getQuestion());
 
+            // cleans when we go to next question
             answersContainer.getChildren().clear();
 
-            // Check if answers are not null before iterating
+            // checks if answers are not null before iterating
             List<Answer> answers = answerDao.getAnswersByQuestionId(currentQuestion.getId());
 
             if (answers != null && !answers.isEmpty()) {
+
+                // group of answers - circles
                 ToggleGroup toggleGroup = new ToggleGroup();
 
+                // cycle which creates radiobutton with the answers
                 for (Answer answer : answers) {
                     RadioButton radioButton = new RadioButton(answer.getAnswer());
                     radioButton.setToggleGroup(toggleGroup);
 
-                    // Set margin between radio buttons
+                    // setting margin between radio buttons
                     VBox.setMargin(radioButton, new Insets(5, 0, 5, 0));
 
-                    // Update selectedAnswer when the user selects an answer
+                    // update selectedAnswer when the user selects an answer
+                    // when selected, it saves the index of the answer with the answer
                     radioButton.setOnAction(event -> {
                         selectedAnswersMap.put(currentQuestionIndex, answer);
                     });
 
+                    // adds the radiobutton
                     answersContainer.getChildren().add(radioButton);
                 }
 
-                // Check if there is a selected answer for the current question
+
+
+
                 if (selectedAnswersMap.containsKey(currentQuestionIndex)) {
                     Answer selectedAnswer = selectedAnswersMap.get(currentQuestionIndex);
-
                 }
+
             } else {
-                // Handle the case where answers are null or empty
-                // You might want to display a message or take appropriate action
+
             }
+
+
         } else {
+
+            // end of test, not needed buttons not visible
             answersContainer.getChildren().clear();
             questionLabel.setText("");
             endOfTestLabel.setText("End of the test");
@@ -137,18 +157,19 @@ public class TestController {
 
     @FXML
     private void handleSubmit() throws IOException {
-        // Iterate over the selectedAnswersMap entries and add them to the userAnswersMap
+        // iterate over the selectedAnswersMap entries and add them to the userAnswersMap
         if (selectedAnswersMap == null) {
             selectedAnswersMap = new HashMap<>();
         }
 
-        // Iterate through the userAnswersMap and update selectedAnswersMap
+        // iterate through the userAnswersMap and update selectedAnswersMap
         for (Map.Entry<Integer, Answer> entry : userAnswersMap.entrySet()) {
             int index = entry.getKey();
             Answer answer = entry.getValue();
             selectedAnswersMap.put(index, answer);
         }
 
+        // score for testhistory
         int score = calculateScore();
         saveTestHistory(score);
 
@@ -156,32 +177,33 @@ public class TestController {
         Parent parent = loader.load();
         ShowTestResultController showTestResultController = loader.getController();
 
-        // Pass the current TestController instance
+        // pass the current TestController instance for result
         showTestResultController.setTestController(this);
 
         Scene showTestResultScene = new Scene(parent);
         Stage stage = (Stage) returnToTestSelectionButton.getScene().getWindow();
         stage.setScene(showTestResultScene);
 
-        // Set the controller to null to ensure a new instance is created next time
+        // we set the controller to null to ensure a new instance is created next time
         loader.setController(null);
     }
 
     @FXML
     void nextQuestion() {
         if (selectedAnswersMap.containsKey(currentQuestionIndex)) {
+            // shows previous answer based on previous question index
             Answer previousAnswer = userAnswersMap.get(currentQuestionIndex);
 
-            // If there was a previous answer for the current question, remove it
+            // if there was a previous answer for the current question, remove it
             if (previousAnswer != null) {
                 userAnswersMap.remove(currentQuestionIndex);
             }
 
-            // Add the selected answer to the userAnswersMap
+            // add the selected answer to the userAnswersMap
             userAnswersMap.put(currentQuestionIndex, selectedAnswersMap.get(currentQuestionIndex));
         }
 
-        // Proceed to the next question
+        // go to the next question
         currentQuestionIndex++;
         loadQuestionAndAnswers();
     }
@@ -189,16 +211,17 @@ public class TestController {
     @FXML
     void questionBefore() {
         if (currentQuestionIndex > 0) {
-            // Update selected answer when going back to the previous question
+            // goes back and nullifies previous answer
+            // update selected answer when going back to the previous question
             selectedAnswersMap.put(currentQuestionIndex, null);
 
-            // Remove the current answer from userAnswersMap if it exists
+            // remove the current answer from userAnswersMap if it exists
             userAnswersMap.remove(currentQuestionIndex);
 
             currentQuestionIndex--;
             loadQuestionAndAnswers();
         } else {
-            // Handle the case where there are no previous questions (e.g., user is on the first question)
+            // case where there are no previous questions
             System.out.println("No previous question available");
         }
     }
@@ -208,25 +231,26 @@ public class TestController {
             return 0;
         }
 
-        // Count correct answers among user-selected answers
+        // counts correct answers and saves them
         long correctAnswersCount = userAnswersMap.values().stream().filter(Answer::getIsCorrect).count();
 
-        // Calculate and return the score
+        // calculate and return the score
         return (int) correctAnswersCount;
     }
 
     private void saveTestHistory(int score) {
-        // Create a TestHistory object and save it using the TestHistoryDao
+        // create a TestHistory object and save it using the TestHistoryDao
         TestHistory testHistory = new TestHistory();
         testHistory.setScore(score);
         testHistory.setTest(testDao.getTestById(testId));
-        // Set the user - you may need to get the actual user from your application
+        // set the user
         Optional<User> currentUser = userDao.getCurrentUser();
         testHistory.setUser(currentUser.get());
 
         testHistoryDao.saveTestHistory(testHistory);
     }
 
+    // return to test selection
         @FXML
     void returnToTestSelection() throws IOException {
         FXMLLoader loader = new FXMLLoader(

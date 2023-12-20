@@ -40,30 +40,12 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
 
 
     @Override
-    public TestHistory getTestHistoryById(Long id) throws EntityNotFoundException {
-        String sql = "SELECT * FROM TestHistory WHERE id=?";
-        return jdbcTemplate.queryForObject(sql, testHistoryRowMapper(), id);
-    }
-
-    @Override
-    public List<TestHistory> getAllTestHistories() throws EntityNotFoundException {
-        String sql = "SELECT * FROM TestHistory";
-        return jdbcTemplate.query(sql, testHistoryRowMapper());
-    }
-
-    @Override
-    public void deleteTestHistory(Long id) throws EntityNotFoundException {
-        String sql = "DELETE FROM TestHistory WHERE id=?";
-        jdbcTemplate.update(sql, id);
-    }
-
-    @Override
     public void saveTestHistory(TestHistory testHistory) {
         Objects.requireNonNull(testHistory, "TestHistory cannot be null");
         Objects.requireNonNull(testHistory.getTest(), "Test cannot be null");
         Objects.requireNonNull(testHistory.getTest().getId(), "Test ID cannot be null");
 
-        if (testHistory.getId() == null) { // INSERT
+        if (testHistory.getId() == null) {
             String sql = "INSERT INTO TestHistory (score, report, date, Test_id, User_id) VALUES (?, ?, ?, ?, ?)";
 
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -78,7 +60,7 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
             }, keyHolder);
             long id = keyHolder.getKey().longValue();
             testHistory.setId(id);
-        } else {    // UPDATE
+        } else {
             String sql = "UPDATE TestHistory SET score=?, report=?, date=?, Test_id=?, User_id=? WHERE id=?";
 
             jdbcTemplate.update(
@@ -93,6 +75,8 @@ public class MysqlTestHistoryDao implements TestHistoryDao {
         }
     }
 
+
+    // implementation of displaying in profile
     @Override
     public List<TestHistory> getTestHistoryByUserId(Long userId) throws EntityNotFoundException {
         String sql = "SELECT * FROM TestHistory WHERE User_id=?";

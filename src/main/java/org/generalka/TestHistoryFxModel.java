@@ -21,6 +21,7 @@ public class TestHistoryFxModel {
 
     }
 
+
     public TestHistoryFxModel(TestHistory testHistory) {
         setId(testHistory.getId());
         setScore(testHistory.getScore());

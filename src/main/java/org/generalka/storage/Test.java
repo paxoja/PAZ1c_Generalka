@@ -13,11 +13,9 @@ public class Test {
     private String subject;
     private String semester;
     private int yearOfStudy;
-    private User user; // User object representing the foreign key relationship
+    private User user;
 
-    public Test(){
-
-    }
+    public Test(){ }
 
     public Test(Long id, String topic, boolean isWholeSemester, Timestamp date, String subject, String semester, int yearOfStudy, User user) {
         this.id = id;

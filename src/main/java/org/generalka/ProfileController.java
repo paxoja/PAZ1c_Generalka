@@ -31,15 +31,6 @@ public class ProfileController {
     private Label profileUsername;
 
     @FXML
-    private Label ageLabel;
-
-    @FXML
-    private Label countryLabel;
-
-    @FXML
-    private Label genderLabel;
-
-    @FXML
     private Button returnToGeneralkaButton;
 
     @FXML
@@ -67,13 +58,13 @@ public class ProfileController {
     private TableColumn<TestHistoryProfile, Timestamp> historyDateColmn;
 
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
-    private OverviewManagerImpl overviewManager = new OverviewManagerImpl(); // Add this line
+    private OverviewManagerImpl overviewManager = new OverviewManagerImpl();
 
-    // po loadnuti FXML ziskame current user z Dao, ak mame pouzivatela tak nastavi jeho username
-    // pouzivame Optional, co zisti pritomnost objektu cez get
+
+    // after loading FXML we retrieve the current user from DAO and sets his username
+    // we use Optional, which finds the presence of the object through getter
     @FXML
     private void initialize() {
-
         Optional<User> currentUser = userDao.getCurrentUser();
         if (currentUser.isPresent()) {
             User user = currentUser.get();
@@ -109,18 +100,20 @@ public class ProfileController {
         }
     }
 
+    // if user is admin, he can delete others users tests
     @FXML
     void moveToEdit() throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/AdminEdit.fxml"));
         Parent parent = loader.load();
-        Scene generalkaScene = new Scene(parent);
-        generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Scene adminScene = new Scene(parent);
+        adminScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) adminEdit.getScene().getWindow();
-        stage.setScene(generalkaScene);
+        stage.setScene(adminScene);
 
     }
 
+    // move to main screen
     @FXML
     private void returnToGeneralka() throws IOException {
         FXMLLoader loader = new FXMLLoader(
