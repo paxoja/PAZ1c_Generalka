@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.AdminEditController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.AdminEditController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="382.0" layoutX="7.0" layoutY="9.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="582.0" />
       <Label layoutX="14.0" layoutY="58.0" text="Year of study:">
@@ -40,11 +40,11 @@
             <TableColumn fx:id="semesterColmn" minWidth="-1.0" prefWidth="120.0" text="Semester" />
         </columns>
       </TableView>
-      <Button fx:id="returnToGeneralkaButton" layoutX="373.0" layoutY="88.0" mnemonicParsing="false" onAction="#returnToGeneralka" text="Return" textFill="WHITE">
+      <Button fx:id="returnToGeneralkaButton" layoutX="12.0" layoutY="22.0" mnemonicParsing="false" onAction="#returnToGeneralka" text="Return" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="12.0" />
          </font></Button>
-      <Button fx:id="adminDeleteTestButton" layoutX="483.0" layoutY="88.0" mnemonicParsing="false" onAction="#deleteTest" text="Delete" textFill="WHITE">
+      <Button fx:id="adminDeleteTestButton" layoutX="493.0" layoutY="143.0" mnemonicParsing="false" onAction="#deleteTest" text="Delete" textFill="WHITE">
          <font>
             <Font name="SansSerif Regular" size="12.0" />
          </font></Button>

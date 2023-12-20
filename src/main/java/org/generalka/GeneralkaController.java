@@ -58,6 +58,7 @@ public class GeneralkaController {
         Stage stage = (Stage) moveToProfileButton.getScene().getWindow();
         stage.setScene(profileScene);
 
+
     }
 
     // move to create test using button

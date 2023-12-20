@@ -9,23 +9,23 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.ShowTestResultController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.ShowTestResultController">
     <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="384.0" layoutX="17.0" layoutY="8.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="567.0" />
       <Label fx:id="scoreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="40.0" prefHeight="29.0" prefWidth="233.0" textAlignment="CENTER" textOverrun="CLIP" />
         <TableView fx:id="resultsTable" layoutX="39.0" layoutY="80.0" prefHeight="284.0" prefWidth="522.0" styleClass="table">
             <columns>
-                <TableColumn prefWidth="173.0" styleClass="column-header" text="Question Number">
+                <TableColumn prefWidth="132.0" styleClass="column-header" text="Question Number">
                     <cellValueFactory>
                         <PropertyValueFactory property="questionNumber" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="173.0" text="Your Answer">
+                <TableColumn prefWidth="197.5999755859375" text="Your Answer">
                     <cellValueFactory>
                         <PropertyValueFactory property="userAnswer" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="175.0" text="Correct Answer">
+                <TableColumn prefWidth="192.79998779296875" text="Correct Answer">
                     <cellValueFactory>
                         <PropertyValueFactory property="correctAnswer" />
                     </cellValueFactory>

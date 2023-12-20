@@ -3,7 +3,6 @@ package org.generalka.storage;
 import java.util.Optional;
 
 public interface UserDao {
-
     // creating new user and inserting into database
     void insertUser(User user);
 

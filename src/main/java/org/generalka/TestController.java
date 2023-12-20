@@ -175,13 +175,16 @@ public class TestController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowTestResult.fxml"));
         Parent parent = loader.load();
+
         ShowTestResultController showTestResultController = loader.getController();
 
         // pass the current TestController instance for result
         showTestResultController.setTestController(this);
 
         Scene showTestResultScene = new Scene(parent);
+        showTestResultScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) returnToTestSelectionButton.getScene().getWindow();
+
         stage.setScene(showTestResultScene);
 
         // we set the controller to null to ensure a new instance is created next time

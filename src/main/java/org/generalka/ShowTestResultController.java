@@ -44,11 +44,10 @@ public class ShowTestResultController {
     public void setTestController(TestController testController) {
         this.testController = testController;
 
-        System.out.println("TestController Reference: " + testController);
 
-        // Check if the TestController instance is set
+
         if (this.testController == null) {
-            System.err.println("TestController instance is null. Aborting table initialization.");
+            System.err.println("TestController instance is null.");
             return;
         }
 
@@ -78,7 +77,6 @@ public class ShowTestResultController {
     @FXML
     public void initialize() {
 
-        System.out.println("TestController Reference in initialize: " + testController);
         TableColumn<TestResultItem, Integer> questionNumberCol = new TableColumn<>("Question Number");
         TableColumn<TestResultItem, String> userAnswerCol = new TableColumn<>("Your Answer");
         TableColumn<TestResultItem, String> correctAnswerCol = new TableColumn<>("Correct Answer");
