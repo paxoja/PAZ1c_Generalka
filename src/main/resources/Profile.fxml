@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.ProfileController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.ProfileController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="372.0" layoutX="14.0" layoutY="16.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="571.0" />
 
@@ -52,5 +52,6 @@
         </columns>
       </TableView>
       <Label layoutX="36.0" layoutY="71.0" text="Username:" />
+      <Button fx:id="adminEdit" layoutX="464.0" layoutY="23.0" mnemonicParsing="false" onAction="#moveToEdit" prefHeight="26.0" prefWidth="100.0" text="Edit Tests" textFill="WHITE" />
    </children>
 </AnchorPane>

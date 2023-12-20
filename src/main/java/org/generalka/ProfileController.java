@@ -2,7 +2,6 @@ package org.generalka;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +15,7 @@ import javafx.stage.Stage;
 import org.generalka.storage.*;
 import org.generalka.table.OverviewManagerImpl;
 import org.generalka.table.TestHistoryProfile;
+import org.generalka.table.CenterTextTable;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProfileController {
+
+    @FXML
+    private Button adminEdit;
 
     @FXML
     private Label profileUsername;
@@ -64,17 +67,22 @@ public class ProfileController {
     private TableColumn<TestHistoryProfile, Timestamp> historyDateColmn;
 
     private UserDao userDao = DaoFactory.INSTANCE.getUserDao();
-    private TestHistoryDao testHistoryDao = DaoFactory.INSTANCE.getTestHistoryDao();
     private OverviewManagerImpl overviewManager = new OverviewManagerImpl(); // Add this line
 
     // po loadnuti FXML ziskame current user z Dao, ak mame pouzivatela tak nastavi jeho username
     // pouzivame Optional, co zisti pritomnost objektu cez get
     @FXML
     private void initialize() {
+
         Optional<User> currentUser = userDao.getCurrentUser();
         if (currentUser.isPresent()) {
             User user = currentUser.get();
             profileUsername.setText(user.getUsername());
+        }
+        if (currentUser.isPresent() && currentUser.get().isAdmin()) {
+            adminEdit.setVisible(true);
+        } else {
+            adminEdit.setVisible(false);
         }
 
         historyIdColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -85,6 +93,13 @@ public class ProfileController {
         historyScoreColmn.setCellValueFactory(new PropertyValueFactory<>("scoreString"));
         historyDateColmn.setCellValueFactory(new PropertyValueFactory<>("formattedDate"));
 
+        historyIdColmn.setCellFactory(new CenterTextTable<>());
+        historySubjectColmn.setCellFactory(new CenterTextTable<>());
+        historySemesterColmn.setCellFactory(new CenterTextTable<>());
+        historyYearOfStudyColmn.setCellFactory(new CenterTextTable<>());
+        historyScoreColmn.setCellFactory(new CenterTextTable<>());
+        historyDateColmn.setCellFactory(new CenterTextTable<>());
+
         try {
             List<TestHistoryProfile> testHistoryProfiles = overviewManager.getHistorySummary();
             ObservableList<TestHistoryProfile> testHistoryObservableList = FXCollections.observableArrayList(testHistoryProfiles);
@@ -92,6 +107,18 @@ public class ProfileController {
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void moveToEdit() throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/AdminEdit.fxml"));
+        Parent parent = loader.load();
+        Scene generalkaScene = new Scene(parent);
+        generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Stage stage = (Stage) adminEdit.getScene().getWindow();
+        stage.setScene(generalkaScene);
+
     }
 
     @FXML

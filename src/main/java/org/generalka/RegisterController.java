@@ -52,11 +52,20 @@ public class RegisterController {
 
 
     @FXML
-    void userRegister(ActionEvent event) {
+    void userRegister() throws IOException{
         User newUser = new User();
         newUser.setUsername(username.getText());
         newUser.setPassword(password.getText());
         userDAO.insertUser(newUser);
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/login.fxml"));
+        Parent parent = loader.load();
+        Scene registerScene = new Scene(parent);
+        registerScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        Stage stage = (Stage) moveToLoginButton.getScene().getWindow();
+        stage.setScene(registerScene);
+        stage.setTitle("Attender");
     }
 
 }

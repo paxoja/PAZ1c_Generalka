@@ -8,19 +8,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.generalka.storage.*;
+import org.generalka.table.CenterTextTable;
 import org.generalka.table.OverviewManager;
 import org.generalka.table.OverviewManagerImpl;
 import org.generalka.table.TestOverview;
-import org.generalka.table.CenterTextTable;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class TestSelectionController {
+public class AdminEditController {
 
     @FXML
     private TableView<TestOverview> TestTable;
@@ -69,9 +70,14 @@ public class TestSelectionController {
 
     private List<TestOverview> originalTestOverviews;
 
+    // Variable to store the selected test
+    private TestOverview selectedTest;
+    private void setSelectedTest(TestOverview test) {
+        this.selectedTest = test;
+    }
+
     @FXML
     public void initialize() {
-        
         // nastavenie tabulky - vytvorenie nazvov pre stlpce
         idColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
@@ -83,6 +89,19 @@ public class TestSelectionController {
         semesterColmn.setCellFactory(new CenterTextTable<>());
         subjectColmn.setCellFactory(new CenterTextTable<>());
         yearOfStudyColmn.setCellFactory(new CenterTextTable<>());
+
+        // Set up the row click event handler
+        TestTable.setRowFactory(tv -> {
+            TableRow<TestOverview> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+                    TestOverview selectedTest = row.getItem();
+                    // Store the selected test for later use
+                    setSelectedTest(selectedTest);
+                }
+            });
+            return row;
+        });
 
         try {
             // test summary z OverviewManager
@@ -161,7 +180,7 @@ public class TestSelectionController {
     @FXML
     private void returnToGeneralka() throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/generalka.fxml"));
+                getClass().getResource("/Profile.fxml"));
         Parent parent = loader.load();
         Scene generalkaScene = new Scene(parent);
         generalkaScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
@@ -169,33 +188,27 @@ public class TestSelectionController {
         stage.setScene(generalkaScene);
     }
 
+        @FXML
+        private void deleteTest() {
+            // Implement test deletion logic here
+            TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
+            if (selectedTest != null) {
+                try {
+                    // Delete the test using the appropriate DAO method
+                    testDao.deleteTest(selectedTest.getId());
 
-    // otvorenie test sceny
-    @FXML
-    private void openTestScene() {
-        TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
+                    // Refresh the table after deletion
+                    originalTestOverviews = overviewManager.getTestSummary();
+                    testOverviewObservableList.clear();
+                    testOverviewObservableList.addAll(originalTestOverviews);
+                    TestTable.setItems(testOverviewObservableList);
 
-        if (selectedTest != null) {
-
-            // gettneme otazky podla test id
-            testQuestionDao.getTestQuestionsByTestId(selectedTest.getId());
-
-            try {
-                // otvori sa TestController a preda sa mu test ID
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Test.fxml"));
-                Parent parent = loader.load();
-                TestController testController = loader.getController();
-                testController.setTestId(selectedTest.getId());
-
-
-                Scene testScene = new Scene(parent);
-                testScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-                Stage stage = (Stage) TestTable.getScene().getWindow();
-                stage.setScene(testScene);
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (EntityNotFoundException e) {
+                    e.printStackTrace();
+                    // Handle the exception as needed
+                }
             }
         }
     }
-}
+
+
