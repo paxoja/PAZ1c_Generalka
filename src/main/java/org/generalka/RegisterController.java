@@ -54,10 +54,13 @@ public class RegisterController {
     @FXML
     void userRegister() throws IOException{
         User newUser = new User();
+
+        // we get the text inputed and insert it into the user table
         newUser.setUsername(username.getText());
         newUser.setPassword(password.getText());
         userDAO.insertUser(newUser);
 
+        // redirect into the login scene for the user to login
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/login.fxml"));
         Parent parent = loader.load();

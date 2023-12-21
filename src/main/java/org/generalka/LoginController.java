@@ -56,9 +56,11 @@ public class LoginController {
 
     // source: https://www.youtube.com/watch?v=HBBtlwGpBek
     private void checkLogin() throws IOException {
+        // we retrieve entered text
         String enteredUsername = username.getText();
         String enteredPassword = password.getText();
 
+        // we need to provide the username and password
         if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
             wrongLogIn.setText("Please enter your username and password.");
             return;
@@ -73,6 +75,7 @@ public class LoginController {
                 userDao.setCurrentUser(user);
                 openGeneralkaScreen();
             } else {
+                // if some credential is incorrect text pops out
                 wrongLogIn.setText("Your username or password is incorrect.");
             }
         } else {

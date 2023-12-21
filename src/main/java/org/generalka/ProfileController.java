@@ -76,6 +76,7 @@ public class ProfileController {
             adminEdit.setVisible(false);
         }
 
+
         historyIdColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         historyTopicColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
         historySubjectColmn.setCellValueFactory(new PropertyValueFactory<>("subject"));

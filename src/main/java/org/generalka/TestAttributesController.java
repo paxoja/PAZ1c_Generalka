@@ -102,6 +102,7 @@ public class TestAttributesController {
                 UserDao userDao = DaoFactory.INSTANCE.getUserDao();
                 Optional<User> currentUser = userDao.getCurrentUser();
 
+
                 if (currentUser.isPresent()) {
                         test.setUser(currentUser.get());
                         try {
