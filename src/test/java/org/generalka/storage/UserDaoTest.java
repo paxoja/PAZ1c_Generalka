@@ -43,16 +43,16 @@ class UserDaoTest {
         // create user for testing
         User testUser = new User();
         testUser.setAdmin(false);
-        testUser.setUsername("testGetUsers");
-        testUser.setPassword("testPasswords");
+        testUser.setUsername("testGetUsersssssssss");
+        testUser.setPassword("testPasswordsssssssss");
         // save test
         userDao.insertUser(testUser);
 
-        Optional<User> retrievedUser = userDao.getUserByUsername("testGetUsers");
+        Optional<User> retrievedUser = userDao.getUserByUsername("testGetUsersssssssss");
 
         assertTrue(retrievedUser.isPresent());
-        assertEquals("testGetUsers", retrievedUser.get().getUsername());
-        assertEquals("testPasswords", retrievedUser.get().getPassword());
+        assertEquals("testGetUsersssssssss", retrievedUser.get().getUsername());
+        assertEquals("testPasswordsssssssss", retrievedUser.get().getPassword());
     }
 
     @org.junit.jupiter.api.Test

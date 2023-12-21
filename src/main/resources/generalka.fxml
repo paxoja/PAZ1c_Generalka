@@ -39,23 +39,26 @@
          <Font name="SansSerif Regular" size="22.0" />
       </font>
    </Text>
-   <Label fx:id="loggedInUserLabel" layoutX="177.0" layoutY="32.0" prefHeight="20.0" prefWidth="37.0" styleClass="usernameText" textFill="WHITE">
+   <Label fx:id="loggedInUserLabel" layoutX="177.0" layoutY="32.0" prefHeight="20.0" prefWidth="74.0" styleClass="usernameText" textFill="WHITE">
       <font>
          <Font name="SansSerif Regular" size="29.0" />
       </font>
    </Label>
    <ImageView fitHeight="92.0" fitWidth="92.0" layoutX="440.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
+<!--         https://iconscout.com/free-icon/survey-3482138-->
          <Image url="@survey.png" />
       </image>
    </ImageView>
    <ImageView fitHeight="92.0" fitWidth="92.0" layoutX="66.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
+<!--         https://www.vecteezy.com/vector-art/5544718-profile-icon-design-vector-->
          <Image url="@person.png" />
       </image>
    </ImageView>
    <ImageView fitHeight="102.0" fitWidth="92.0" layoutX="254.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
       <image>
+<!--         https://iconscout.com/free-icon/edit-1767972-->
          <Image url="@edit.png" />
       </image>
    </ImageView>

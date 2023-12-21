@@ -119,4 +119,4 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 SELECT * FROM user;
 
-INSERT INTO User (is_admin, username, password) VALUES (1, root, root);
+INSERT INTO User (is_admin, username, password) VALUES (1, "admin", "admin");

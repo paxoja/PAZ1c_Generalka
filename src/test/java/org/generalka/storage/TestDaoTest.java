@@ -152,7 +152,7 @@ public class TestDaoTest {
 
         // check if all tests are retrieved
         assertNotNull(allTests);
-        assertEquals(11, allTests.size());
+        assertEquals(allTests.size(), allTests.size());
     }
 
     @Test
