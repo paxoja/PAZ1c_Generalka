@@ -14,5 +14,8 @@ public interface UserDao {
 
     // setting logged in user as current user
     void setCurrentUser(User user);
+
+    // set user admin
+    boolean getUserIsAdminFromDatabase(long userId);
 }
 

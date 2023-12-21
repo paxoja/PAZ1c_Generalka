@@ -82,6 +82,16 @@ public class LoginController {
 
     // move to main screen using login button
     private void openGeneralkaScreen() throws IOException {
+        Optional<User> optionalUser = userDao.getCurrentUser();
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Retrieve isAdmin information from the database and update the User object
+            boolean isAdmin = userDao.getUserIsAdminFromDatabase(user.getId());
+            user.setAdmin(isAdmin);
+        }
+
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/generalka.fxml"));
         Parent parent = loader.load();

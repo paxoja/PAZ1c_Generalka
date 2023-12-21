@@ -58,6 +58,12 @@ public class MysqlUserDao implements UserDao {
         }
     }
 
+    @Override
+    public boolean getUserIsAdminFromDatabase(long userId) {
+        String query = "SELECT is_admin FROM User WHERE id = ?";
+        return jdbcTemplate.queryForObject(query, new Object[]{userId}, Boolean.class);
+    }
+
     // getting user by id which is current logged in user
     @Override
     public Optional<User> getCurrentUser() {

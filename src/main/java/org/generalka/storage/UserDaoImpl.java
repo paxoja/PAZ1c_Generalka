@@ -22,4 +22,9 @@ public class UserDaoImpl implements UserDao {
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
+
+    @Override
+    public boolean getUserIsAdminFromDatabase(long userId) {
+        return false;
+    }
 }

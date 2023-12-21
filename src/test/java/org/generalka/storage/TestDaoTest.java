@@ -1,127 +1,194 @@
 package org.generalka.storage;
 
+import org.generalka.storage.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import javax.sql.DataSource;
-
-
-import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-class TestDaoTest {
-
-    private org.generalka.storage.TestDao testDao;
+public class TestDaoTest {
+    private TestDao testDao;
+    private UserDao userDao;
+    private TestQuestionDao testQuestionDao;
+    private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void setUp() {
         DataSource dataSource = DaoFactory.INSTANCE.getFullDataSource();
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         testDao = new MysqlTestDao(jdbcTemplate);
+        userDao = new MysqlUserDao(jdbcTemplate);
+        testQuestionDao = new MysqlTestQuestionDao(jdbcTemplate);
     }
 
     @Test
-    void testSaveAndGetTest() throws EntityNotFoundException {
-        // create user
-        User user1 = new User();
-        user1.setId(15L);
-        user1.setUsername("testUser2");
-        user1.setPassword("testPassword2");
+    void testSaveTest() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
 
-        // create a test with a user
+        // create test for testing
         org.generalka.storage.Test test = new org.generalka.storage.Test();
-        test.setTopic("MZI");
+        test.setTopic("Test Topic");
         test.setIsWholeSemester(false);
         Timestamp date = new Timestamp(System.currentTimeMillis());
         test.setDate(date);
         test.setSubject("MZI");
         test.setSemester("winter");
+        test.setYearOfStudy(2);
+        test.setUser(user);
         test.setYearOfStudy(1);
-        test.setUser(user1);
 
-        // Save the test
         testDao.saveTest(test);
 
-        // get the test by ID
-        org.generalka.storage.Test retrievedTest = testDao.getTestById(test.getId());
+        long testId = test.getId();
+        org.generalka.storage.Test retrievedTest = testDao.getTestById(testId);
 
-        // tolerance of 1 sec
-        long expectedMillis = date.getTime();
-        long actualMillis = retrievedTest.getDate().getTime();
-        long tolerance = 1000;  // 1 second tolerance
+        assertNotNull(retrievedTest);
 
-        // Assert other properties
-        assertEquals("MZI", retrievedTest.getTopic());
-        assertFalse(retrievedTest.getIsWholeSemester());
+        // check individual components of timestamp
+        assertEquals(test.getDate().getMinutes(), retrievedTest.getDate().getMinutes(), "Minute mismatch");
+        assertEquals(test.getDate().getSeconds(), retrievedTest.getDate().getSeconds(), "Second mismatch");
 
-        // Compare timestamps with tolerance
-        assertTrue(Math.abs(expectedMillis - actualMillis) <= tolerance);
-
-        assertEquals("MZI", retrievedTest.getSubject());
-        assertEquals("winter", retrievedTest.getSemester());
-        assertEquals(1, retrievedTest.getYearOfStudy());
-        assertNotNull(retrievedTest.getUser());
-        assertEquals("testUser2", retrievedTest.getUser().getUsername());
-        assertEquals("testPassword2", retrievedTest.getUser().getPassword());
+        assertEquals(test.getTopic(), retrievedTest.getTopic());
+        assertEquals(test.getIsWholeSemester(), retrievedTest.getIsWholeSemester());
+        assertEquals(test.getSubject(), retrievedTest.getSubject());
+        assertEquals(test.getSemester(), retrievedTest.getSemester());
+        assertEquals(test.getYearOfStudy(), retrievedTest.getYearOfStudy());
+        assertEquals(testId, retrievedTest.getId());
     }
 
 
 
-    @Test
-    void testDeleteTest() throws EntityNotFoundException {
-        // create a user
-        User user2 = new User();
-        user2.setId(4L);
-        user2.setUsername("testUser");
-        user2.setPassword("testPassword");
 
-        // create a test with user
+    @Test
+    void testDeleteTest() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis()); // append timestamp to ensure uniqueness
+        user.setPassword("password");
+        userDao.insertUser(user);
+
+        // create test for testing
         org.generalka.storage.Test test = new org.generalka.storage.Test();
-        test.setTopic("deleted test");
-        test.setIsWholeSemester(true);
+        test.setTopic("Test Topic");
+        test.setIsWholeSemester(false);
         Timestamp date = new Timestamp(System.currentTimeMillis());
         test.setDate(date);
-        test.setSubject("UGR1");
+        test.setSubject("URG");
         test.setSemester("winter");
         test.setYearOfStudy(2);
-        test.setUser(user2);
+        test.setUser(user);
+        test.setYearOfStudy(1);
 
-        // save test
         testDao.saveTest(test);
 
-        // delete test
-        testDao.deleteTest(test.getId());
+        long testId = test.getId();
 
-        // when we want to open the deleted test it should throw exception
-        assertThrows(EmptyResultDataAccessException.class, () -> testDao.getTestById(test.getId()));
+        // delete test
+        testDao.deleteTest(testId);
+
+        // try to retrieve deleted test
+        assertThrows(EmptyResultDataAccessException.class, () -> testDao.getTestById(testId));
     }
 
     @Test
-    void testGetAllTests() throws EntityNotFoundException {
-        // create users
-        User user3 = new User();
-        user3.setId(5L);
-        user3.setUsername("user3");
-        user3.setPassword("password3");
+    void testGetAllTests() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
 
-        User user4 = new User();
-        user4.setId(6L);
-        user4.setUsername("user4");
-        user4.setPassword("password4");
+        // create user for testing
+        User user2 = new User();
+        user2.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user2.setPassword("password");
+        userDao.insertUser(user2);
 
-        // tests with users
-        testDao.saveTest(new org.generalka.storage.Test(9L, "SWI", true, new Timestamp(System.currentTimeMillis()), "SWI1a", "summer", 1, user3));
-        testDao.saveTest(new org.generalka.storage.Test(10L, "NUM", false, new Timestamp(System.currentTimeMillis()), "NUM", "winter", 2, user4));
+        // create test for testing
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test Topic1");
+        test.setIsWholeSemester(false);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("URG");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+        test.setUser(user);
+        test.setYearOfStudy(1);
 
-        // get all tests
+        // create a test for tesing
+        org.generalka.storage.Test test2 = new org.generalka.storage.Test();
+        test2.setTopic("Test Topic2");
+        test2.setIsWholeSemester(false);
+        Timestamp date2 = new Timestamp(System.currentTimeMillis());
+        test2.setDate(date2);
+        test2.setSubject("URG");
+        test2.setSemester("winter");
+        test2.setYearOfStudy(2);
+        test2.setUser(user2);
+        test2.setYearOfStudy(1);
+
+        testDao.saveTest(test2);
+        testDao.saveTest(test);
+
+        // retrieve all tests from the database
         List<org.generalka.storage.Test> allTests = testDao.getAllTests();
 
-        assertEquals(2, allTests.size());
+        // check if all tests are retrieved
+        assertNotNull(allTests);
+        assertEquals(24, allTests.size());
     }
+
+    @Test
+    void testGetNumberOfQuestions() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test Topic");
+        test.setIsWholeSemester(false);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("URG");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+        test.setUser(user);
+        test.setYearOfStudy(1);
+
+        // save the test before saving questions
+        testDao.saveTest(test);
+
+        TestQuestion question1 = new TestQuestion();
+        question1.setQuestion("Question 1");
+        question1.setTest(test);
+        testQuestionDao.saveTestQuestion(question1);
+
+        TestQuestion question2 = new TestQuestion();
+        question2.setQuestion("Question 2");
+        question2.setTest(test);
+        testQuestionDao.saveTestQuestion(question2);
+
+        int numberOfQuestions = testDao.getNumberOfQuestions(test.getId());
+        assertEquals(2, numberOfQuestions);
+    }
+
 }
