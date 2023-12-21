@@ -1,35 +1,35 @@
-/* style.css */
 
-/* Apply styles to AnchorPane */
+
+
 .anchor-pane {
     -fx-background: linear-gradient(to left, #82a5fe, #e099f9);
 }
 
-/* Apply styles to labels */
+
 .label {
     -fx-font-size: 14px;
-    -fx-text-fill: #333333; /* Dark gray */
+    -fx-text-fill: #333333;
 }
 
-/* Apply styles to text fields and password fields */
+
 .text-field, .password-field {
-    -fx-border-color: #99ccff; /* Light blue */
-    -fx-border-radius: 20; /* Increased border radius for a rounder look */
+    -fx-border-color: #99ccff;
+    -fx-border-radius: 20;
     -fx-padding: 5;
     -fx-font-size: 14px;
-    -fx-text-fill: #333333; /* Dark gray */
+    -fx-text-fill: #333333;
 }
 
-/* Apply styles to buttons */
+
 .button {
     -fx-font-weight: bold;
-    -fx-border-radius: 20; /* Increased border radius for a rounder look */
-    -fx-background-radius: 20; /* Make the button round */
-    -fx-background-color: #e099f9; /* Light blue background */
-    -fx-min-width: 80; /* Set a minimum width for the buttons */
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: #e099f9;
+    -fx-min-width: 80;
 }
 
-/* Apply styles to the login button */
+
 #loginButton {
     -fx-background-radius: 20;
     -fx-background-color: #e099f9;
@@ -43,44 +43,44 @@
     -fx-text-fill: white;
 }
 
-/* Apply styles to the register button */
+
 #moveToRegisterButton {
     -fx-background-color: transparent;
-    -fx-text-fill: #99ccff; /* Light blue */
+    -fx-text-fill: #99ccff;
     -fx-border-color: transparent;
 }
 
-/* Apply styles to the register button */
+
 #moveToLoginButton {
     -fx-background-color: transparent;
-    -fx-text-fill: #99ccff; /* Light blue */
+    -fx-text-fill: #99ccff;
     -fx-border-color: transparent;
 }
 
-/* Apply styles to the wrongLogIn label */
+
 #wrongLogIn {
-    -fx-text-fill: #ff5555; /* Red color */
+    -fx-text-fill: #ff5555;
 }
 
-/* Customize focus appearance */
+
 .text-field:focused, .password-field:focused, .button:focused {
-    -fx-border-color: #99ccff; /* Light blue */
-    -fx-border-width: 0; /* Remove border width */
-    -fx-faint-focus-color: transparent; /* Remove faint focus color */
-    -fx-background-radius: 20; /* Make the button round */
+    -fx-border-color: #99ccff;
+    -fx-border-width: 0;
+    -fx-faint-focus-color: transparent;
+    -fx-background-radius: 20;
 }
 
-/* Apply styles to the rectangle for circular round edges */
+
 .rectangle {
-    -fx-arc-width: 50; /* Adjust the arc width for the circular round edges */
-    -fx-arc-height: 50; /* Adjust the arc height for the circular round edges */
+    -fx-arc-width: 50;
+    -fx-arc-height: 50;
 }
 
 
 .testTextField {
-    -fx-background-color: white; /* White background */
-    -fx-text-fill: black; /* Black text color */
-    -fx-border-radius: 0; /* Remove border radius */
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-border-radius: 0;
 }
 
 
@@ -101,50 +101,50 @@
     -fx-border-color: #99ccff;
 }
 
-/* Apply styles to CheckBox with style class checkbox */
+
 .checkbox {
-    -fx-font-size: 12px; /* Adjust font size as needed */
-    -fx-text-fill: #333333; /* Dark gray text color */
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
 
 }
 
-/* Apply styles to the box part of the CheckBox */
+
 .checkbox .box {
-    -fx-border-color: #99ccff; /* Light blue border color */
-        -fx-background-color: white /* Light blue background for the check mark */
+    -fx-border-color: #99ccff;
+        -fx-background-color: white
 }
 
 
 
-/* Apply styles to the text part of the CheckBox */
+
 .checkbox .text {
-    -fx-padding: 0 0 0 5; /* Adjust padding as needed */
+    -fx-padding: 0 0 0 5;
 }
 
-/* Apply styles to the table */
+
 #TestTable {
     -fx-table-cell-border-color: derive(-fx-control-inner-background, -10%);
     -fx-table-header-border-color: derive(-fx-control-inner-background, -20%);
 }
 
-/* Apply styles to table columns */
+
 #idColmn, #nameColmn, #subjectColmn, #yearOfStudyColmn, #semesterColmn {
     -fx-alignment: CENTER;
 }
 
 
-/* Apply hover effect on rows */
+
 #TestTable .table-row-cell:hover {
     -fx-background-color: #d9d9d9;
 }
 
-/* Apply styles to selected rows */
+
 #TestTable .table-row-cell:selected {
     -fx-background-color: #99ccff;
 
 }
 
-/* Apply styles to column headers */
+
 #TestTable .column-header {
     -fx-background-color: #99ccff;
     -fx-text-fill: white;
@@ -152,18 +152,18 @@
 }
 
 
-/* Apply hover effect on rows */
+
 #resultsTable .table-row-cell:hover {
     -fx-background-color: #d9d9d9;
 }
 
-/* Apply styles to selected rows */
+
 #resultsTable .table-row-cell:selected {
     -fx-background-color: #99ccff;
 
 }
 
-/* Apply styles to column headers */
+
 #resultsTable .column-header {
     -fx-background-color: #99ccff;
     -fx-text-fill: white;
@@ -171,18 +171,18 @@
 }
 
 
-/* Apply hover effect on rows */
+
 #testHistoryTable .table-row-cell:hover {
     -fx-background-color: #d9d9d9;
 }
 
-/* Apply styles to selected rows */
+
 #testHistoryTable .table-row-cell:selected {
     -fx-background-color: #99ccff;
 
 }
 
-/* Apply styles to column headers */
+
 #testHistoryTable .column-header {
     -fx-background-color: #99ccff;
     -fx-text-fill: white;
