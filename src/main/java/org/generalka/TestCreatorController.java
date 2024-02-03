@@ -116,9 +116,14 @@ public class TestCreatorController {
         choiceField.setPromptText("Enter Choice");
         RadioButton radioButton = new RadioButton();
         radioButton.setToggleGroup(toggleGroup);
+
+        // Apply CSS to set the black border
+        radioButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 50%;");
+
         choiceRow.getChildren().addAll(choiceField, radioButton);
         return choiceRow;
     }
+
 
     private void addSeparator() {
         Line separator = new Line();
