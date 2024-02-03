@@ -45,13 +45,26 @@ public class TestCreatorController {
             if (node instanceof VBox) {
                 VBox questionBox = (VBox) node;
                 HBox questionRow = (HBox) questionBox.getChildren().get(0); // First child is the question row
-                RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+                TextField questionField = (TextField) questionRow.getChildren().get(1); // Second child is the question field
 
-                if (selectedRadioButton != null) {
-                    String questionText = ((TextField) questionRow.getChildren().get(1)).getText();
-                    TestQuestion testQuestion = createTestQuestion(questionText, selectedRadioButton.getText());
-                    testQuestionDao.saveTestQuestion(testQuestion);
+                // Retrieve the HBoxes containing the choices
+                List<HBox> choiceRows = new ArrayList<>();
+                for (int i = 1; i < questionBox.getChildren().size(); i++) {
+                    Node childNode = questionBox.getChildren().get(i);
+                    if (childNode instanceof HBox) {
+                        choiceRows.add((HBox) childNode);
+                    }
                 }
+
+                // Extract the text from the choice text fields
+                List<String> answersText = new ArrayList<>();
+                for (HBox choiceRow : choiceRows) {
+                    TextField choiceField = (TextField) choiceRow.getChildren().get(0);
+                    answersText.add(choiceField.getText());
+                }
+
+                TestQuestion testQuestion = createTestQuestion(questionField.getText(), choiceRows);
+                testQuestionDao.saveTestQuestion(testQuestion);
             }
         }
 
@@ -131,27 +144,31 @@ public class TestCreatorController {
         return questionRow;
     }
 
+
+
     // Check if the data is valid
     private boolean isDataValid(String question, RadioButton selectedRadioButton) {
         return !question.isEmpty() && selectedRadioButton != null;
     }
 
-    // Create a TestQuestion object from the input data
-    private TestQuestion createTestQuestion(String questionText, String correctAnswerText) {
+    private TestQuestion createTestQuestion(String questionText, List<HBox> choiceRows) {
         TestQuestion testQuestion = new TestQuestion();
         testQuestion.setQuestion(questionText);
         testQuestion.setTest(currentTest);
         testQuestionDao.saveTestQuestion(testQuestion);
 
-        for (Toggle toggle : toggleGroup.getToggles()) {
-            RadioButton radioButton = (RadioButton) toggle;
-            if (radioButton.isSelected()) {
-                Answer answer = new Answer();
-                answer.setAnswer(radioButton.getText());
-                answer.setIsCorrect(true);
-                answer.setTestQuestion(testQuestion);
-                answerDao.saveAnswer(answer);
-            }
+        for (HBox choiceRow : choiceRows) {
+            TextField choiceField = (TextField) choiceRow.getChildren().get(0);
+            String choiceText = choiceField.getText();
+
+            RadioButton radioButton = (RadioButton) choiceRow.getChildren().get(1);
+            boolean isCorrect = radioButton.isSelected();
+
+            Answer answer = new Answer();
+            answer.setAnswer(choiceText);
+            answer.setIsCorrect(isCorrect);
+            answer.setTestQuestion(testQuestion);
+            answerDao.saveAnswer(answer);
         }
 
         return testQuestion;
@@ -173,7 +190,6 @@ public class TestCreatorController {
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();
         stage.setScene(testAttributesScene);
     }
-
 
     // Set which test we are editing
     public void setTest(Test test) {
