@@ -2,53 +2,49 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.generalka.TestCreatorController">
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="379.0" layoutX="15.0" layoutY="11.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="568.0" />
-        <Button layoutX="476.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="26.0" prefWidth="80.0" text="Submit" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Button>
-      <Button layoutX="343.0" layoutY="351.0" mnemonicParsing="false" onAction="#addNextQuestion" prefHeight="26.0" prefWidth="121.0" text="Add next question" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Button>
-      <Button fx:id="returnToTestAttributesButton" layoutX="50.0" layoutY="351.0" mnemonicParsing="false" onAction="#returnToTestAttributes" prefHeight="26.0" prefWidth="100.0" text="Return" textFill="WHITE">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Button>
-          <Label layoutX="175.0" layoutY="43.0" text="Create Your Test Questions and Answers">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Label>
-          <Label layoutX="248.0" layoutY="102.0" text="Enter a question:">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Label>
-          <TextField fx:id="questionTextField" layoutX="135.0" layoutY="132.0" prefHeight="26.0" prefWidth="329.0" promptText="Type your question here">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></TextField>
-          <Label layoutX="170.0" layoutY="181.0" text="Enter answer options (comma-separated):">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Label>
-          <TextField fx:id="answersTextField" layoutX="135.0" layoutY="209.0" prefHeight="26.0" prefWidth="329.0" promptText="Option 1, Option 2, Option 3, ...">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></TextField>
-      <TextField fx:id="correctAnswerTextField" layoutX="214.0" layoutY="288.0" promptText="Option 1, Option 2, Option 3, ...">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></TextField>
-          <Label layoutX="230.0" layoutY="258.0" text="Select correct answers:">
-         <font>
-            <Font name="SansSerif Regular" size="12.0" />
-         </font></Label>
+        <!-- ScrollPane for the VBox -->
+        <ScrollPane hbarPolicy="NEVER" layoutX="15.0" layoutY="50.0" prefHeight="282.0" prefWidth="568.0" vbarPolicy="ALWAYS">
+            <content>
+                <!-- AnchorPane for VBox -->
+                <AnchorPane prefHeight="300.0" prefWidth="568.0" style="-fx-background-color: white;">
+                    <!-- VBox for grouping individual questions -->
+                    <VBox fx:id="questionsVBox" spacing="10" style="-fx-background-color: white;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                        <!-- Content inside VBox -->
+                    </VBox>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+
+        <!-- AnchorPane for buttons -->
+        <AnchorPane layoutX="9.0" layoutY="343.0" prefHeight="34.0" prefWidth="600.0" styleClass="anchor-pane" AnchorPane.bottomAnchor="18.600000000000023">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="38.0" layoutX="11.0" layoutY="6.0" stroke="WHITE" strokeType="INSIDE" styleClass="rectangle" width="562.0" />
+                <Button layoutX="488.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="26.0" prefWidth="80.0" text="Submit" textFill="WHITE">
+                    <font>
+                        <Font name="SansSerif Regular" size="12.0" />
+                    </font>
+                </Button>
+                <Button layoutX="360.0" layoutY="12.0" mnemonicParsing="false" onAction="#addNextQuestion" prefHeight="26.0" prefWidth="121.0" text="Add next question" textFill="WHITE">
+                    <font>
+                        <Font name="SansSerif Regular" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="returnToTestAttributesButton" layoutX="17.0" layoutY="11.0" mnemonicParsing="false" onAction="#returnToTestAttributes" prefHeight="26.0" prefWidth="100.0" text="Return" textFill="WHITE">
+                    <font>
+                        <Font name="SansSerif Regular" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
