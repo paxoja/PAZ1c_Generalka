@@ -96,26 +96,29 @@ public class TestCreatorController {
         // Add the question box to the main VBox
         questionsVBox.getChildren().add(questionBox);
 
+        // Create a ToggleGroup for this question
+        ToggleGroup questionToggleGroup = new ToggleGroup();
+
         // Add a button to add choices
         Button addChoiceButton = new Button("Add Choice");
-        addChoiceButton.setOnAction(event -> addChoice(questionBox));
+        addChoiceButton.setOnAction(event -> addChoice(questionBox, questionToggleGroup)); // Pass the ToggleGroup
         questionBox.getChildren().add(addChoiceButton);
 
         // Add a separator line
         addSeparator();
     }
 
-    private void addChoice(VBox questionBox) {
-        HBox choiceRow = createChoiceRow();
+    private void addChoice(VBox questionBox, ToggleGroup questionToggleGroup) { // Accept ToggleGroup as parameter
+        HBox choiceRow = createChoiceRow(questionToggleGroup); // Pass the ToggleGroup
         questionBox.getChildren().add(choiceRow);
     }
 
-    private HBox createChoiceRow() {
+    private HBox createChoiceRow(ToggleGroup questionToggleGroup) { // Accept ToggleGroup as parameter
         HBox choiceRow = new HBox(10);
         TextField choiceField = new TextField();
         choiceField.setPromptText("Enter Choice");
         RadioButton radioButton = new RadioButton();
-        radioButton.setToggleGroup(toggleGroup);
+        radioButton.setToggleGroup(questionToggleGroup); // Use the provided ToggleGroup
 
         // Apply CSS to set the black border
         radioButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 50%;");
