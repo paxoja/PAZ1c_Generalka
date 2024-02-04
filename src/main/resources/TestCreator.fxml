@@ -19,7 +19,6 @@
                 <AnchorPane prefHeight="300.0" prefWidth="568.0" style="-fx-background-color: white;">
                     <!-- VBox for grouping individual questions -->
                     <VBox fx:id="questionsVBox" spacing="10" style="-fx-background-color: white;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-                        <!-- Content inside VBox -->
                     </VBox>
                 </AnchorPane>
             </content>
