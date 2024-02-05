@@ -346,9 +346,11 @@ public class TestCreatorController {
 
     // back to TestAttributes after pressing return button
     @FXML
-    void returnToTestAttributes() throws IOException {
+    private void returnToTestAttributes() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestAttributes.fxml"));
         Parent parent = loader.load();
+        TestAttributesController testAttributesController = loader.getController();
+        testAttributesController.setFilterValues(currentTest.getTopic(), currentTest.getYearOfStudy(), currentTest.getSubject(), currentTest.getSemester(), currentTest.getIsWholeSemester(), currentTest);
         Scene testAttributesScene = new Scene(parent);
         testAttributesScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();

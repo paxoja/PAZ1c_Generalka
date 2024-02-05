@@ -114,4 +114,37 @@ public class MysqlTestDao implements TestDao {
         String sql = "SELECT COUNT(*) FROM TestQuestion WHERE Test_id = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, testId);
     }
+
+    @Override
+    public void updateTest(Test test) {
+        Objects.requireNonNull(test, "Test cannot be null");
+        Objects.requireNonNull(test.getId(), "Test ID cannot be null");
+        Objects.requireNonNull(test.getTopic(), "Test topic cannot be null");
+        Objects.requireNonNull(test.getSubject(), "Test subject cannot be null");
+        Objects.requireNonNull(test.getSemester(), "Test semester cannot be null");
+        Objects.requireNonNull(test.getYearOfStudy(), "Test year of study cannot be null");
+        Objects.requireNonNull(test.getUser(), "Test user cannot be null");
+        Objects.requireNonNull(test.getUser().getId(), "User ID cannot be null");
+
+        String sql = "UPDATE Test SET topic=?, is_whole_semester=?, date=?, subject=?, semester=?, year_of_study=?, user_id=? WHERE id=?";
+
+        jdbcTemplate.update(
+                sql,
+                test.getTopic(),
+                test.getIsWholeSemester(),
+                new Timestamp(test.getDate().getTime()),
+                test.getSubject(),
+                test.getSemester(),
+                test.getYearOfStudy(),
+                test.getUser().getId(),
+                test.getId()
+        );
+    }
+
+    @Override
+    public void updateTestAttribute(Long testId, String attributeName, Object attributeValue) throws EntityNotFoundException {
+        String sql = "UPDATE Test SET " + attributeName + "=? WHERE id=?";
+        jdbcTemplate.update(sql, attributeValue, testId);
+    }
+
 }

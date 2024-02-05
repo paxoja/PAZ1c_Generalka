@@ -18,4 +18,7 @@ public interface TestDao {
     // used in results table - how many points are there for test
     int getNumberOfQuestions(Long testId) throws EntityNotFoundException;
 
+    void updateTest(Test test);
+
+    void updateTestAttribute(Long testId, String attributeName, Object attributeValue) throws EntityNotFoundException;
 }
