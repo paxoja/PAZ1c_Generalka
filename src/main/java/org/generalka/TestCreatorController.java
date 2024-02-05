@@ -47,6 +47,44 @@ public class TestCreatorController {
             return;
         }
 
+        // Accumulate errors in a StringBuilder
+        StringBuilder errorBuilder = new StringBuilder();
+
+        // Validate each question and choice
+        for (Node node : questionsVBox.getChildren()) {
+            if (node instanceof VBox) {
+                VBox questionBox = (VBox) node;
+                HBox questionRow = (HBox) questionBox.getChildren().get(0);
+                TextField questionField = (TextField) questionRow.getChildren().get(1);
+
+                // Check if question field is empty
+                if (questionField.getText().trim().isEmpty()) {
+                    errorBuilder.append("Question cannot be left blank.\n");
+                }
+
+                // Check each choice for this question
+                for (int i = 1; i < questionBox.getChildren().size(); i++) {
+                    Node childNode = questionBox.getChildren().get(i);
+                    if (childNode instanceof HBox) {
+                        HBox choiceRow = (HBox) childNode;
+                        TextField choiceField = (TextField) choiceRow.getChildren().get(0);
+
+                        // Check if choice field is empty
+                        if (choiceField.getText().trim().isEmpty()) {
+                            errorBuilder.append("Choice cannot be left blank.\n");
+                        }
+                    }
+                }
+            }
+        }
+
+        // Check if any errors occurred
+        String errors = errorBuilder.toString().trim();
+        if (!errors.isEmpty()) {
+            showAlert("Error", errors);
+            return;
+        }
+
         // Check if all questions have at least 2 choices
         boolean allQuestionsHaveChoices = true;
         for (Node node : questionsVBox.getChildren()) {
@@ -143,6 +181,8 @@ public class TestCreatorController {
         Stage stage = (Stage) returnToTestAttributesButton.getScene().getWindow();
         stage.setScene(generalkaScene);
     }
+
+
 
 
 
