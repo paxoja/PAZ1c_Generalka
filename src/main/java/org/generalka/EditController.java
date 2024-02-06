@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AdminEditController {
+public class EditController {
 
     @FXML
     private TableView<TestOverview> TestTable;
@@ -186,28 +186,33 @@ public class AdminEditController {
         stage.setScene(generalkaScene);
     }
 
-        @FXML
-        private void deleteTest() {
-
-        // we take selected test
+    @FXML
+    private void deleteTest() {
+        UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+        Optional<User> currentUserOptional = userDao.getCurrentUser();
+        if (currentUserOptional.isPresent() && currentUserOptional.get().isAdmin()) {
+            // Only allow test deletion for admin users
             TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
             if (selectedTest != null) {
                 try {
-                    // deletes test using its id
                     testDao.deleteTest(selectedTest.getId());
 
-                    // refresh table
+                    // Refresh table
                     originalTestOverviews = overviewManager.getTestSummary();
                     testOverviewObservableList.clear();
                     testOverviewObservableList.addAll(originalTestOverviews);
                     TestTable.setItems(testOverviewObservableList);
-
                 } catch (EntityNotFoundException e) {
                     e.printStackTrace();
-
                 }
             }
+        } else {
+            // Display a message or handle the case where the user is not an admin
+            // For example:
+            System.out.println("Only admin users can delete tests.");
         }
+    }
+
     }
 
 

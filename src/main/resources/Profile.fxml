@@ -52,6 +52,6 @@
         </columns>
       </TableView>
       <Label layoutX="36.0" layoutY="71.0" text="Username:" />
-      <Button fx:id="adminEdit" layoutX="464.0" layoutY="23.0" mnemonicParsing="false" onAction="#moveToEdit" prefHeight="26.0" prefWidth="100.0" text="Edit Tests" textFill="WHITE" />
+      <Button fx:id="editButton" layoutX="464.0" layoutY="23.0" mnemonicParsing="false" onAction="#moveToEdit" prefHeight="26.0" prefWidth="100.0" text="Edit Tests" textFill="WHITE" />
    </children>
 </AnchorPane>

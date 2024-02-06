@@ -25,7 +25,7 @@ import java.util.Optional;
 public class ProfileController {
 
     @FXML
-    private Button adminEdit;
+    private Button editButton;
 
     @FXML
     private Label profileUsername;
@@ -70,12 +70,7 @@ public class ProfileController {
             User user = currentUser.get();
             profileUsername.setText(user.getUsername());
         }
-        if (currentUser.isPresent() && currentUser.get().isAdmin()) {
-            adminEdit.setVisible(true);
-        } else {
-            adminEdit.setVisible(false);
-        }
-
+        editButton.setVisible(true); // Set visibility to true for everyone
 
         historyIdColmn.setCellValueFactory(new PropertyValueFactory<>("id"));
         historyTopicColmn.setCellValueFactory(new PropertyValueFactory<>("topic"));
@@ -101,6 +96,7 @@ public class ProfileController {
         }
     }
 
+
     // if user is admin, he can delete others users tests
     @FXML
     void moveToEdit() throws IOException {
@@ -109,7 +105,7 @@ public class ProfileController {
         Parent parent = loader.load();
         Scene adminScene = new Scene(parent);
         adminScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-        Stage stage = (Stage) adminEdit.getScene().getWindow();
+        Stage stage = (Stage) editButton.getScene().getWindow();
         stage.setScene(adminScene);
 
     }
