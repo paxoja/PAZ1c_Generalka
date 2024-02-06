@@ -190,11 +190,17 @@ public class EditController {
     private void deleteTest() {
         UserDao userDao = DaoFactory.INSTANCE.getUserDao();
         Optional<User> currentUserOptional = userDao.getCurrentUser();
-        if (currentUserOptional.isPresent() && currentUserOptional.get().isAdmin()) {
-            // Only allow test deletion for admin users
-            TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
-            if (selectedTest != null) {
-                try {
+        TestOverview selectedTest = TestTable.getSelectionModel().getSelectedItem();
+
+        if (currentUserOptional.isPresent() && selectedTest != null) {
+            User currentUser = currentUserOptional.get();
+
+            try {
+                // Fetch the complete Test object from the database based on the selectedTest's ID
+                Test test = testDao.getTestById(selectedTest.getId());
+
+                if (currentUser.isAdmin() || test.getUser().getId() == currentUser.getId()) {
+                    // Allow test deletion for admin users or if the test belongs to the current user
                     testDao.deleteTest(selectedTest.getId());
 
                     // Refresh table
@@ -202,17 +208,23 @@ public class EditController {
                     testOverviewObservableList.clear();
                     testOverviewObservableList.addAll(originalTestOverviews);
                     TestTable.setItems(testOverviewObservableList);
-                } catch (EntityNotFoundException e) {
-                    e.printStackTrace();
+                } else {
+                    // Display a message or handle unauthorized deletion...
+                    System.out.println("You are not authorized to delete this test.");
                 }
+            } catch (EntityNotFoundException e) {
+                e.printStackTrace();
+                // Handle the case where the test cannot be found in the database
             }
         } else {
-            // Display a message or handle the case where the user is not an admin
+            // Handle the case where the current user is not logged in or no test is selected
             // For example:
-            System.out.println("Only admin users can delete tests.");
+            System.out.println("No test selected or user not logged in.");
         }
     }
 
-    }
+
+
+}
 
 
