@@ -47,6 +47,7 @@ public class TestEditController {
         this.testQuestionDao = DaoFactory.INSTANCE.getTestQuestionDao();
         this.answerDao = DaoFactory.INSTANCE.getAnswerDao();
         loadQuestionsAndAnswers();  // Call the method during initialization
+
     }
 
     private void loadQuestionsAndAnswers() {
