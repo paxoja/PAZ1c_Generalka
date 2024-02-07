@@ -200,29 +200,26 @@ public class EditController {
             User currentUser = currentUserOptional.get();
 
             try {
-                // Fetch the complete Test object from the database based on the selectedTest's ID
+                // fetch the complete Test object from the database based on the selectedTest's ID
                 Test test = testDao.getTestById(selectedTest.getId());
 
                 if (currentUser.isAdmin() || test.getUser().getId() == currentUser.getId()) {
-                    // Allow test deletion for admin users or if the test belongs to the current user
+                    // allow test deletion for admin users or if the test belongs to the current user
                     testDao.deleteTest(selectedTest.getId());
 
-                    // Refresh table
+                    // refresh table
                     originalTestOverviews = overviewManager.getTestSummary();
                     testOverviewObservableList.clear();
                     testOverviewObservableList.addAll(originalTestOverviews);
                     TestTable.setItems(testOverviewObservableList);
                 } else {
-                    // Display a message or handle unauthorized deletion...
+                    // display a message or handle unauthorized deletion...
                     System.out.println("You are not authorized to delete this test.");
                 }
             } catch (EntityNotFoundException e) {
                 e.printStackTrace();
-                // Handle the case where the test cannot be found in the database
             }
         } else {
-            // Handle the case where the current user is not logged in or no test is selected
-            // For example:
             System.out.println("No test selected or user not logged in.");
         }
     }
@@ -230,36 +227,52 @@ public class EditController {
 
     @FXML
     private void editTest() throws IOException {
-        // Ensure a test is selected
+        // ensure a test is selected
         if (selectedTest != null) {
-            // Fetch the corresponding Test object for editing
+            // fetch the corresponding Test object for editing
             Test testToEdit = fetchTest(selectedTest.getId());
 
-            // Navigate to TestAttributesController for editing
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestEditAttributes.fxml"));
-            Parent parent = loader.load();
-            TestEditAttributesController testEditAttributesController = loader.getController();
+            UserDao userDao = DaoFactory.INSTANCE.getUserDao();
+            Optional<User> currentUserOptional = userDao.getCurrentUser();
 
-            // Set the selected test for editing
-            testEditAttributesController.setTestForEditing(testToEdit);
+            if (currentUserOptional.isPresent()) {
+                User currentUser = currentUserOptional.get();
 
-            Scene editTestScene = new Scene(parent);
-            editTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-            Stage stage = (Stage) EditTestButton.getScene().getWindow();
-            stage.setScene(editTestScene);
+                // check if the current user is admin or the owner of the test
+                if (currentUser.isAdmin() || testToEdit.getUser().getId() == currentUser.getId()) {
+                    // navigate to TestAttributesController for editing
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestEditAttributes.fxml"));
+                    Parent parent = loader.load();
+                    TestEditAttributesController testEditAttributesController = loader.getController();
+
+                    // set the selected test for editing
+                    testEditAttributesController.setTestForEditing(testToEdit);
+
+                    Scene editTestScene = new Scene(parent);
+                    editTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+                    Stage stage = (Stage) EditTestButton.getScene().getWindow();
+                    stage.setScene(editTestScene);
+                } else {
+                    // if the user is neither admin nor the owner of the test, show a message or handle the case as needed
+                    System.out.println("You are not authorized to edit this test.");
+                }
+            } else {
+                // handle the case where the current user is not logged in
+                System.out.println("User not logged in.");
+            }
         } else {
-            // If no test is selected, show a message or handle the case as needed
+            // if no test is selected, show a message or handle the case as needed
             System.out.println("No test selected for editing.");
         }
     }
 
-    // Helper method to fetch Test object based on TestOverview id
+
+    // helper method to fetch Test object based on TestOverview id
     private Test fetchTest(Long testId) {
         try {
             return testDao.getTestById(testId);
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
-            // Handle the exception appropriately
             return null;
         }
     }
