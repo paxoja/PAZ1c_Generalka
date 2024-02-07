@@ -113,4 +113,85 @@ public class TestQuestionDaoTest {
         // try to retrieve a test question with an invalid id
         assertThrows(EmptyResultDataAccessException.class, () -> testQuestionDao.getTestQuestionById(999L));
     }
+
+    @Test
+    void testDeleteTestQuestion() {
+        // Create a test question for deletion
+        TestQuestion testQuestion = new TestQuestion();
+        testQuestion.setQuestion("Question for deletion");
+
+        // Set a Test object
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test1");
+        test.setIsWholeSemester(true);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("UGR1");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+
+        // Set a User object
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+        test.setUser(user);
+
+        testDao.saveTest(test);
+        testQuestion.setTest(test);
+        testQuestionDao.saveTestQuestion(testQuestion);
+
+        // Get the ID of the test question
+        Long testQuestionId = testQuestion.getId();
+
+        // Ensure that the test question exists before deletion
+        assertNotNull(testQuestionDao.getTestQuestionById(testQuestionId));
+
+        // Delete the test question
+        assertDoesNotThrow(() -> testQuestionDao.deleteTestQuestion(testQuestionId));
+
+        // Ensure that the test question is deleted
+        assertThrows(EmptyResultDataAccessException.class, () -> testQuestionDao.getTestQuestionById(testQuestionId));
+    }
+
+    @Test
+    void testUpdateTestQuestion() {
+        // Create a test question for updating
+        TestQuestion testQuestion = new TestQuestion();
+        testQuestion.setQuestion("Question for update");
+
+        // Set a Test object
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test1");
+        test.setIsWholeSemester(true);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("UGR1");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+
+        // Set a User object
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+        test.setUser(user);
+
+        testDao.saveTest(test);
+        testQuestion.setTest(test);
+        testQuestionDao.saveTestQuestion(testQuestion);
+
+        // Modify the test question
+        String updatedQuestionText = "Updated question text";
+        testQuestion.setQuestion(updatedQuestionText);
+
+        // Update the test question
+        assertDoesNotThrow(() -> testQuestionDao.updateTestQuestion(testQuestion));
+
+        // Retrieve the updated test question
+        TestQuestion updatedTestQuestion = testQuestionDao.getTestQuestionById(testQuestion.getId());
+
+        // Ensure that the question text is updated correctly
+        assertEquals(updatedQuestionText, updatedTestQuestion.getQuestion());
+    }
 }

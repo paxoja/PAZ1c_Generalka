@@ -141,4 +141,54 @@ public class AnswerDaoTest {
         assertThrows(EmptyResultDataAccessException.class, () ->
                 answerDao.getCorrectAnswerByQuestionId(999L));
     }
+    @Test
+    void testUpdateAnswer() {
+        // create test for testing
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test1");
+        test.setIsWholeSemester(true);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("UGR1");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+        test.setUser(user);
+
+        testDao.saveTest(test);
+
+        // create TestQuestion
+        TestQuestion testQuestion = new TestQuestion();
+        testQuestion.setQuestion("What is the capital of Germany?");
+        testQuestion.setTest(test);
+
+        testQuestionDao.saveTestQuestion(testQuestion);
+
+        // create original answer
+        Answer originalAnswer = new Answer();
+        originalAnswer.setAnswer("Berlin");
+        originalAnswer.setIsCorrect(true);
+        originalAnswer.setTestQuestion(testQuestion);
+
+        answerDao.saveAnswer(originalAnswer);
+
+        // update the answer
+        originalAnswer.setAnswer("Munich");
+        originalAnswer.setIsCorrect(false);
+        answerDao.updateAnswer(originalAnswer);
+
+        // retrieve updated answer from the database
+        Answer updatedAnswer = answerDao.getAnswerById(originalAnswer.getId());
+
+        assertNotNull(updatedAnswer);
+        assertEquals(originalAnswer.getId(), updatedAnswer.getId());
+        assertEquals("Munich", updatedAnswer.getAnswer());
+        assertFalse(updatedAnswer.getIsCorrect());
+    }
+
 }

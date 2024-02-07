@@ -191,4 +191,74 @@ public class TestDaoTest {
         assertEquals(2, numberOfQuestions);
     }
 
+    @Test
+    void testUpdateTestAttribute() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+
+        // create test for testing
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test Topic");
+        test.setIsWholeSemester(false);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("URG");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+        test.setUser(user);
+        test.setYearOfStudy(1);
+
+        // save the test before updating
+        testDao.saveTest(test);
+
+        // update attribute
+        String attributeName = "subject";
+        String newAttributeValue = "New Subject";
+        testDao.updateTestAttribute(test.getId(), attributeName, newAttributeValue);
+
+        // retrieve updated test
+        org.generalka.storage.Test updatedTest = testDao.getTestById(test.getId());
+
+        assertNotNull(updatedTest);
+        assertEquals(newAttributeValue, updatedTest.getSubject());
+    }
+
+    @Test
+    void testUpdateTestEditAttribute() {
+        // create user for testing
+        User user = new User();
+        user.setUsername("uniqueTestUser" + System.currentTimeMillis());
+        user.setPassword("password");
+        userDao.insertUser(user);
+
+        // create test for testing
+        org.generalka.storage.Test test = new org.generalka.storage.Test();
+        test.setTopic("Test Topic");
+        test.setIsWholeSemester(false);
+        Timestamp date = new Timestamp(System.currentTimeMillis());
+        test.setDate(date);
+        test.setSubject("URG");
+        test.setSemester("winter");
+        test.setYearOfStudy(2);
+        test.setUser(user);
+        test.setYearOfStudy(1);
+
+        // save the test before updating
+        testDao.saveTest(test);
+
+        // update attribute
+        String attributeName = "subject";
+        String newAttributeValue = "New Subject";
+        testDao.updateTestEditAttribute(test.getId(), attributeName, newAttributeValue);
+
+        // retrieve updated test
+        org.generalka.storage.Test updatedTest = testDao.getTestById(test.getId());
+
+        assertNotNull(updatedTest);
+        assertEquals(newAttributeValue, updatedTest.getSubject());
+    }
+
 }
