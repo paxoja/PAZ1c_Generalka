@@ -192,6 +192,8 @@ public class TestAttributesController {
                 return null;
         }
 
+
+
         @FXML
         private void returnToGeneralka() throws IOException {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
@@ -209,6 +211,16 @@ public class TestAttributesController {
                 semesterComboBox.setValue(semester);
                 wholeSemesterCheckBox.setSelected(isWholeSemester);
                 this.currentTest = currentTest; // Set the current test
+        }
+
+        public void setTestForEditing(Test test) {
+                // Set the filter values for editing the provided Test object
+                descriptionTextField.setText(test.getTopic());
+                yearComboBox.setValue(test.getYearOfStudy());
+                subjectComboBox.setValue(test.getSubject());
+                semesterComboBox.setValue(test.getSemester());
+                wholeSemesterCheckBox.setSelected(test.getIsWholeSemester());
+                currentTest = test; // Set the current test
         }
 
         @FXML

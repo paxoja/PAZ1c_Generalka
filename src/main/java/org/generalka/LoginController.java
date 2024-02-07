@@ -46,7 +46,7 @@ public class LoginController {
         registerScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToRegisterButton.getScene().getWindow();
         stage.setScene(registerScene);
-        stage.setTitle("Attender");
+        stage.setTitle("Generalka");
     }
 
     public void userLogin() throws IOException {

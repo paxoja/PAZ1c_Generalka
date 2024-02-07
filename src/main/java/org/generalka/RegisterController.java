@@ -68,7 +68,7 @@ public class RegisterController {
         registerScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToLoginButton.getScene().getWindow();
         stage.setScene(registerScene);
-        stage.setTitle("Attender");
+        stage.setTitle("Generalka");
     }
 
 }

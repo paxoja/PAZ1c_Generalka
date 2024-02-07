@@ -101,7 +101,7 @@ public class ProfileController {
     @FXML
     void moveToEdit() throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/AdminEdit.fxml"));
+                getClass().getResource("/Edit.fxml"));
         Parent parent = loader.load();
         Scene adminScene = new Scene(parent);
         adminScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

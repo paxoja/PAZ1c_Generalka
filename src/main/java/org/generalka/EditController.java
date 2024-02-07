@@ -2,6 +2,7 @@ package org.generalka;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -57,7 +58,10 @@ public class EditController {
     private Button returnToGeneralkaButton;
 
     @FXML
-    private Button adminDeleteTestButton;
+    private Button DeleteTestButton;
+
+    @FXML
+    public Button EditTestButton;
 
     private final OverviewManager overviewManager = new OverviewManagerImpl();
 
@@ -224,6 +228,41 @@ public class EditController {
     }
 
 
+    @FXML
+    private void editTest() throws IOException {
+        // Ensure a test is selected
+        if (selectedTest != null) {
+            // Fetch the corresponding Test object for editing
+            Test testToEdit = fetchTest(selectedTest.getId());
+
+            // Navigate to TestAttributesController for editing
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestAttributes.fxml"));
+            Parent parent = loader.load();
+            TestAttributesController testAttributesController = loader.getController();
+
+            // Set the selected test for editing
+            testAttributesController.setTestForEditing(testToEdit);
+
+            Scene editTestScene = new Scene(parent);
+            editTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            Stage stage = (Stage) EditTestButton.getScene().getWindow();
+            stage.setScene(editTestScene);
+        } else {
+            // If no test is selected, show a message or handle the case as needed
+            System.out.println("No test selected for editing.");
+        }
+    }
+
+    // Helper method to fetch Test object based on TestOverview id
+    private Test fetchTest(Long testId) {
+        try {
+            return testDao.getTestById(testId);
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately
+            return null;
+        }
+    }
 
 }
 
