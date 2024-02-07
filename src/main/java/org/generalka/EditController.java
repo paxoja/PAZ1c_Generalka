@@ -236,12 +236,12 @@ public class EditController {
             Test testToEdit = fetchTest(selectedTest.getId());
 
             // Navigate to TestAttributesController for editing
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestAttributes.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestEditAttributes.fxml"));
             Parent parent = loader.load();
-            TestAttributesController testAttributesController = loader.getController();
+            TestEditAttributesController testEditAttributesController = loader.getController();
 
             // Set the selected test for editing
-            testAttributesController.setTestForEditing(testToEdit);
+            testEditAttributesController.setTestForEditing(testToEdit);
 
             Scene editTestScene = new Scene(parent);
             editTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());

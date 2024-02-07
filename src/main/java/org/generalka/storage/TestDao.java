@@ -21,4 +21,7 @@ public interface TestDao {
     void updateTest(Test test);
 
     void updateTestAttribute(Long testId, String attributeName, Object attributeValue) throws EntityNotFoundException;
+
+    void updateTestEditAttribute(Long testId, String attributeName, Object attributeValue) throws EntityNotFoundException;
+
 }

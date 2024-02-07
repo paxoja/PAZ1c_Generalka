@@ -147,4 +147,10 @@ public class MysqlTestDao implements TestDao {
         jdbcTemplate.update(sql, attributeValue, testId);
     }
 
+    @Override
+    public void updateTestEditAttribute(Long testId, String attributeName, Object attributeValue) throws EntityNotFoundException {
+        String sql = "UPDATE Test SET " + attributeName + "=? WHERE id=?";
+        jdbcTemplate.update(sql, attributeValue, testId);
+    }
+
 }
