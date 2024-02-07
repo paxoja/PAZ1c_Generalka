@@ -104,4 +104,29 @@ public class MysqlAnswerDao implements AnswerDao {
         return jdbcTemplate.queryForObject(sql, answerRowMapper(), questionId);
     }
 
+    @Override
+    public void setCorrectAnswer(Long questionId, Long answerId) throws EntityNotFoundException {
+        String updateSql = "UPDATE Answer SET is_correct = CASE WHEN id = ? THEN true ELSE false END WHERE TestQuestion_id = ?";
+        int updatedRows = jdbcTemplate.update(updateSql, answerId, questionId);
+        if (updatedRows == 0) {
+            throw new EntityNotFoundException("Answer or question not found");
+        }
+    }
+
+    @Override
+    public void updateAnswer(Answer answer) throws EntityNotFoundException {
+        Objects.requireNonNull(answer, "Answer cannot be null");
+        Objects.requireNonNull(answer.getId(), "Answer ID cannot be null");
+
+        String sql = "UPDATE Answer SET answer=?, is_correct=?, TestQuestion_id=? WHERE id=?";
+
+        jdbcTemplate.update(
+                sql,
+                answer.getAnswer(),
+                answer.getIsCorrect(),
+                answer.getTestQuestion().getId(),
+                answer.getId()
+        );
+    }
+
 }

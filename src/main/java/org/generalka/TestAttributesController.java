@@ -152,12 +152,14 @@ public class TestAttributesController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
                 Parent parent = loader.load();
                 TestCreatorController testCreatorController = loader.getController();
-                testCreatorController.setTest(test);
+                testCreatorController.setTest(test); // Pass the currentTest object
                 Scene createTestScene = new Scene(parent);
                 createTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
                 Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
                 stage.setScene(createTestScene);
         }
+
+
 
 
 

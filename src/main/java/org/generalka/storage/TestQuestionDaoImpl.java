@@ -40,4 +40,16 @@ public class TestQuestionDaoImpl implements TestQuestionDao {
         // return the list of TestQuestions of specific test
         return questionsByTestId;
     }
+
+    @Override
+    public void deleteTestQuestion(Long testQuestionId) throws EntityNotFoundException {
+
+    }
+
+    @Override
+    public void updateTestQuestion(TestQuestion testQuestion) throws EntityNotFoundException {
+
+    }
+
+
 }

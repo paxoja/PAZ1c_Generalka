@@ -77,4 +77,32 @@ public class MysqlTestQuestionDao implements TestQuestionDao {
         String sql = "SELECT * FROM TestQuestion WHERE Test_id = ?";
         return jdbcTemplate.query(sql, testQuestionRowMapper(), testId);
     }
+
+    @Override
+    public void deleteTestQuestion(Long testQuestionId) throws EntityNotFoundException {
+        String sql = "DELETE FROM TestQuestion WHERE id=?";
+        int deletedRows = jdbcTemplate.update(sql, testQuestionId);
+        if (deletedRows == 0) {
+            throw new EntityNotFoundException("Test question with ID " + testQuestionId + " not found");
+        }
+    }
+
+    @Override
+    public void updateTestQuestion(TestQuestion testQuestion) throws EntityNotFoundException {
+        Objects.requireNonNull(testQuestion, "TestQuestion cannot be null");
+        Objects.requireNonNull(testQuestion.getId(), "TestQuestion ID cannot be null");
+
+        String sql = "UPDATE TestQuestion SET question=?, Test_id=? WHERE id=?";
+
+        jdbcTemplate.update(
+                sql,
+                testQuestion.getQuestion(),
+                testQuestion.getTest().getId(),
+                testQuestion.getId()
+        );
+    }
+
+
+
+
 }

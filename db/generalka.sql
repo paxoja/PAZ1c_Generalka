@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`TestQuestion` (
     FOREIGN KEY (`Test_id`)
     REFERENCES `mydb`.`Test` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Answer` (
     FOREIGN KEY (`TestQuestion_id`)
     REFERENCES `mydb`.`TestQuestion` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -119,4 +119,11 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 SELECT * FROM user;
 
-INSERT INTO User (is_admin, username, password) VALUES (1, "admin", "admin");
+INSERT INTO User (is_admin, username, password) VALUES (1, "root", "root");
+
+select * from answer;
+select * from test;
+select * from testquestion;
+
+
+

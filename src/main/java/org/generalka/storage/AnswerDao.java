@@ -19,5 +19,11 @@ public interface AnswerDao {
     List<Answer> getAnswersByQuestionId(Long questionId) throws EntityNotFoundException;
 
     Answer getCorrectAnswerByQuestionId(Long questionId) throws EntityNotFoundException;
+
+    void setCorrectAnswer(Long questionId, Long answerId) throws EntityNotFoundException;
+
+    // update an answer
+    void updateAnswer(Answer answer) throws EntityNotFoundException;
 }
+
 

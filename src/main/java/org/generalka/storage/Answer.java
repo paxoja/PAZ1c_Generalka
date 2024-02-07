@@ -38,6 +38,8 @@ public class Answer {
         return isCorrect;
     }
 
+
+
     public void setIsCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
