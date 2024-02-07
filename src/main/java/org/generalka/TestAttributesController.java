@@ -2,7 +2,6 @@ package org.generalka;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -40,9 +39,6 @@ public class TestAttributesController {
 
         @FXML
         private CheckBox wholeSemesterCheckBox;
-
-        @FXML
-        private Button editTestButton; // New button for editing existing test
 
         private String topic;
         private Integer year;
@@ -223,16 +219,4 @@ public class TestAttributesController {
                 currentTest = test; // Set the current test
         }
 
-        @FXML
-        private void editTest() throws IOException {
-                // Navigate to TestCreatorController for editing
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestCreator.fxml"));
-                Parent parent = loader.load();
-                TestCreatorController testCreatorController = loader.getController();
-                testCreatorController.setTest(currentTest);
-                Scene createTestScene = new Scene(parent);
-                createTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-                Stage stage = (Stage) editTestButton.getScene().getWindow();
-                stage.setScene(createTestScene);
-        }
 }
