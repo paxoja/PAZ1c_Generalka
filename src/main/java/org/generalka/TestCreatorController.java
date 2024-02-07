@@ -46,84 +46,82 @@ public class TestCreatorController {
     public TestCreatorController() {
         this.testQuestionDao = DaoFactory.INSTANCE.getTestQuestionDao();
         this.answerDao = DaoFactory.INSTANCE.getAnswerDao();
-        loadQuestionsAndAnswers();  // Call the method during initialization
+        loadQuestionsAndAnswers();
     }
 
     private void loadQuestionsAndAnswers() {
-        // Assuming currentTest is already set in your controller
         if (isEditing && currentTest != null) {
             try {
-                // Fetch questions associated with the current test
+                // fetch questions associated with the current test
                 List<TestQuestion> testQuestions = testQuestionDao.getTestQuestionsByTestId(currentTest.getId());
 
-                // Iterate through each question and fetch associated answers
+                // iterate through each question and fetch associated answers
                 for (TestQuestion question : testQuestions) {
                     List<Answer> answers = answerDao.getAnswersByQuestionId(question.getId());
-                    // Now you have the question and its answers to display/edit
-                    // You may need to update your UI components accordingly
+                    // now you have the question and its answers to display/edit
+                    // you may need to update your UI components accordingly
                     displayQuestionAndAnswers(question, answers);
                 }
             } catch (EntityNotFoundException e) {
                 e.printStackTrace();
-                // Handle exception as needed
             }
         }
     }
 
     private void displayQuestionAndAnswers(TestQuestion question, List<Answer> answers) {
-        // Create a VBox to hold the question and its answers
-        VBox questionBox = createQuestionBox(); // Use the method to create the VBox
-        questionBox.setSpacing(10); // Set spacing between elements
+        // create a VBox to hold the question and its answers
+        VBox questionBox = createQuestionBox(); // use the method to create the VBox
+        questionBox.setSpacing(10);
 
-        // Set the TestQuestion object as user data for the questionBox
+        // set the TestQuestion object as user data for the questionBox
         questionBox.setUserData(question);
 
-        // Create a HBox for the question row
-        HBox questionRow = createQuestionRow(); // Use the method to create the HBox
+        // create a HBox for the question row
+        HBox questionRow = createQuestionRow(); // use the method to create the HBox
         TextField questionField = (TextField) questionRow.getChildren().get(1);
-        questionField.setText(question.getQuestion()); // Set the question text
-        questionBox.getChildren().add(questionRow); // Add the question HBox to the VBox
+        questionField.setText(question.getQuestion()); // set the question text
+        questionBox.getChildren().add(questionRow); // add the question HBox to the VBox
 
-        // Create a ToggleGroup for the RadioButtons
+        // create a ToggleGroup for the RadioButtons
         ToggleGroup toggleGroup = new ToggleGroup();
 
-        // Iterate through each answer and create a HBox for it
+        // iterate through each answer and create a HBox for it
         for (Answer answer : answers) {
-            HBox answerBox = createChoiceRow(toggleGroup); // Use the method to create the HBox
+            HBox answerBox = createChoiceRow(toggleGroup); // use the method to create the HBox
             TextField choiceField = (TextField) answerBox.getChildren().get(0);
-            choiceField.setText(answer.getAnswer()); // Set the answer text
+            choiceField.setText(answer.getAnswer()); // set the answer text
 
             RadioButton radioButton = (RadioButton) answerBox.getChildren().get(1);
             if (answer.getIsCorrect()) {
-                radioButton.setSelected(true); // Set the RadioButton as selected if the answer is correct
+                radioButton.setSelected(true); // set the RadioButton as selected if the answer is correct
             }
 
-            // Add an event handler to the RadioButton to update the database when selection changes
+            // add an event handler to the RadioButton to update the database when selection changes
             radioButton.setOnAction(event -> updateCorrectAnswer(answer, radioButton.isSelected()));
 
             // Create a delete choice button
             Button deleteChoiceButton = new Button("X");
-            deleteChoiceButton.setOnAction(event -> deleteChoice(answerBox, questionBox)); // Set the action to delete the choice
-            answerBox.getChildren().add(deleteChoiceButton); // Add the delete choice button to the answer HBox
+            deleteChoiceButton.setOnAction(event -> deleteChoice(answerBox, questionBox)); // Sst the action to delete the choice
+            answerBox.getChildren().add(deleteChoiceButton); // add the delete choice button to the answer HBox
 
-            questionBox.getChildren().add(answerBox); // Add the answer HBox to the question VBox
+            questionBox.getChildren().add(answerBox); // add the answer HBox to the question VBox
         }
 
 
-        // Create an "Add Choice" button
+        // create an "Add Choice" button
         Button addChoiceButton = new Button("Add Choice");
         addChoiceButton.setOnAction(event -> addChoice(questionBox, toggleGroup)); // Set the action to add a choice
         questionBox.getChildren().add(addChoiceButton); // Add the "Add Choice" button to the question VBox
 
-        // Create a "Delete this question" button
+        // create a "Delete this question" button
         Button deleteButton = new Button("Delete this question");
         deleteButton.setOnAction(event -> deleteQuestion(event)); // when we click on the button we delete the question
         questionBox.getChildren().add(deleteButton);
 
-        // Add the question VBox to the main VBox (questionsVBox)
+        // add the question VBox to the main VBox (questionsVBox)
         questionsVBox.getChildren().add(questionBox);
 
-        // Add separator line between questions
+        // add separator line between questions
         addSeparator();
     }
 
@@ -144,35 +142,35 @@ public class TestCreatorController {
 
     @FXML
     private void handleSubmit() throws IOException {
-        // Check if there are no questions added
+        // check if there are no questions added
         if (questionsVBox.getChildren().isEmpty()) {
             showAlert("Error", "You need to add at least 1 question to save the test.");
             return;
         }
 
-        // Accumulate errors in a StringBuilder
+        // accumulate errors in a StringBuilder
         StringBuilder errorBuilder = new StringBuilder();
 
-        // Validate each question and choice
+        // validate each question and choice
         for (Node node : questionsVBox.getChildren()) {
             if (node instanceof VBox) {
                 VBox questionBox = (VBox) node;
                 HBox questionRow = (HBox) questionBox.getChildren().get(0);
                 TextField questionField = (TextField) questionRow.getChildren().get(1);
 
-                // Check if question field is empty
+                // check if question field is empty
                 if (questionField.getText().trim().isEmpty()) {
                     errorBuilder.append("Question cannot be left blank.\n");
                 }
 
-                // Check each choice for this question
+                // check each choice for this question
                 for (int i = 1; i < questionBox.getChildren().size(); i++) {
                     Node childNode = questionBox.getChildren().get(i);
                     if (childNode instanceof HBox) {
                         HBox choiceRow = (HBox) childNode;
                         TextField choiceField = (TextField) choiceRow.getChildren().get(0);
 
-                        // Check if choice field is empty
+                        // check if choice field is empty
                         if (choiceField.getText().trim().isEmpty()) {
                             errorBuilder.append("Choice cannot be left blank.\n");
                         }
@@ -181,7 +179,7 @@ public class TestCreatorController {
             }
         }
 
-        // Check if any errors occurred
+        // check if any errors occurred
         String errors = errorBuilder.toString().trim();
         if (!errors.isEmpty()) {
             showAlert("Error", errors);
@@ -193,14 +191,14 @@ public class TestCreatorController {
         for (Node node : questionsVBox.getChildren()) {
             if (node instanceof VBox) {
                 VBox questionBox = (VBox) node;
-                // Count the choice rows
+                // count the choice rows
                 int choiceRowCount = 0;
                 for (Node childNode : questionBox.getChildren()) {
                     if (childNode instanceof HBox) {
                         choiceRowCount++;
                     }
                 }
-                // Subtract 1 because the first child is the question itself, not a choice
+                // subtract 1 because the first child is the question itself, not a choice
                 if (choiceRowCount - 1 < 2) { // Subtract 1 from choiceRowCount
                     allQuestionsHaveChoices = false;
                     break;
@@ -208,18 +206,18 @@ public class TestCreatorController {
             }
         }
 
-        // If not all questions have at least 2 choices, show an error message
+        // if not all questions have at least 2 choices, show an error message
         if (!allQuestionsHaveChoices) {
             showAlert("Error", "Each question must have at least 2 choices.");
             return;
         }
 
-        // Check if all questions have a correct answer selected
+        // check if all questions have a correct answer selected
         boolean allQuestionsHaveCorrectAnswer = true;
         for (Node node : questionsVBox.getChildren()) {
             if (node instanceof VBox) {
                 VBox questionBox = (VBox) node;
-                // Check if any RadioButton in the ToggleGroup is selected
+                // check if any RadioButton in the ToggleGroup is selected
                 boolean questionHasSelectedAnswer = false;
                 for (Node childNode : questionBox.getChildren()) {
                     if (childNode instanceof HBox) {
@@ -228,7 +226,7 @@ public class TestCreatorController {
                             if (choiceNode instanceof RadioButton) {
                                 RadioButton radioButton = (RadioButton) choiceNode;
                                 if (radioButton.isSelected()) {
-                                    // Correct answer is selected
+                                    // correct answer is selected
                                     questionHasSelectedAnswer = true;
                                     break;
                                 }
@@ -236,7 +234,7 @@ public class TestCreatorController {
                         }
                     }
                 }
-                // If no RadioButton is selected, set the flag to false
+                // if no RadioButton is selected, set the flag to false
                 if (!questionHasSelectedAnswer) {
                     allQuestionsHaveCorrectAnswer = false;
                     break;
@@ -244,13 +242,13 @@ public class TestCreatorController {
             }
         }
 
-        // If not all questions have a correct answer selected, show an error message
+        // if not all questions have a correct answer selected, show an error message
         if (!allQuestionsHaveCorrectAnswer) {
             showAlert("Error", "Each question must have a correct answer selected.");
             return;
         }
 
-        // If there are no errors, proceed to save the test questions
+        // if there are no errors, proceed to save the test questions
         for (Node node : questionsVBox.getChildren()) {
             if (node instanceof VBox) {
                 VBox questionBox = (VBox) node;
@@ -273,10 +271,10 @@ public class TestCreatorController {
             }
         }
 
-        // After we save all questions, clear the fields
+        // after we save all questions, clear the fields
         clearFields();
 
-        // Navigate back to the main screen
+        // navigate back to the main screen
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/generalka.fxml"));
         Parent parent = loader.load();
         Scene generalkaScene = new Scene(parent);
@@ -336,9 +334,9 @@ public class TestCreatorController {
         TestQuestion question = (TestQuestion) questionBox.getUserData();
 
         if (question != null) {
-            // Check if the question has been saved to the database
+            // check if the question has been saved to the database
             if (question.getId() != null) {
-                // This is an existing question, so delete it from the database
+                // this is an existing question, so delete it from the database
                 try {
                     List<Answer> answers = answerDao.getAnswersByQuestionId(question.getId());
                     for (Answer answer : answers) {
@@ -347,16 +345,14 @@ public class TestCreatorController {
                     testQuestionDao.deleteTestQuestion(question.getId());
                 } catch (EntityNotFoundException e) {
                     e.printStackTrace();
-                    // Handle exception as needed
                 }
             } else {
-                // This is a new question that hasn't been saved to the database yet,
-                // so simply remove it from the UI
+                // if its just a question in UI not saved yet we just delete it from UI
                 questionsVBox.getChildren().remove(questionBox);
             }
         }
 
-        // Remove the question box from the UI
+        // remove the question box from the UI
         questionsVBox.getChildren().remove(questionBox);
         if (questionsVBox.getChildren().isEmpty()) {
             questionsVBox.getChildren().remove(questionsVBox.getChildren().size() - 1);
@@ -368,7 +364,7 @@ public class TestCreatorController {
     private void addChoice(VBox questionBox, ToggleGroup questionToggleGroup) {
         HBox choiceRow = createChoiceRow(questionToggleGroup);
         int addButtonIndex = questionBox.getChildren().size() - 2;
-        // Create a delete button for each choice
+        // create a delete button for each choice
         Button deleteChoiceButton = new Button("X");
         deleteChoiceButton.setOnAction(event -> deleteChoice(choiceRow, questionBox));
         choiceRow.getChildren().add(deleteChoiceButton);
@@ -380,10 +376,10 @@ public class TestCreatorController {
 
 
     private void deleteChoice(HBox choiceRow, VBox questionBox) {
-        // Remove the choice row from the question box
+        // remove the choice row from the question box
         questionBox.getChildren().remove(choiceRow);
 
-        // Check if there are at least 2 choices remaining
+        // check if there are at least 2 choices remaining
         int remainingChoices = 0;
         for (Node node : questionBox.getChildren()) {
             if (node instanceof HBox) {
@@ -395,13 +391,13 @@ public class TestCreatorController {
             return;
         }
 
-        // If there are more than 2 choices, update the database
+        // if there are more than 2 choices, update the database
         TestQuestion question = (TestQuestion) questionBox.getUserData();
         TextField choiceField = (TextField) choiceRow.getChildren().get(0);
         String choiceText = choiceField.getText();
 
         try {
-            // Find the answer associated with this choice text
+            // find the answer associated with this choice text
             List<Answer> answers = answerDao.getAnswersByQuestionId(question.getId());
             for (Answer answer : answers) {
                 if (answer.getAnswer().equals(choiceText)) {
@@ -411,13 +407,12 @@ public class TestCreatorController {
             }
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
-            // Handle exception as needed
         }
     }
 
 
 
-    private HBox createChoiceRow(ToggleGroup questionToggleGroup) { // Accept ToggleGroup as parameter
+    private HBox createChoiceRow(ToggleGroup questionToggleGroup) {
         HBox choiceRow = new HBox(10);
         TextField choiceField = new TextField();
         choiceField.setPromptText("Enter Choice");
@@ -466,14 +461,14 @@ public class TestCreatorController {
 
         try {
             if (testQuestion.getId() == null) {
-                // This is a new question, so save it to the database
+                // if new question save it to the database
                 testQuestionDao.saveTestQuestion(testQuestion);
             } else {
-                // This is an existing question, so update it in the database
+                // if existing update it
                 testQuestionDao.updateTestQuestion(testQuestion);
             }
 
-            // Save or update each answer in the database
+            // save or update each answer in the database
             for (HBox choiceRow : choiceRows) {
                 TextField choiceField = (TextField) choiceRow.getChildren().get(0);
                 String choiceText = choiceField.getText();
@@ -486,7 +481,7 @@ public class TestCreatorController {
                 answer.setIsCorrect(isCorrect);
                 answer.setTestQuestion(testQuestion);
 
-                // Save or update the answer in the database
+                // save or update the answer in the database
                 if (answer.getId() == null) {
                     answerDao.saveAnswer(answer);
                 } else {
@@ -495,7 +490,6 @@ public class TestCreatorController {
             }
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
-            // Handle exception as needed
         }
 
         return testQuestion;
@@ -528,7 +522,7 @@ public class TestCreatorController {
         this.currentTest = test;
         if (test != null) {
             isEditing = true;
-            loadQuestionsAndAnswers(); // Load questions and answers when editing an existing test
+            loadQuestionsAndAnswers(); // load questions and answers when editing an existing test
         } else {
             isEditing = false;
         }

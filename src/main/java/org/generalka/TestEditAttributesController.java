@@ -49,7 +49,7 @@ public class TestEditAttributesController {
     private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
     private TestFxModel testFxModel;
 
-    private Test currentTest; // Field to store the current test
+    private Test currentTest;
 
     public TestEditAttributesController() {
         testFxModel = new TestFxModel();
@@ -57,7 +57,7 @@ public class TestEditAttributesController {
 
     @FXML
     private void initialize() {
-        // Initialize ComboBoxes with data
+        // initialize ComboBoxes with data - year, subject, semester, description...
         ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3);
         yearComboBox.setItems(years);
 
@@ -67,7 +67,7 @@ public class TestEditAttributesController {
         ObservableList<String> semesters = FXCollections.observableArrayList("winter", "summer");
         semesterComboBox.setItems(semesters);
 
-        // Add change listeners to update the current test object
+        // add change listeners to update the current test object
         descriptionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (currentTest != null) {
                 currentTest.setTopic(newValue);
@@ -106,22 +106,23 @@ public class TestEditAttributesController {
 
     private void updateTestEditAttributeInDatabase(Long testId, String attributeName, Object attributeValue) {
         try {
+            // we update the attributes if changed
             testDao.updateTestEditAttribute(testId, attributeName, attributeValue);
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
-            // Handle the exception
         }
     }
 
     @FXML
     private void moveToCreateTest() throws IOException {
+        // we collect values if there are any saved
         topic = descriptionTextField.getText();
         year = yearComboBox.getValue();
         subject = subjectComboBox.getValue();
         semester = semesterComboBox.getValue();
         isWholeSemester = wholeSemesterCheckBox.isSelected();
 
-        // If currentTest is not null, we are editing an existing test
+        // I=if currentTest is not null, we are editing an existing test, so we set the values
         if (currentTest != null) {
             currentTest.setTopic(topic);
             currentTest.setYearOfStudy(year);
@@ -131,36 +132,34 @@ public class TestEditAttributesController {
 
             navigateToTestCreator(currentTest);
         } else {
-            // If currentTest is null, we are creating a new test
+            // if currentTest is null, we are creating a new test, so we create a new test
             Test test = createTest();
             if (test != null) {
                 navigateToTestCreator(test);
             }
         }
 
-        // Update the filter values on the existing instance of TestAttributesController
+        // update based on the updateFilterValues method
         updateFilterValues(topic, year, subject, semester, isWholeSemester, this);
     }
 
     private void updateFilterValues(String topic, Integer year, String subject, String semester, boolean isWholeSemester, TestEditAttributesController controller) {
-        // Update the filter values on the existing instance of TestAttributesController
+        // update the filter values on the existing instance of TestAttributesController
         controller.setFilterValues(topic, year, subject, semester, isWholeSemester, currentTest);
     }
+
 
 
     private void navigateToTestCreator(Test test) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TestEdit.fxml"));
         Parent parent = loader.load();
         TestEditController testEditController = loader.getController();
-        testEditController.setTest(test); // Pass the currentTest object
+        testEditController.setTest(test); // we pass the currentTest object
         Scene createTestScene = new Scene(parent);
         createTestScene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         Stage stage = (Stage) moveToCreateTestButton.getScene().getWindow();
         stage.setScene(createTestScene);
     }
-
-
-
 
 
     private Test createTest() {
@@ -208,17 +207,17 @@ public class TestEditAttributesController {
         subjectComboBox.setValue(subject);
         semesterComboBox.setValue(semester);
         wholeSemesterCheckBox.setSelected(isWholeSemester);
-        this.currentTest = currentTest; // Set the current test
+        this.currentTest = currentTest; // set the current test
     }
 
     public void setTestForEditing(Test test) {
-        // Set the filter values for editing the provided Test object
+        // set the filter values for editing the provided Test object
         descriptionTextField.setText(test.getTopic());
         yearComboBox.setValue(test.getYearOfStudy());
         subjectComboBox.setValue(test.getSubject());
         semesterComboBox.setValue(test.getSemester());
         wholeSemesterCheckBox.setSelected(test.getIsWholeSemester());
-        currentTest = test; // Set the current test
+        currentTest = test; // set the current test
     }
 
 }

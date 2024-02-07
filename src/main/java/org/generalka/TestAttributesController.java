@@ -49,7 +49,7 @@ public class TestAttributesController {
         private TestDao testDao = DaoFactory.INSTANCE.getTestDao();
         private TestFxModel testFxModel;
 
-        private Test currentTest; // Field to store the current test
+        private Test currentTest;
 
         public TestAttributesController() {
                 testFxModel = new TestFxModel();
@@ -57,7 +57,7 @@ public class TestAttributesController {
 
         @FXML
         private void initialize() {
-                // Initialize ComboBoxes with data
+                // initialize ComboBoxes with data
                 ObservableList<Integer> years = FXCollections.observableArrayList(1, 2, 3);
                 yearComboBox.setItems(years);
 
@@ -67,7 +67,7 @@ public class TestAttributesController {
                 ObservableList<String> semesters = FXCollections.observableArrayList("winter", "summer");
                 semesterComboBox.setItems(semesters);
 
-                // Add change listeners to update the current test object
+                // add change listeners to update the current test object
                 descriptionTextField.textProperty().addListener((observable, oldValue, newValue) -> {
                         if (currentTest != null) {
                                 currentTest.setTopic(newValue);
@@ -121,7 +121,7 @@ public class TestAttributesController {
                 semester = semesterComboBox.getValue();
                 isWholeSemester = wholeSemesterCheckBox.isSelected();
 
-                // If currentTest is not null, we are editing an existing test
+                // if currentTest is not null, we are editing an existing test
                 if (currentTest != null) {
                         currentTest.setTopic(topic);
                         currentTest.setYearOfStudy(year);
@@ -131,7 +131,7 @@ public class TestAttributesController {
 
                         navigateToTestCreator(currentTest);
                 } else {
-                        // If currentTest is null, we are creating a new test
+                        // if currentTest is null, we are creating a new test
                         Test test = createTest();
                         if (test != null) {
                                 navigateToTestCreator(test);
@@ -143,7 +143,7 @@ public class TestAttributesController {
         }
 
         private void updateFilterValues(String topic, Integer year, String subject, String semester, boolean isWholeSemester, TestAttributesController controller) {
-                // Update the filter values on the existing instance of TestAttributesController
+                // update the filter values on the existing instance of TestAttributesController
                 controller.setFilterValues(topic, year, subject, semester, isWholeSemester, currentTest);
         }
 
@@ -208,17 +208,17 @@ public class TestAttributesController {
                 subjectComboBox.setValue(subject);
                 semesterComboBox.setValue(semester);
                 wholeSemesterCheckBox.setSelected(isWholeSemester);
-                this.currentTest = currentTest; // Set the current test
+                this.currentTest = currentTest; // set the current test
         }
 
         public void setTestForEditing(Test test) {
-                // Set the filter values for editing the provided Test object
+                // set the filter values for editing the provided Test object
                 descriptionTextField.setText(test.getTopic());
                 yearComboBox.setValue(test.getYearOfStudy());
                 subjectComboBox.setValue(test.getSubject());
                 semesterComboBox.setValue(test.getSemester());
                 wholeSemesterCheckBox.setSelected(test.getIsWholeSemester());
-                currentTest = test; // Set the current test
+                currentTest = test;
         }
 
 }
