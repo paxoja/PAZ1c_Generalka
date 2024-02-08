@@ -122,7 +122,7 @@ public class TestEditAttributesController {
         semester = semesterComboBox.getValue();
         isWholeSemester = wholeSemesterCheckBox.isSelected();
 
-        // I=if currentTest is not null, we are editing an existing test, so we set the values
+        // if currentTest is not null, we are editing an existing test, so we set the values
         if (currentTest != null) {
             currentTest.setTopic(topic);
             currentTest.setYearOfStudy(year);

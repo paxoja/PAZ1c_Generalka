@@ -241,7 +241,7 @@ public class TestEditController {
         ToggleGroup toggleGroup = new ToggleGroup();
 
         // create a HBox for each answer row
-        for (int i = 0; i < 2; i++) { // Add at least two answer rows initially
+        for (int i = 0; i < 2; i++) {
             HBox answerRow = createChoiceRow(toggleGroup);
             questionBox.getChildren().add(answerRow);
         }
